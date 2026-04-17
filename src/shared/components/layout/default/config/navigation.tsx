@@ -22,18 +22,18 @@ export type NavItem = {
 export const navItems: NavItem[] = [
 	{
 		icon: <Layers />,
-		name: 'Remote1',
-		subItems: [
-			{ name: 'Remote1 메인', path: '/remote1/main' },
-			{ name: 'Remote1 계좌목록', path: '/remote1/example/account-page' },
-			{ name: 'Remote1 데이터가져오기', path: '/remote1/example/use-api-example' },
-		],
+		name: 'Dev Examples',
+		subItems: [{ name: '기본 페이지', path: '/remote1/main' }],
 	},
 	{
 		icon: <SquareDashedBottomCode />,
-		name: 'Example',
+		name: 'UI Components',
+		subItems: [{ name: 'Button', icon: <Square />, path: '/example/component-button' }],
+	},
+	{
+		icon: <SquareDashedBottomCode />,
+		name: 'API Examples',
 		subItems: [
-			{ name: 'Button', icon: <Square />, path: '/example/component-button' },
 			{ name: 'useApi', icon: <FishingHook />, path: '/example/use-api' },
 			{
 				name: 'useClientState예제',

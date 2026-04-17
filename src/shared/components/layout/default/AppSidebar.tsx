@@ -344,7 +344,7 @@ const AppSidebar: React.FC = () => {
 										!isExpanded && !isHovered ? 'lg:justify-center' : 'justify-start'
 									}`}
 								>
-									{isExpanded || isHovered || isMobileOpen ? 'Apps' : <ChevronDownIcon className="size-6" />}
+									{isExpanded || isHovered || isMobileOpen ? 'Examples' : <ChevronDownIcon className="size-6" />}
 								</h2>
 								{renderMenuItems(navItems, 'main')}
 							</div>
