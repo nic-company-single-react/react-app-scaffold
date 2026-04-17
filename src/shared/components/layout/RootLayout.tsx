@@ -1,9 +1,17 @@
-import LayoutContent from './LayoutContent';
+import RootLayoutContent from './RootLayoutContent';
+
+// default template ===============================
+import LayoutDefaultSidebarProvider from '@/core/providers/layout/default/LayoutDefaultSidebarProvider';
+// default template ===============================
 
 interface IRootLayoutProps {
 	//
 }
 
 export default function RootLayout({}: IRootLayoutProps): React.ReactNode {
-	return <LayoutContent />;
+	return (
+		<LayoutDefaultSidebarProvider>
+			<RootLayoutContent />
+		</LayoutDefaultSidebarProvider>
+	);
 }
