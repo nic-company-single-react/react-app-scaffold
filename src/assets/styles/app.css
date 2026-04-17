@@ -1,0 +1,4 @@
+/* Tailwind 엔진 (v4 방식) */
+@import 'tailwindcss';
+/* tw-animate-css 사용 시 */
+@import 'tw-animate-css';
