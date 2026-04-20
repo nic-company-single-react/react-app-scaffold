@@ -1,6 +1,5 @@
-import RootLayoutContent from './RootLayoutContent';
-
 // default template ===============================
+import RootLayoutContent from './RootLayoutContent';
 import LayoutDefaultSidebarProvider from '@/core/providers/layout/default/LayoutDefaultSidebarProvider';
 // default template ===============================
 
