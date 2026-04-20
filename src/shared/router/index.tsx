@@ -6,7 +6,7 @@ import RootLayout from '@/shared/components/layout/RootLayout';
 // main router 가져오기 ----------------
 import MainRouter from '@/domains/main/router';
 // example router 가져오기 -------------
-//import ExampleRouter from '@/domains/example/router';
+import ExampleRouter from '@/domains/example/router';
 
 const routes: TAppRoute[] = [
 	{
@@ -15,11 +15,11 @@ const routes: TAppRoute[] = [
 		children: MainRouter,
 	},
 	// 업무(domain) 라우터 생성될 때 다음과 같이 추가
-	//{
-	//	path: '/example',
-	//	element: <RootLayout />,
-	//	children: ExampleRouter,
-	//},
+	{
+		path: '/example',
+		element: <RootLayout />,
+		children: ExampleRouter,
+	},
 	{
 		path: '*',
 		element: (
