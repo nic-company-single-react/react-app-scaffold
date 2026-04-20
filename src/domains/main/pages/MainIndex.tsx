@@ -1,4 +1,4 @@
-import { Button } from '@components/ui';
+import { Button } from '@axiom/components/ui';
 
 export default function MainIndex(): React.ReactNode {
 	return (

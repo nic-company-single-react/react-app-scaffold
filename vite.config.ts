@@ -12,7 +12,8 @@ export default defineConfig(({ mode }) => {
 		resolve: {
 			alias: {
 				'@': resolve(__dirname, './src'),
-				'@components/ui': resolve(__dirname, './src/shared/components/ui'),
+				'@axiom/components/ui': resolve(__dirname, './src/shared/components/ui'),
+				'@axiom/hooks': resolve(__dirname, './src/core/hooks'),
 				'@app-types': resolve(__dirname, './src/types'),
 			},
 		},
