@@ -23,7 +23,10 @@ export const navItems: NavItem[] = [
 	{
 		icon: <Layers />,
 		name: 'Dev Examples',
-		subItems: [{ name: '기본 페이지', path: '/remote1/main' }],
+		subItems: [
+			{ name: '메인 페이지', path: '/' },
+			{ name: '계좌 메인 페이지', path: '/example/account-page' },
+		],
 	},
 	{
 		icon: <SquareDashedBottomCode />,
