@@ -4,7 +4,9 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@components/ui": ["./src/shared/components/ui"],
+			"@components/ui/*": ["./src/shared/components/ui/*"]
 		}
 	}
 }

@@ -21,7 +21,9 @@
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@components/ui": ["./src/shared/components/ui"],
+			"@components/ui/*": ["./src/shared/components/ui/*"]
 		}
 	},
 	"include": ["src"]

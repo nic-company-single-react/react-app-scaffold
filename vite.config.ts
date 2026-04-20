@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
 		resolve: {
 			alias: {
 				'@': resolve(__dirname, './src'),
+				'@components/ui': resolve(__dirname, './src/shared/components/ui'),
 				'@app-types': resolve(__dirname, './src/types'),
 			},
 		},
