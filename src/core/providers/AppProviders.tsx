@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { QueryProvider } from './query-client/QueryProvider';
 
 interface AppProvidersProps {
 	children: ReactNode;
@@ -11,5 +12,5 @@ interface AppProvidersProps {
  * Provider 순서는 의존성을 고려하여 배치합니다.
  */
 export function AppProviders({ children }: AppProvidersProps) {
-	return <>{children}</>;
+	return <QueryProvider>{children}</QueryProvider>;
 }
