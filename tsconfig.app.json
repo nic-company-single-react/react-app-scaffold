@@ -27,5 +27,6 @@
 			"@axiom/hooks": ["./src/core/hooks/index.ts"]
 		}
 	},
-	"include": ["src"]
+	"include": ["src"],
+	"exclude": ["src/__stories__"]
 }
