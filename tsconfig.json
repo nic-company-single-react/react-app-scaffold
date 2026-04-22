@@ -2,11 +2,10 @@
 	"files": [],
 	"references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
 	"compilerOptions": {
-		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
-			"@axiom/components/ui": ["./src/shared/components/ui"],
-			"@axiom/components/ui/*": ["./src/shared/components/ui/*"],
+			"@axiom/components/ui": ["./src/shared/ui"],
+			"@axiom/components/ui/*": ["./src/shared/ui/*"],
 			"@axiom/hooks": ["./src/core/hooks/index.ts"]
 		}
 	}

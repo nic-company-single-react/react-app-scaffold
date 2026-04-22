@@ -22,8 +22,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
 			"@/*": ["./src/*"],
-			"@axiom/components/ui": ["./src/shared/components/ui"],
-			"@axiom/components/ui/*": ["./src/shared/components/ui/*"],
+			"@axiom/components/ui": ["./src/shared/ui"],
+			"@axiom/components/ui/*": ["./src/shared/ui/*"],
 			"@axiom/hooks": ["./src/core/hooks/index.ts"]
 		}
 	},
