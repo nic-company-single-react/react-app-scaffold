@@ -70,7 +70,7 @@ function UseApiMutationDemo() {
 }
 
 const meta = {
-	title: 'Core/Hooks/useApi',
+	title: 'Functions/Hooks/useApi',
 	tags: ['autodocs'],
 } satisfies Meta;
 
