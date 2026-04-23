@@ -1,3 +1,4 @@
+// src/domains/example/router/index.tsx
 import type { TAppRoute } from '@/types/router';
 import loadable from '@loadable/component';
 
