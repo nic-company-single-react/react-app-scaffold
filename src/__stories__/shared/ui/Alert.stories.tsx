@@ -126,7 +126,10 @@ export const WithAction: Story = {
 				<AlertTitle>새로운 업데이트가 있습니다</AlertTitle>
 				<AlertDescription>버전 2.0이 출시되었습니다. 지금 업데이트하세요.</AlertDescription>
 				<AlertAction>
-					<Button variant="ghost" size="icon-sm">
+					<Button
+						variant="ghost"
+						size="icon-sm"
+					>
 						<XIcon />
 					</Button>
 				</AlertAction>
@@ -200,15 +203,17 @@ export const InteractiveExample: Story = {
 						<AlertTitle>닫을 수 있는 알림</AlertTitle>
 						<AlertDescription>우측 X 버튼을 클릭하면 알림이 사라집니다.</AlertDescription>
 						<AlertAction>
-							<Button variant="ghost" size="icon-sm" onClick={() => setVisible(false)}>
+							<Button
+								variant="ghost"
+								size="icon-sm"
+								onClick={() => setVisible(false)}
+							>
 								<XIcon />
 							</Button>
 						</AlertAction>
 					</Alert>
 				)}
-				{!visible && (
-					<Button onClick={() => setVisible(true)}>알림 다시 표시</Button>
-				)}
+				{!visible && <Button onClick={() => setVisible(true)}>알림 다시 표시</Button>}
 			</div>
 		);
 	},

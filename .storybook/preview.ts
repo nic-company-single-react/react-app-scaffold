@@ -38,12 +38,12 @@ const preview: Preview = {
 		a11y: {
 			test: 'todo',
 		},
-    docs: {
+		docs: {
 			toc: hideDocsToc ? false : true,
 		},
-    options: {
+		options: {
 			storySort: {
-				order: ['Getting Started', 'UI Components', 'Functions', '*'],
+				order: ['Getting Started', ['UI Components', ['Accordion', 'Alert', 'Button']], 'Functions', '*'],
 			},
 		},
 	},
