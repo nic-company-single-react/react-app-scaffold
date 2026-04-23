@@ -1,11 +1,6 @@
 import type { TAppRoute } from '@/types/router';
-
-// root layout 가져오기 -----------
 import RootLayout from '@/shared/components/layout/RootLayout';
-
-// main router 가져오기 ----------------
 import MainRouter from '@/domains/main/router';
-// example router 가져오기 -------------
 import ExampleRouter from '@/domains/example/router';
 
 const routes: TAppRoute[] = [

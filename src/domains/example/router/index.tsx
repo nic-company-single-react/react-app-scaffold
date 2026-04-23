@@ -2,7 +2,7 @@ import type { TAppRoute } from '@/types/router';
 import loadable from '@loadable/component';
 
 // 라우터에 연결할 페이지를 import 한다.
-// loadable 라이브러리는 react에서 Code Spliting를 제공해주는 라이브러리 이다.
+// loadable 라이브러리는 react에서 Code Splitting를 제공해주는 라이브러리 이다.
 const AccountIndex = loadable(() => import('@/domains/example/pages/AccountIndex'));
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
 
