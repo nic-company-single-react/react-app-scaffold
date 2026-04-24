@@ -3,6 +3,7 @@ export * from './button';
 export * from './accordion';
 export * from './alert';
 export * from './badge';
+export * from './calendar';
 export * from './table';
 export * from './checkbox';
 export * from './combobox';

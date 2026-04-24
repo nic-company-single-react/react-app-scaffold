@@ -11,6 +11,7 @@ const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-comp
 const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
+const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
 
 const routes: TAppRoute[] = [
 	{
@@ -57,6 +58,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/data-table',
 		element: <DataTableComponent />,
 		name: 'Data Table 컴포넌트',
+	},
+	{
+		path: 'ui-components/calendar',
+		element: <CalendarComponent />,
+		name: '캘린더 컴포넌트',
 	},
 ];
 
