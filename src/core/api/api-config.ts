@@ -1,6 +1,12 @@
-export type ApiLibConfig = {
-	baseURL?: string;
-};
+import type { ApiLibConfig } from '@/types/api';
+
+export type { ApiLibConfig };
+
+//declare global {
+//	interface Window {
+//		__MF_APP_CONFIG__: ApiLibConfig;
+//	}
+//}
 
 //let _config: ApiLibConfig = {};
 
