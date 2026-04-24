@@ -565,7 +565,7 @@ const allItems = Object.values(groupedItems).flat();
 						<Combobox
 							items={frameworks}
 							value={selected}
-							onValueChange={setSelected}
+							onValueChange={(value) => setSelected(value ?? '')}
 						>
 							<ComboboxInput
 								placeholder="프레임워크 선택..."
