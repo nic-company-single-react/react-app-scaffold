@@ -4,5 +4,6 @@
 export * from '../lib/shadcn/ui';
 
 // ── 내가 만든 커스텀 컴포넌트 re-export ─────────────────────
+export { CodeBlock } from '../components/ui/codeblock';
 //export { DataTable } from './DataTable';
 //export { MyCustomCard } from './MyCustomCard';
