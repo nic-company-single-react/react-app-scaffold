@@ -1,4 +1,12 @@
-import { Layers, SquareDashedBottomCode, Square, FishingHook } from 'lucide-react';
+import {
+	Layers,
+	SquareDashedBottomCode,
+	Square,
+	FishingHook,
+	Badge,
+	ListChevronsDownUp,
+	GalleryHorizontal,
+} from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
  * 2뎁스 leaf에 `icon`이 있으면 사이드바에서 해당 아이콘을 쓰고, 없으면 기본(FileCode) 처리.
@@ -32,9 +40,10 @@ export const navItems: NavItem[] = [
 		icon: <SquareDashedBottomCode />,
 		name: 'UI Components',
 		subItems: [
-			{ name: 'Accordion', icon: <Square />, path: '/example/ui-components/accordion' },
-			{ name: 'Badge', icon: <Square />, path: '/example/ui-components/badge' },
+			{ name: 'Accordion', icon: <ListChevronsDownUp />, path: '/example/ui-components/accordion' },
+			{ name: 'Badge', icon: <Badge />, path: '/example/ui-components/badge' },
 			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
+			{ name: 'Carousel', icon: <GalleryHorizontal />, path: '/example/ui-components/carousel' },
 		],
 	},
 	{

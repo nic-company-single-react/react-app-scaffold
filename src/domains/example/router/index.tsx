@@ -7,6 +7,8 @@ const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
+const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-components/CarouselComponent'));
+
 const routes: TAppRoute[] = [
 	{
 		path: 'account-page', // 라우터 path를 원하는 이름으로 정하여 작성한다.
@@ -32,6 +34,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/accordion',
 		element: <AccordionComponent />,
 		name: '아코디언 컴포넌트',
+	},
+	{
+		path: 'ui-components/carousel',
+		element: <CarouselComponent />,
+		name: '캐러셀 컴포넌트',
 	},
 ];
 
