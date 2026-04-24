@@ -8,6 +8,7 @@ const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-compon
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
 const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-components/CarouselComponent'));
+const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 
 const routes: TAppRoute[] = [
 	{
@@ -39,6 +40,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/carousel',
 		element: <CarouselComponent />,
 		name: '캐러셀 컴포넌트',
+	},
+	{
+		path: 'ui-components/checkbox',
+		element: <CheckboxComponent />,
+		name: '체크박스 컴포넌트',
 	},
 ];
 
