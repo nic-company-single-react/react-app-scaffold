@@ -10,6 +10,7 @@ const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-compone
 const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-components/CarouselComponent'));
 const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
+const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 
 const routes: TAppRoute[] = [
 	{
@@ -51,6 +52,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/combobox',
 		element: <ComboboxComponent />,
 		name: '콤보박스 컴포넌트',
+	},
+	{
+		path: 'ui-components/data-table',
+		element: <DataTableComponent />,
+		name: 'Data Table 컴포넌트',
 	},
 ];
 
