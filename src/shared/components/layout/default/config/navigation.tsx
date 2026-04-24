@@ -7,6 +7,7 @@ import {
 	ListChevronsDownUp,
 	GalleryHorizontal,
 	CheckSquare2,
+	ChevronsUpDown,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -46,6 +47,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
 			{ name: 'Carousel', icon: <GalleryHorizontal />, path: '/example/ui-components/carousel' },
 			{ name: 'Checkbox', icon: <CheckSquare2 />, path: '/example/ui-components/checkbox' },
+			{ name: 'Combobox', icon: <ChevronsUpDown />, path: '/example/ui-components/combobox' },
 		],
 	},
 	{
