@@ -5,6 +5,7 @@ import loadable from '@loadable/component';
 const AccountIndex = loadable(() => import('@/domains/example/pages/AccountIndex'));
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
+const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
 
 const routes: TAppRoute[] = [
 	{
@@ -21,6 +22,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/button',
 		element: <ButtonComponent />,
 		name: '버튼 컴포넌트',
+	},
+	{
+		path: 'ui-components/accordion',
+		element: <AccordionComponent />,
+		name: '아코디언 컴포넌트',
 	},
 ];
 

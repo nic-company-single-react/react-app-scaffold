@@ -31,7 +31,10 @@ export const navItems: NavItem[] = [
 	{
 		icon: <SquareDashedBottomCode />,
 		name: 'UI Components',
-		subItems: [{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' }],
+		subItems: [
+			{ name: 'Accordion', icon: <Square />, path: '/example/ui-components/accordion' },
+			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
+		],
 	},
 	{
 		icon: <SquareDashedBottomCode />,
