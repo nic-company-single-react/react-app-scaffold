@@ -33,6 +33,7 @@ export const navItems: NavItem[] = [
 		name: 'UI Components',
 		subItems: [
 			{ name: 'Accordion', icon: <Square />, path: '/example/ui-components/accordion' },
+			{ name: 'Badge', icon: <Square />, path: '/example/ui-components/badge' },
 			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
 		],
 	},
