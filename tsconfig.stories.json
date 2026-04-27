@@ -1,5 +1,5 @@
 {
 	"extends": "./tsconfig.app.json",
-	"include": ["src/__stories__"],
+	"include": ["src/__stories__", "src/types"],
 	"exclude": []
 }

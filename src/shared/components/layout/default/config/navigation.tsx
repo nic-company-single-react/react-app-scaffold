@@ -1,4 +1,16 @@
-import { Layers, SquareDashedBottomCode, Square, FishingHook } from 'lucide-react';
+import {
+	Layers,
+	SquareDashedBottomCode,
+	Square,
+	FishingHook,
+	Badge,
+	ListChevronsDownUp,
+	GalleryHorizontal,
+	CheckSquare2,
+	ChevronsUpDown,
+	Table2,
+	CalendarDays,
+} from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
  * 2뎁스 leaf에 `icon`이 있으면 사이드바에서 해당 아이콘을 쓰고, 없으면 기본(FileCode) 처리.
@@ -31,7 +43,16 @@ export const navItems: NavItem[] = [
 	{
 		icon: <SquareDashedBottomCode />,
 		name: 'UI Components',
-		subItems: [{ name: 'Button', icon: <Square />, path: '/example/component-button' }],
+		subItems: [
+			{ name: 'Accordion', icon: <ListChevronsDownUp />, path: '/example/ui-components/accordion' },
+			{ name: 'Badge', icon: <Badge />, path: '/example/ui-components/badge' },
+			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
+			{ name: 'Carousel', icon: <GalleryHorizontal />, path: '/example/ui-components/carousel' },
+			{ name: 'Checkbox', icon: <CheckSquare2 />, path: '/example/ui-components/checkbox' },
+			{ name: 'Combobox', icon: <ChevronsUpDown />, path: '/example/ui-components/combobox' },
+			{ name: 'Calendar', icon: <CalendarDays />, path: '/example/ui-components/calendar' },
+			{ name: 'Data Table', icon: <Table2 />, path: '/example/ui-components/data-table' },
+		],
 	},
 	{
 		icon: <SquareDashedBottomCode />,

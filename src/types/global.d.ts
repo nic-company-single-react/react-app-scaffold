@@ -1,8 +1,7 @@
 import type { IRouter } from '@/types/router';
 //import type { IUtils } from '@/types/common';
 //import type { IUI } from '@/types/components';
-
-import type { ApiLibConfig } from '@/core/api/api-config';
+import type { ApiLibConfig } from '@/types/api';
 
 declare global {
 	interface Window {
