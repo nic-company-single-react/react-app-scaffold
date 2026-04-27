@@ -7,9 +7,9 @@ const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi
 
 const routes: TAppRoute[] = [
 	{
-		path: 'account-page', // 라우터 path를 원하는 이름으로 정하여 작성한다.
-		element: <AccountIndex />, // 위에서 가져온 페이지 컴포넌트를 element에 연결한다.
-		name: '계좌 메인', // 페이지 name을 원하는 이름으로 정하여 입력한다.
+		path: 'account-page', // 라우터 path 를 원하는 이름으로 정하여 작성한다.
+		element: <AccountIndex />, // 위에서 가져온 페이지 컴포넌트를 element 에 연결한다.
+		name: '계좌 메인', // 페이지 name 을 원하는 이름으로 정하여 입력한다.
 	},
 	{
 		path: 'use-api',
