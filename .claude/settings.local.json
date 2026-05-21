@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\work\\\\2026\\\\react\\\\scaffold\\\\react-app-scaffold\" -Force)",
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(Sort-Object PSIsContainer -Descending)",
+      "Bash(grep -E \"config|\\\\.ts$|\\\\.json$\")"
+    ]
+  }
+}
