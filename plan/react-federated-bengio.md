@@ -316,6 +316,18 @@ export default {
 
 ### Phase 6 — 퍼블리싱 폴더 신설
 
+**역할 분리 원칙:**
+```
+src/publishing/      ← 순수 HTML/CSS (라우터 없음, React 앱과 완전 무관)
+                       퍼블리셔 작업 공간 → Storybook으로 팀 공유
+                       ↓ React 컴포넌트화 완료 후
+src/domains/[name]/  ← 라우터 등록, 실제 앱에 마운트
+```
+
+- `src/publishing/`은 Vite 번들링 대상이 아니며 React Router를 사용하지 않는다
+- 팀 내 미리보기·공유는 **Storybook**으로 처리한다 (별도 라우터 불필요)
+- HTML/CSS → React JSX 변환이 완료된 시점에 `src/domains/[name]/`으로 이동
+
 ```
 src/publishing/
 ├── README.md
@@ -328,10 +340,14 @@ src/publishing/
 ```
 
 **README.md 핵심 내용:**
-1. 토큰 클래스 참조: Storybook `Getting Started/Design Tokens` 링크
-2. 미리보기: `npm run dev` 후 dev server CSS 링크 방법
-3. 퍼블 → 개발 핸드오프 기준: `templates/` → 페이지 컴포넌트, `components/` → shared 컴포넌트
-4. 토큰 변경 요청 방법: JSON 수정 후 `npm run build:tokens`
+1. **역할 정의:** 이 폴더는 React 이전 단계의 순수 HTML/CSS 스테이징 공간
+2. **미리보기 방법:** `npm run dev` 실행 후 빌드된 CSS를 HTML에 링크 (정적 파일 직접 열기)
+3. **팀 공유:** Storybook에 스토리로 등록 → `Getting Started/Design Tokens` 또는 별도 퍼블 스토리
+4. **핸드오프 기준:**
+   - `templates/` HTML → 페이지 컴포넌트 (`src/domains/[name]/pages/`)
+   - `components/` HTML → 공유 또는 도메인 컴포넌트 (`src/shared/` 또는 `src/domains/[name]/components/`)
+5. **토큰 클래스 참조:** Storybook `Getting Started/Design Tokens` 링크
+6. **토큰 변경 요청:** JSON 수정 후 `npm run build:tokens`
 
 ---
 
