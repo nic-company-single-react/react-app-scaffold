@@ -2,6 +2,7 @@ import type { TAppRoute } from '@/types/router';
 import RootLayout from '@/shared/components/layout/RootLayout';
 import MainRouter from '@/domains/main/router';
 import ExampleRouter from '@/domains/example/router';
+import PubExampleRouter from '@/publishing/example/router';
 
 const routes: TAppRoute[] = [
 	{
@@ -14,6 +15,11 @@ const routes: TAppRoute[] = [
 		path: '/example',
 		element: <RootLayout />,
 		children: ExampleRouter,
+	},
+	{
+		path: '/publishing/example',
+		element: <RootLayout />,
+		children: PubExampleRouter,
 	},
 	{
 		path: '*',
