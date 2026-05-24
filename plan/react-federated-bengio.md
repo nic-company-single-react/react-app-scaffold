@@ -37,10 +37,9 @@ src/
 │   └── style-dictionary.config.js
 ├── assets/styles/
 │   ├── tokens/                  ← (신규, 자동생성) Style Dictionary 출력물
-│   │   ├── colors.css           ← ⚠ 직접 편집 금지 (generated)
-│   │   ├── typography.css
-│   │   ├── shadows.css
-│   │   └── spacing.css
+│   │   ├── primitive.css           ← ⚠ 직접 편집 금지 (generated)
+│   │   ├── theme-dark.css
+│   │   └── theme-light.css
 │   ├── themes/                  ← (신규) 프로젝트 브랜드 테마
 │   │   ├── theme-default.css
 │   │   └── theme-example-project.css  ← 투입 시 참고용 예시
