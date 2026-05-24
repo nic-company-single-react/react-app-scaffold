@@ -1,8 +1,9 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 import type { Plugin } from 'vite';
 import { fileURLToPath } from 'url';
-import { dirname, resolve, relative } from 'path';
+import { dirname, resolve } from 'path';
 import { normalizePath } from 'vite';
+import tailwindcss from '@tailwindcss/vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -46,7 +47,7 @@ const config: StorybookConfig = {
 	async viteFinal(config) {
 		return {
 			...config,
-			plugins: [...(config.plugins ?? []), fixWindowsStorybookPaths()],
+			plugins: [...(config.plugins ?? []), fixWindowsStorybookPaths(), tailwindcss()],
 			resolve: {
 				...config.resolve,
 				alias: {

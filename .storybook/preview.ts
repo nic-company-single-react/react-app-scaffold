@@ -43,7 +43,16 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: ['Getting Started', ['소개', 'Design Tokens'], 'UI Components', ['Accordion', 'Alert', 'Button'], 'Publishing', ['Components', 'Templates'], 'Functions', '*'],
+				order: [
+					'Getting Started',
+					['소개', 'Design Tokens'],
+					'UI Components',
+					['Accordion', 'Alert', 'Button'],
+					'Publishing',
+					['Components', 'Templates'],
+					'Functions',
+					'*',
+				],
 			},
 		},
 	},
