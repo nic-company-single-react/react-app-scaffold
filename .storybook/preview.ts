@@ -1,7 +1,9 @@
+/// <reference types="vite/client" />
 import type { Preview, ReactRenderer } from '@storybook/react-vite';
 import type { DecoratorFunction } from 'storybook/internal/types';
 import { createElement } from 'react';
 import { QueryProvider } from '../src/core/providers/query-client/QueryProvider';
+// 내부 프로젝트용 미리보기 스타일
 import '../src/assets/styles/app.css';
 
 const withQueryProvider: DecoratorFunction<ReactRenderer> = (Story) =>
