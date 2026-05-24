@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ExamplePage } from './ExamplePage';
+import ExamplePage from '@/publishing/example/pages/ExamplePage';
 
 const meta = {
 	title: 'Publishing/example/pages/ExamplePage',

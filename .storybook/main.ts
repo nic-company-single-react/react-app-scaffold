@@ -37,11 +37,7 @@ function fixWindowsStorybookPaths(): Plugin {
 
 const config: StorybookConfig = {
 	staticDirs: ['../src/__stories__/public'],
-	stories: [
-		'../src/__stories__/**/*.mdx',
-		'../src/__stories__/**/*.stories.@(ts|tsx)',
-		'../src/publishing/**/*.stories.@(ts|tsx)',
-	],
+	stories: ['../src/__stories__/**/*.mdx', '../src/__stories__/**/*.stories.@(ts|tsx)'],
 	addons: ['@storybook/addon-docs', '@storybook/addon-a11y', '@storybook/addon-onboarding', '@chromatic-com/storybook'],
 	framework: '@storybook/react-vite',
 	async viteFinal(config) {
