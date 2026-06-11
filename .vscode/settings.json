@@ -36,5 +36,6 @@
 	"axiom-ai.llm.maxTokens": 16384,
 	"axiom-ai.debug.logSystemPrompt": true,
 	"axiom-ai.llm.provider": "ollama",
-	"axiom-ai.experimental.regionEdit": true
+	"axiom-ai.experimental.regionEdit": true,
+	"axiom-ai.experimental.intentClassifier": true
 }
