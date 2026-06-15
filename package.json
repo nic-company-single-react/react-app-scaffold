@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"build:tokens": "style-dictionary build --config src/design-tokens/style-dictionary.config.js",
+		"build:tokens": "node src/design-tokens/style-dictionary.config.js",
 		"dev": "npm run build:tokens && vite",
 		"build": "tsc -b && vite build",
 		"preview": "vite preview",
