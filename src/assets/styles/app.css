@@ -1,4 +1,12 @@
-/* app.css — CSS 진입점. 선언 없이 @import만. */
+/* app.css — CSS 진입점. 선언 없이 @import만.
+ *
+ * import 순서 규칙 (빌드 시 한 파일로 인라인됨 → 합쳐진 소스 순서가 중요):
+ *   - 위 → 아래로 갈수록 우선순위/덮어쓰기 우선.
+ *   - ★ Theme은 반드시 Tokens 뒤에 위치해야 함 (Tokens 기본값을 :root/.dark/@theme 로 덮어쓰는 구조).
+ *   - 퍼블리셔가 만지는 구간(4. Theme · 5. Layout)을 하단에 모아둠.
+ */
+
+/* ───────────── 아래는 건드릴 일 없음 ───────────── */
 
 /* 1. External */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
@@ -12,20 +20,25 @@
 @import './tokens/theme-light.css';
 @import './tokens/theme-dark.css';
 
-/* 3. Theme (shadcn 시맨틱 vars + Tailwind 브리지) */
-@import './themes/theme-default.css';
-/* @import './themes/theme-[project].css'; ← 투입 시 주석 해제 */
-
-/* 4. Base */
+/* 3. Base (전역 reset / 타이포 / 유틸) */
 @import './base/reset.css';
 @import './base/typography.css';
-@import './base/layout.css';
 @import './base/utilities.css';
+
+/* ───────────── ▼▼ 퍼블리셔 수정 지점 (사이트별 교체) ▼▼ ───────────── */
+
+/* 4. Theme (shadcn 시맨틱 vars + Tailwind 브리지) — 색상 테마 스위치 지점.
+   사이트 전환 시 ./themes/theme-<name>.css 로 교체 (둘 중 하나만 활성).
+   ★ 반드시 Tokens(#2) 뒤에 있어야 토큰 기본값을 정상 덮어씀. */
+@import './themes/theme-default.css';
+/* @import './themes/theme-[project].css'; ← 투입 시 주석 해제 */
 
 /* 5. Layout (서드파티 오버라이드) — 레이아웃 CSS 스위치 지점.
    새 레이아웃 적용 시 ./layout/<name>/layout.css 로 교체
    (컴포넌트 스위치는 src/shared/layouts/index.ts) */
 @import './layout/default/layout.css';
+
+/* ───────────── ▲▲ 퍼블리셔 수정 지점 끝 ▲▲ ───────────── */
 
 /* @custom-variant은 반드시 루트 파일에 직접 선언 (import된 파일 안에 넣으면 dark: variant 미생성) */
 @custom-variant dark (&:is(.dark *));
