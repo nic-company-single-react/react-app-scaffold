@@ -155,14 +155,12 @@ function useApi<TData = unknown, TVariables = Record<string, unknown>>(
  * File/Blob은 그대로 유지하고, 나머지는 string으로 변환합니다.
  */
 function normalizeBody(variables: unknown): Record<string, unknown> {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const v = variables as any;
 	const isFormData = typeof FormData !== 'undefined' && typeof v === 'object' && v !== null && v instanceof FormData;
 
 	if (isFormData) {
 		const result: Record<string, unknown> = {};
 		(v as FormData).forEach((value: FormDataEntryValue, key: string) => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			const val = value as any;
 			result[key] = val instanceof File || val instanceof Blob ? val : String(value);
 		});
