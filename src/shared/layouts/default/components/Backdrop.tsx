@@ -1,4 +1,4 @@
-import { useSidebar } from '@/core/hooks/layout/default/useSidebar';
+import { useSidebar } from '../hooks/useSidebar';
 
 const Backdrop: React.FC = () => {
 	const { isMobileOpen, toggleMobileSidebar } = useSidebar();

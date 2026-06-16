@@ -22,7 +22,9 @@
 @import './base/layout.css';
 @import './base/utilities.css';
 
-/* 5. Layout (서드파티 오버라이드) */
+/* 5. Layout (서드파티 오버라이드) — 레이아웃 CSS 스위치 지점.
+   새 레이아웃 적용 시 ./layout/<name>/layout.css 로 교체
+   (컴포넌트 스위치는 src/shared/layouts/index.ts) */
 @import './layout/default/layout.css';
 
 /* @custom-variant은 반드시 루트 파일에 직접 선언 (import된 파일 안에 넣으면 dark: variant 미생성) */

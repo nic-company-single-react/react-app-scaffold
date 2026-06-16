@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-type LayoutDefaultSidebarContextType = {
+type SidebarContextType = {
 	isExpanded: boolean;
 	isMobileOpen: boolean;
 	isHovered: boolean;
@@ -13,4 +13,4 @@ type LayoutDefaultSidebarContextType = {
 	toggleSubmenu: (item: string) => void;
 };
 
-export const LayoutDefaultSidebarContext = createContext<LayoutDefaultSidebarContextType | undefined>(undefined);
+export const SidebarContext = createContext<SidebarContextType | undefined>(undefined);

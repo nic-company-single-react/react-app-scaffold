@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { useSidebar } from '@/core/hooks/layout/default/useSidebar';
+import { useSidebar } from '../hooks/useSidebar';
 import { ThemeToggleButton } from './ThemeToggleButton';
 import GithubLinkButton from './GithubLinkButton';
 

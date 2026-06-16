@@ -1,5 +1,5 @@
 import type { TAppRoute } from '@/types/router';
-import RootLayout from '@/shared/components/layout/RootLayout';
+import { RootLayout } from '@/shared/layouts';
 import MainRouter from '@/domains/main/router';
 import ExampleRouter from '@/domains/example/router';
 import PubExampleRouter from '@/publishing/example/router';

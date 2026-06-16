@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { LayoutDefaultThemeContext, type Theme } from '@/core/context/layout/default/LayoutDefaultThemeContext';
+import { ThemeContext, type Theme } from '@/core/context/theme/ThemeContext';
 
 export interface IThemeProviderProps {
 	children: React.ReactNode;
@@ -18,7 +18,7 @@ function getInitialTheme(): Theme {
 	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-export default function LayoutDefaultThemeProvider({ children }: IThemeProviderProps): React.ReactNode {
+export default function ThemeProvider({ children }: IThemeProviderProps): React.ReactNode {
 	const [theme, setThemeState] = useState<Theme>(getInitialTheme);
 
 	useEffect(() => {
@@ -36,7 +36,7 @@ export default function LayoutDefaultThemeProvider({ children }: IThemeProviderP
 	}, []);
 
 	return (
-		<LayoutDefaultThemeContext.Provider
+		<ThemeContext.Provider
 			value={{
 				theme,
 				toggleTheme,
@@ -44,6 +44,6 @@ export default function LayoutDefaultThemeProvider({ children }: IThemeProviderP
 			}}
 		>
 			{children}
-		</LayoutDefaultThemeContext.Provider>
+		</ThemeContext.Provider>
 	);
 }

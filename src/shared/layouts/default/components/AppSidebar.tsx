@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
 import { ChevronDownIcon, FileCode, Folder, FolderOpen } from 'lucide-react';
-import { useSidebar } from '@/core/hooks/layout/default/useSidebar';
-import { navItems, othersItems, type NavItem, type NavSubItem } from './config/navigation';
+import { useSidebar } from '../hooks/useSidebar';
+import { navItems, othersItems, type NavItem, type NavSubItem } from '../config/navigation';
 
 import logoSvg from '@/assets/images/logo/logo.png';
 

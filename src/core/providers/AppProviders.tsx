@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { QueryProvider } from './query-client/QueryProvider';
-import LayoutDefaultThemeProvider from './layout/default/LayoutDefaultThemeProvider';
+import ThemeProvider from './theme/ThemeProvider';
 
 interface AppProvidersProps {
 	children: ReactNode;
@@ -14,8 +14,8 @@ interface AppProvidersProps {
  */
 export function AppProviders({ children }: AppProvidersProps) {
 	return (
-		<LayoutDefaultThemeProvider>
+		<ThemeProvider>
 			<QueryProvider>{children}</QueryProvider>
-		</LayoutDefaultThemeProvider>
+		</ThemeProvider>
 	);
 }

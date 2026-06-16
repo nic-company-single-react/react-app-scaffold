@@ -1,10 +1,8 @@
 import { Outlet } from 'react-router';
-// default template ===============================
-import { useSidebar } from '@/core/hooks/layout/default/useSidebar';
-import AppSidebar from './default/AppSidebar';
-import Backdrop from './default/Backdrop';
-import AppHeader from './default/AppHeader';
-// default template ===============================
+import { useSidebar } from './hooks/useSidebar';
+import AppSidebar from './components/AppSidebar';
+import Backdrop from './components/Backdrop';
+import AppHeader from './components/AppHeader';
 
 export default function RootLayoutContent(): React.ReactNode {
 	const { isExpanded, isHovered, isMobileOpen } = useSidebar();

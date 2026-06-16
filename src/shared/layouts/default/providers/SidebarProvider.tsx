@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { LayoutDefaultSidebarContext } from '@/core/context/layout/default/LayoutDefaultSidebarContext';
+import { SidebarContext } from '../context/SidebarContext';
 
 export interface ISidebarProviderProps {
 	children: React.ReactNode;
 }
 
-export default function LayoutDefaultSidebarProvider({ children }: ISidebarProviderProps): React.ReactNode {
+export default function SidebarProvider({ children }: ISidebarProviderProps): React.ReactNode {
 	const [isExpanded, setIsExpanded] = useState(true);
 	const [isMobileOpen, setIsMobileOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
@@ -43,7 +43,7 @@ export default function LayoutDefaultSidebarProvider({ children }: ISidebarProvi
 	};
 
 	return (
-		<LayoutDefaultSidebarContext.Provider
+		<SidebarContext.Provider
 			value={{
 				isExpanded: isMobile ? false : isExpanded,
 				isMobileOpen,
@@ -58,6 +58,6 @@ export default function LayoutDefaultSidebarProvider({ children }: ISidebarProvi
 			}}
 		>
 			{children}
-		</LayoutDefaultSidebarContext.Provider>
+		</SidebarContext.Provider>
 	);
 }
