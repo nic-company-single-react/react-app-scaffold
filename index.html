@@ -12,6 +12,18 @@
 			content="width=device-width, initial-scale=1.0"
 		/>
 		<title>react-app-scaffold</title>
+		<script>
+			// FOUC 방지: React 마운트 전에 저장된 테마를 미리 적용
+			(function () {
+				try {
+					var stored = localStorage.getItem('theme');
+					var isDark =
+						stored === 'dark' ||
+						(!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+					if (isDark) document.documentElement.classList.add('dark');
+				} catch (e) {}
+			})();
+		</script>
 	</head>
 	<body>
 		<div id="root"></div>

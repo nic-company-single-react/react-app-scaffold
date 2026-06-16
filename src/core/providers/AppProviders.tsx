@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { QueryProvider } from './query-client/QueryProvider';
+import LayoutDefaultThemeProvider from './layout/default/LayoutDefaultThemeProvider';
 
 interface AppProvidersProps {
 	children: ReactNode;
@@ -12,5 +13,9 @@ interface AppProvidersProps {
  * Provider 순서는 의존성을 고려하여 배치합니다.
  */
 export function AppProviders({ children }: AppProvidersProps) {
-	return <QueryProvider>{children}</QueryProvider>;
+	return (
+		<LayoutDefaultThemeProvider>
+			<QueryProvider>{children}</QueryProvider>
+		</LayoutDefaultThemeProvider>
+	);
 }
