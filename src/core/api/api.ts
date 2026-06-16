@@ -19,10 +19,9 @@ export async function callApi<T = unknown>(
 ): Promise<ApiResponse<T>> {
 	try {
 		const reqConfig = BaseAxiosClient.makeRequestConfig(endpoint, config);
-		const token: string | null = null;
-		// 토큰이 필요한 경우: token = localStorage.getItem('access_token');
 
-		const response = await BaseAxiosClient.request<T>(reqConfig, token);
+		// 토큰 등 인증 헤더는 요청 인터셉터(shared/auth)에서 일괄 주입한다.
+		const response = await BaseAxiosClient.request<T>(reqConfig);
 
 		if (!response.success) {
 			throw new ApiError(response.statusCode ?? 500, response.error ?? '알 수 없는 오류', response);

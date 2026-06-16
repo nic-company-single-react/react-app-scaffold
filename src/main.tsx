@@ -4,6 +4,7 @@ import App from './App.tsx';
 import './assets/styles/app.css';
 import { initApiConfig } from '@/core/api/api-config';
 import { registerWindowUtil } from '@/core/utils/util';
+import { setupAuthInterceptor, setAccessToken } from '@/shared/auth';
 
 // 전역 $util 유틸리티 등록(window.$util) =============================
 registerWindowUtil();
@@ -13,6 +14,11 @@ const apiConfig = {
 	baseURL: import.meta.env.VITE_EXTERNAL_API_BASE_URL2,
 };
 initApiConfig(apiConfig);
+
+// JWT access token을 모든 API 요청 헤더에 자동 주입 =============================
+const saved = localStorage.getItem('access_token');
+if (saved) setAccessToken(saved);
+setupAuthInterceptor();
 
 createRoot(document.getElementById('root')!).render(
 	<AppProviders>

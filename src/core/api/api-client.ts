@@ -51,6 +51,23 @@ class BaseAxiosClient {
 		return Promise.reject(error);
 	}
 
+	/**
+	 * 외부(shared 등)에서 요청 인터셉터를 등록할 수 있는 창구.
+	 * core는 등록만 위임하며, 헤더/토큰 등 구체 로직은 호출 측이 소유한다.
+	 *
+	 * @returns 등록 해제에 사용할 interceptor id
+	 */
+	registerRequestInterceptor(
+		onFulfilled: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig,
+	): number {
+		return this.axiosInstance.interceptors.request.use(onFulfilled);
+	}
+
+	/** 등록된 요청 인터셉터를 해제한다. */
+	ejectRequestInterceptor(id: number): void {
+		this.axiosInstance.interceptors.request.eject(id);
+	}
+
 	makeRequestConfig(endpoint: string, config: ApiRequestConfig): AxiosRequestConfig {
 		const { method = 'GET', params, headers = {}, body, timeout } = config;
 		const apiConfig = getApiConfig();
@@ -92,15 +109,8 @@ class BaseAxiosClient {
 		return requestConfig;
 	}
 
-	async request<T>(config: AxiosRequestConfig, token: string | null = null): Promise<ApiResponse<T>> {
+	async request<T>(config: AxiosRequestConfig): Promise<ApiResponse<T>> {
 		try {
-			if (token) {
-				config.headers = {
-					...config.headers,
-					Authorization: `Bearer ${token}`,
-				};
-			}
-
 			const response = await this.axiosInstance.request<T>(config);
 
 			return {
