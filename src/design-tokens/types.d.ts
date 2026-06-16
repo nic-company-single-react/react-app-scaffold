@@ -1,4 +1,6 @@
-/* AUTO-GENERATED — do not edit manually */
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
 
 export const colorBrand25: string;
 export const colorBrand50: string;
@@ -101,13 +103,13 @@ export const shadowFocusRing: string;
 export const shadowSliderNavigation: string;
 export const shadowTooltip: string;
 export const dropShadow4xl: string;
-export const zIndex1: string;
-export const zIndex9: string;
-export const zIndex99: string;
-export const zIndex999: string;
-export const zIndex9999: string;
-export const zIndex99999: string;
-export const zIndex999999: string;
+export const zIndex1: number;
+export const zIndex9: number;
+export const zIndex99: number;
+export const zIndex999: number;
+export const zIndex9999: number;
+export const zIndex99999: number;
+export const zIndex999999: number;
 export const fontOutfit: string;
 export const breakpoint2xsm: string;
 export const breakpointXsm: string;

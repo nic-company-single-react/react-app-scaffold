@@ -37,7 +37,7 @@ export const navItems: NavItem[] = [
 		name: 'Dev Examples',
 		subItems: [
 			{ name: '메인 페이지', path: '/' },
-			{ name: '계좌 메인 페이지', path: '/example/account-page' },
+			{ name: 'Blank 페이지', path: '/example/blank-page' },
 		],
 	},
 	{

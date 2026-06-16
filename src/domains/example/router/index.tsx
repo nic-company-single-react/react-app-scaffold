@@ -2,7 +2,7 @@
 import type { TAppRoute } from '@/types/router';
 import loadable from '@loadable/component';
 
-const AccountIndex = loadable(() => import('@/domains/example/pages/AccountIndex'));
+const BlankPage = loadable(() => import('@/domains/example/pages/BlankPage'));
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
@@ -15,9 +15,9 @@ const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-comp
 
 const routes: TAppRoute[] = [
 	{
-		path: 'account-page', // 라우터 path 를 원하는 이름으로 정하여 작성한다.
-		element: <AccountIndex />, // 위에서 가져온 페이지 컴포넌트를 element 에 연결한다.
-		name: '계좌 메인', // 페이지 name 을 원하는 이름으로 정하여 입력한다.
+		path: 'blank-page', // 라우터 path 를 원하는 이름으로 정하여 작성한다.
+		element: <BlankPage />, // 위에서 가져온 페이지 컴포넌트를 element 에 연결한다.
+		name: '빈 페이지', // 페이지 name 을 원하는 이름으로 정하여 입력한다.
 	},
 	{
 		path: 'use-api',
