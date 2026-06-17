@@ -2,7 +2,6 @@ import type { TAppRoute } from '@/types/router';
 import { RootLayout } from '@/shared/layouts';
 import MainRouter from '@/domains/main/router';
 import ExampleRouter from '@/domains/example/router';
-import PubExampleRouter from '@/publishing/example/router';
 
 const routes: TAppRoute[] = [
 	{
@@ -16,11 +15,17 @@ const routes: TAppRoute[] = [
 		element: <RootLayout />,
 		children: ExampleRouter,
 	},
-	{
-		path: '/publishing/example',
-		element: <RootLayout />,
-		children: PubExampleRouter,
-	},
+	...(import.meta.env.DEV
+		? [
+				{
+					path: '/publishing/example',
+					element: <RootLayout />,
+					// 조건이 false면 이 import 구문 자체가 도달 불가 → 번들에서 완전 제외
+					children: (await import('@/publishing/example/router')).default,
+				},
+				// 여기에 추후 추가된 publishing 라우터를 추가.
+			]
+		: []),
 	{
 		path: '*',
 		element: (
