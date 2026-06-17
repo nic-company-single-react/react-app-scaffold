@@ -2,7 +2,7 @@
 
 프로젝트 투입 시 곧바로 프론트엔드 작업을 시작할 수 있도록 라우팅·상태관리·UI 컴포넌트·디자인 토큰·테스트까지 갖춘 **React 스타터 프로젝트**입니다. 클론 → 의존성 설치 → 개발 서버 실행만으로 잘 정돈된 기본 화면이 뜨며, 여기서부터 사이트에 맞게 커스터마이징해 나가면 됩니다.
 
-> 📖 **시작 가이드:** https://redsky02122.dothome.co.kr/guide/docs/started/getting-started/overview
+> 📖 **시작 가이드:** http://redsky02122.dothome.co.kr/guide/docs/started/getting-started/overview
 
 ## Quick Start
 
@@ -70,4 +70,4 @@ src/
 4. **테마/토큰** — `src/design-tokens/`에서 색상·간격·타이포를 수정한 뒤 `npm run build:tokens`로 반영합니다.
 5. **예제 정리** — 실제 개발을 시작하면 `src/domains/example` 등 데모 코드는 제거하거나 참고용으로만 남깁니다.
 
-자세한 내용은 [시작 가이드 문서](https://redsky02122.dothome.co.kr/guide/docs/started/getting-started/overview)를 참고하세요.
+자세한 내용은 [시작 가이드 문서](http://redsky02122.dothome.co.kr/guide/docs/started/getting-started/overview)를 참고하세요.

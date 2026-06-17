@@ -30,7 +30,7 @@ function GithubMark(props: React.SVGProps<SVGSVGElement>) {
 }
 
 /** 가이드 문서 / 저장소 링크 */
-const GUIDE_URL = 'https://redsky02122.dothome.co.kr/guide/docs/started/getting-started/overview';
+const GUIDE_URL = 'http://redsky02122.dothome.co.kr/guide/docs/started/getting-started/overview';
 const GITHUB_URL = 'https://github.com/nic-company-single-react/react-app-scaffold.git';
 const STORYBOOK_URL = 'http://localhost:6006';
 
