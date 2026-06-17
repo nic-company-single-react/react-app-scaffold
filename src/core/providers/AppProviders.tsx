@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { QueryProvider } from './query-client/QueryProvider';
 import ThemeProvider from './theme/ThemeProvider';
+import { UIDialogHost } from '@/core/ui/UIDialogHost';
 
 interface AppProvidersProps {
 	children: ReactNode;
@@ -15,7 +16,11 @@ interface AppProvidersProps {
 export function AppProviders({ children }: AppProvidersProps) {
 	return (
 		<ThemeProvider>
-			<QueryProvider>{children}</QueryProvider>
+			<QueryProvider>
+				{children}
+				{/* 전역 $ui.alert / $ui.confirm 다이얼로그 호스트 */}
+				<UIDialogHost />
+			</QueryProvider>
 		</ThemeProvider>
 	);
 }

@@ -4,10 +4,14 @@ import App from './App.tsx';
 import './assets/styles/app.css';
 import { initApiConfig } from '@/core/api/api-config';
 import { registerWindowUtil } from '@/core/utils/util';
+import { registerWindowUI } from '@/core/ui';
 //import { setupAuthInterceptor, setAccessToken } from '@/shared/auth';
 
 // 전역 $util 유틸리티 등록(window.$util) =============================
 registerWindowUtil();
+
+// 전역 $ui 등록(window.$ui : $ui.alert / $ui.confirm) =============================
+registerWindowUI();
 
 // 앱에서 REST API 호출용 API 설정(전역에 저장된 : window.__MF_APP_CONFIG__) =============================
 const apiConfig = {
