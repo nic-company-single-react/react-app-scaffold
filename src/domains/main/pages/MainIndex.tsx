@@ -117,7 +117,7 @@ export default function MainIndex(): React.ReactNode {
 	return (
 		<div className="p-6 space-y-10 max-w-5xl">
 			{/* ── Hero ─────────────────────────────────────────────── */}
-			<section className="relative overflow-hidden rounded-2xl border border-gray-200 bg-linear-to-br from-violet-50 via-white to-blue-50 px-6 py-10 sm:px-10 dark:border-gray-800 dark:from-violet-950/30 dark:via-gray-900 dark:to-blue-950/20">
+			<section className="relative overflow-hidden rounded-2xl border border-gray-200 bg-linear-to-br from-brand-50 via-white to-blue-light-50 px-6 py-10 sm:px-10 dark:border-gray-800 dark:from-brand-950/30 dark:via-gray-900 dark:to-brand-900/20">
 				<div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
 					<div className="max-w-xl space-y-4">
 						<Badge
@@ -204,7 +204,7 @@ export default function MainIndex(): React.ReactNode {
 							size="sm"
 							className="gap-2 p-4"
 						>
-							<div className="flex size-9 items-center justify-center rounded-lg bg-violet-50 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400">
+							<div className="flex size-9 items-center justify-center rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400">
 								<Icon className="size-5" />
 							</div>
 							<div className="space-y-1">
@@ -227,12 +227,12 @@ export default function MainIndex(): React.ReactNode {
 				<div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
 					{exploreLinks.map(({ to, icon: Icon, title, desc, external }) => {
 						const inner = (
-							<Card className="group h-full gap-3 p-5 transition-colors hover:ring-violet-400/50 dark:hover:ring-violet-500/40">
+							<Card className="group h-full gap-3 p-5 transition-colors hover:ring-brand-400/50 dark:hover:ring-brand-500/40">
 								<div className="flex items-center justify-between">
 									<div className="flex size-9 items-center justify-center rounded-lg bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">
 										<Icon className="size-5" />
 									</div>
-									<ArrowRight className="size-4 text-gray-400 transition-transform group-hover:translate-x-0.5 group-hover:text-violet-500" />
+									<ArrowRight className="size-4 text-gray-400 transition-transform group-hover:translate-x-0.5 group-hover:text-brand-500" />
 								</div>
 								<div className="space-y-1">
 									<p className="font-medium text-gray-900 dark:text-white">{title}</p>

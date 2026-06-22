@@ -1,8 +1,12 @@
 /*
- * theme-default.css — shadcn 시맨틱 테마 + Tailwind 브리지
+ * theme-niccompany.css — niccompany(닉컴퍼니) 브랜드 테마
  *
- * 프로젝트 투입 시: 이 파일을 복사 → theme-[project].css 로 브랜드 override
- * 변경 방법: :root의 --primary 등 shadcn vars를 tokens/primitive.css의 값으로 교체
+ * Signature: #499ed8 (Sky Blue)
+ * 라이트:   배경 #f4f6f9 · 카드/사이드바 #fff · 보더 #e4e7ec
+ * 다크:     배경 #0c111d · 카드/사이드바 #1a2231 · 보더 white/8 (중립 슬레이트, 보라끼 제거)
+ *
+ * 활성화: app.css 에서 theme-peoplify.css 대신 이 파일을 @import
+ *         (레이아웃 컴포넌트 스위치는 shared/layouts/index.ts, layout.css 는 app.css)
  */
 
 /* shadcn CSS vars → Tailwind 유틸 연결 브리지 */
@@ -49,73 +53,101 @@
 	--radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* 라이트 테마 */
-:root {
-	--background: oklch(1 0 0);
-	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
-	--card-foreground: oklch(0.145 0 0);
-	--popover: oklch(1 0 0);
-	--popover-foreground: oklch(0.145 0 0);
-	--primary: oklch(0.205 0 0);
-	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
-	--secondary-foreground: oklch(0.205 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.556 0 0);
-	--accent: oklch(0.97 0 0);
-	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(0.577 0.245 27.325);
-	--border: oklch(0.922 0 0);
-	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.87 0 0);
-	--chart-2: oklch(0.556 0 0);
-	--chart-3: oklch(0.439 0 0);
-	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
-	--radius: 0.625rem;
-	--sidebar: oklch(0.985 0 0);
-	--sidebar-foreground: oklch(0.145 0 0);
-	--sidebar-primary: oklch(0.205 0 0);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.97 0 0);
-	--sidebar-accent-foreground: oklch(0.205 0 0);
-	--sidebar-border: oklch(0.922 0 0);
-	--sidebar-ring: oklch(0.708 0 0);
+/*
+ * brand 스케일 niccompany 블루 리매핑 — scaffold tokens/primitive.css 의 brand 는 파랑(#465fff)이라
+ * 사이드바 active(menu-item-active)·검색창 ring·UserDropdown 버튼 등 brand-* 유틸이 다른 파랑으로 나온다.
+ * 이 테마가 활성일 때만 brand 를 niccompany 시그니처 #499ed8 스케일로 덮어쓴다. (generated primitive.css 는 건드리지 않음)
+ * focus-ring 그림자도 시그니처 색으로 맞춘다.
+ */
+@theme {
+	--color-brand-25: #f6fafd;
+	--color-brand-50: #edf5fb;
+	--color-brand-100: #dbecf7;
+	--color-brand-200: #b6d8ef;
+	--color-brand-300: #89c0e6;
+	--color-brand-400: #64adde;
+	--color-brand-500: #499ed8;
+	--color-brand-600: #408bbe;
+	--color-brand-700: #35729c;
+	--color-brand-800: #2a5c7d;
+	--color-brand-900: #214761;
+	--color-brand-950: #142c3c;
+	--shadow-focus-ring: 0px 0px 0px 4px rgba(73, 158, 216, 0.12);
 }
 
-/* 다크 테마 */
+/* 라이트 테마 — niccompany Sky Blue */
+:root {
+	--background: #f4f6f9;
+	--foreground: #101828;
+	--card: #ffffff;
+	--card-foreground: #101828;
+	--popover: #ffffff;
+	--popover-foreground: #101828;
+	/* Primary: niccompany Sky Blue #499ed8 */
+	--primary: #499ed8;
+	--primary-foreground: #ffffff;
+	--secondary: #eef2f6;
+	--secondary-foreground: #101828;
+	--muted: #f1f4f8;
+	--muted-foreground: #667085;
+	--accent: #eaf4fb;
+	--accent-foreground: #35729c;
+	/* Danger */
+	--destructive: #f04438;
+	--border: #e4e7ec;
+	--input: #e4e7ec;
+	--ring: #499ed8;
+	/* 차트: primary / success / info / warning / light-primary */
+	--chart-1: #499ed8;
+	--chart-2: #12b76a;
+	--chart-3: #36bffa;
+	--chart-4: #f79009;
+	--chart-5: #64adde;
+	--radius: 0.5rem;
+	/* 사이드바: 라이트=흰색 */
+	--sidebar: #ffffff;
+	--sidebar-foreground: #667085;
+	--sidebar-primary: #499ed8;
+	--sidebar-primary-foreground: #ffffff;
+	--sidebar-accent: rgba(73, 158, 216, 0.1);
+	--sidebar-accent-foreground: #35729c;
+	--sidebar-border: #e4e7ec;
+	--sidebar-ring: #499ed8;
+}
+
+/* 다크 테마 — 중립 슬레이트 + niccompany 블루 액센트 (보라끼 제거) */
 .dark {
-	--background: oklch(0.145 0 0);
-	--foreground: oklch(0.985 0 0);
-	--card: oklch(0.205 0 0);
-	--card-foreground: oklch(0.985 0 0);
-	--popover: oklch(0.205 0 0);
-	--popover-foreground: oklch(0.985 0 0);
-	--primary: oklch(0.922 0 0);
-	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
-	--secondary-foreground: oklch(0.985 0 0);
-	--muted: oklch(0.269 0 0);
-	--muted-foreground: oklch(0.708 0 0);
-	--accent: oklch(0.269 0 0);
-	--accent-foreground: oklch(0.985 0 0);
-	--destructive: oklch(0.704 0.191 22.216);
-	--border: oklch(1 0 0 / 10%);
-	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.87 0 0);
-	--chart-2: oklch(0.556 0 0);
-	--chart-3: oklch(0.439 0 0);
-	--chart-4: oklch(0.371 0 0);
-	--chart-5: oklch(0.269 0 0);
-	--sidebar: oklch(0.205 0 0);
-	--sidebar-foreground: oklch(0.985 0 0);
-	--sidebar-primary: oklch(0.488 0.243 264.376);
-	--sidebar-primary-foreground: oklch(0.985 0 0);
-	--sidebar-accent: oklch(0.269 0 0);
-	--sidebar-accent-foreground: oklch(0.985 0 0);
-	--sidebar-border: oklch(1 0 0 / 10%);
-	--sidebar-ring: oklch(0.556 0 0);
+	--background: #0c111d;
+	--foreground: #e4e7ec;
+	--card: #1a2231;
+	--card-foreground: #f2f4f7;
+	--popover: #1a2231;
+	--popover-foreground: #f2f4f7;
+	/* 다크에서는 한 단계 밝은 블루(brand-400) */
+	--primary: #64adde;
+	--primary-foreground: #0c111d;
+	--secondary: #1d2939;
+	--secondary-foreground: #f2f4f7;
+	--muted: #1d2939;
+	--muted-foreground: #98a2b3;
+	--accent: #1d2939;
+	--accent-foreground: #f2f4f7;
+	--destructive: #f97066;
+	--border: rgba(255, 255, 255, 0.08);
+	--input: rgba(255, 255, 255, 0.1);
+	--ring: #64adde;
+	--chart-1: #64adde;
+	--chart-2: #32d583;
+	--chart-3: #36bffa;
+	--chart-4: #fdb022;
+	--chart-5: #89c0e6;
+	/* 사이드바: 다크=#1a2231 */
+	--sidebar: #1a2231;
+	--sidebar-foreground: #98a2b3;
+	--sidebar-primary: #64adde;
+	--sidebar-primary-foreground: #0c111d;
+	--sidebar-accent: rgba(73, 158, 216, 0.2);
+	--sidebar-accent-foreground: #f2f4f7;
+	--sidebar-border: rgba(255, 255, 255, 0.08);
+	--sidebar-ring: #64adde;
 }
