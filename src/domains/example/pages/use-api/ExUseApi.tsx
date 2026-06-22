@@ -18,7 +18,7 @@ export default function ExUseApi(): React.ReactNode {
 	/** 상수 선언 */
 	const CODE_CHIP_CLASS =
 		'text-xs font-mono font-semibold px-2 py-0.5 rounded-md border border-amber-400/45 bg-amber-200/75 text-amber-950 shadow-sm dark:border-amber-500/40 dark:bg-amber-950/70 dark:text-amber-100';
-	const apiBase = import.meta.env.VITE_EXTERNAL_API_BASE_URL2 as string | undefined;
+	const apiBase = import.meta.env.VITE_API_BASE_URL as string | undefined;
 	const POSTS_ENDPOINT = '/posts' as const;
 
 	/** useApi 훅 호출 */
