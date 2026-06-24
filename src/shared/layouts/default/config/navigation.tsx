@@ -36,7 +36,7 @@ export const navItems: NavItem[] = [
 		icon: <Layers />,
 		name: 'Dev Examples',
 		subItems: [
-			{ name: '메인 페이지', path: '/' },
+			{ name: 'introduction', path: '/' },
 			{ name: 'Blank 페이지', path: '/example/blank-page' },
 		],
 	},

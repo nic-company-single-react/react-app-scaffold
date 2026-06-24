@@ -103,7 +103,7 @@ const exploreLinks = [
 	},
 ];
 
-const quickStartCode = `# 1. 저장소 클론
+const quickStartCode = `# 1. 작업할 폴더에서 저장소 클론
 git clone <repository-url> my-app
 cd my-app
 
