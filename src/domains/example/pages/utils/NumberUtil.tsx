@@ -54,58 +54,58 @@ export default function NumberUtil(): React.ReactNode {
 
 	return (
 		<div className="p-6">
-			{/* ── 페이지 헤더 ─────────────────────────────────────── */}
-			<div className="mb-6 max-w-3xl space-y-3">
-				<Link
-					to="/example/utils"
-					className="inline-flex items-center gap-1 text-xs text-gray-500 transition-colors hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
-				>
-					<ArrowLeft className="size-3.5" />
-					유틸리티 목록으로
-				</Link>
-				<div className="flex items-center gap-3">
-					<div className="flex size-10 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-900/20">
-						<Calculator className="size-5 text-indigo-600 dark:text-indigo-400" />
-					</div>
-					<div>
-						<h1 className="text-2xl font-bold text-gray-900 dark:text-white">number 유틸</h1>
-						<p className="text-sm text-gray-500 dark:text-gray-400">
-							<code className="rounded border border-indigo-300/50 bg-indigo-100/60 px-1.5 py-0.5 font-mono text-xs font-semibold text-indigo-800 dark:border-indigo-600/40 dark:bg-indigo-900/30 dark:text-indigo-300">
-								$util.number
-							</code>{' '}
-							의 숫자 관련 함수들을 직접 입력하며 실행해 볼 수 있습니다.
-						</p>
-					</div>
-				</div>
-
-				{/* ── 검색 입력 ───────────────────────────────────────
-				 * 함수명·설명·시그니처를 대상으로 데모 카드와 목록을 함께 필터링합니다. */}
-				<div className="relative">
-					<Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
-					<input
-						type="text"
-						value={query}
-						onChange={(e) => setQuery(e.target.value)}
-						placeholder="함수명 또는 설명으로 검색 (예: 콤마)"
-						className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-9 text-sm text-gray-900 shadow-sm transition-colors placeholder:text-gray-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500 dark:focus:ring-indigo-900/40"
-					/>
-					{query && (
-						<button
-							type="button"
-							onClick={() => setQuery('')}
-							aria-label="검색어 지우기"
-							className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-						>
-							<X className="size-4" />
-						</button>
-					)}
-				</div>
-			</div>
-
-			{/* ── 본문 2단 레이아웃 ───────────────────────────────── */}
+			{/* ── 본문 2단 레이아웃 (좌: 헤더+검색+데모 / 우: 함수 목록) ──
+			 * 헤더를 좌측 컬럼 안에 두어 우측 nav가 같은 최상단에서 시작하도록 합니다. */}
 			<div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_260px]">
-				{/* 좌측: 인터랙티브 데모 (검색 결과 filteredFns에서 자동 생성) */}
+				{/* 좌측: 헤더 + 검색 + 인터랙티브 데모 (검색 결과 filteredFns에서 자동 생성) */}
 				<div className="max-w-3xl space-y-8">
+					{/* ── 페이지 헤더 ─────────────────────────────────────── */}
+					<div className="space-y-3">
+						<Link
+							to="/example/utils"
+							className="inline-flex items-center gap-1 text-xs text-gray-500 transition-colors hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400"
+						>
+							<ArrowLeft className="size-3.5" />
+							유틸리티 목록으로
+						</Link>
+						<div className="flex items-center gap-3">
+							<div className="flex size-10 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-900/20">
+								<Calculator className="size-5 text-indigo-600 dark:text-indigo-400" />
+							</div>
+							<div>
+								<h1 className="text-2xl font-bold text-gray-900 dark:text-white">number 유틸</h1>
+								<p className="text-sm text-gray-500 dark:text-gray-400">
+									<code className="rounded border border-indigo-300/50 bg-indigo-100/60 px-1.5 py-0.5 font-mono text-xs font-semibold text-indigo-800 dark:border-indigo-600/40 dark:bg-indigo-900/30 dark:text-indigo-300">
+										$util.number
+									</code>{' '}
+									의 숫자 관련 함수들을 직접 입력하며 실행해 볼 수 있습니다.
+								</p>
+							</div>
+						</div>
+					</div>
+					{/* ── 검색 입력 ───────────────────────────────────────
+					 * 함수명·설명·시그니처를 대상으로 데모 카드와 목록을 함께 필터링합니다. */}
+					<div className="relative">
+						<Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+						<input
+							type="text"
+							value={query}
+							onChange={(e) => setQuery(e.target.value)}
+							placeholder="함수명 또는 설명으로 검색 (예: 콤마)"
+							className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-9 text-sm text-gray-900 shadow-sm transition-colors placeholder:text-gray-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500 dark:focus:ring-indigo-900/40"
+						/>
+						{query && (
+							<button
+								type="button"
+								onClick={() => setQuery('')}
+								aria-label="검색어 지우기"
+								className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+							>
+								<X className="size-4" />
+							</button>
+						)}
+					</div>
+
 					{noResult ? (
 						<div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-12 text-center dark:border-gray-700 dark:bg-gray-900/40">
 							<Search className="mx-auto size-6 text-gray-400 dark:text-gray-500" />
