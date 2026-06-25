@@ -10,6 +10,8 @@ import {
 	ChevronsUpDown,
 	Table2,
 	CalendarDays,
+	Wrench,
+	Calculator,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -66,6 +68,14 @@ export const navItems: NavItem[] = [
 					{ name: 'useClientState2', path: '/example/use-client-state-2' },
 				],
 			},
+		],
+	},
+	{
+		icon: <Wrench />,
+		name: 'Utils',
+		subItems: [
+			{ name: '전체 목록', icon: <Wrench />, path: '/example/utils' },
+			{ name: 'number', icon: <Calculator />, path: '/example/utils/number' },
 		],
 	},
 ];

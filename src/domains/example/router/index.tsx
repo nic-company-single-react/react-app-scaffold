@@ -12,6 +12,8 @@ const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-comp
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
+const UtilIndex = loadable(() => import('@/domains/example/pages/utils/UtilIndex'));
+const NumberUtil = loadable(() => import('@/domains/example/pages/utils/NumberUtil'));
 
 const routes: TAppRoute[] = [
 	{
@@ -63,6 +65,16 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/calendar',
 		element: <CalendarComponent />,
 		name: '캘린더 컴포넌트',
+	},
+	{
+		path: 'utils',
+		element: <UtilIndex />,
+		name: '유틸리티',
+	},
+	{
+		path: 'utils/number',
+		element: <NumberUtil />,
+		name: 'number 유틸',
 	},
 ];
 

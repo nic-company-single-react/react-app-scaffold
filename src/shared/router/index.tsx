@@ -9,14 +9,14 @@ const routes: TAppRoute[] = [
 		element: <RootLayout />,
 		children: MainRouter,
 	},
-	// 업무(domain) 라우터 생성될 때 다음과 같이 추가
-	{
-		path: '/example',
-		element: <RootLayout />,
-		children: ExampleRouter,
-	},
+	// 업무(domain) 라우터 생성될 때 다음에 추가
 	...(import.meta.env.DEV
 		? [
+				{
+					path: '/example',
+					element: <RootLayout />,
+					children: ExampleRouter,
+				},
 				{
 					path: '/publishing/example',
 					element: <RootLayout />,
