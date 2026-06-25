@@ -1,11 +1,40 @@
 import { Link } from 'react-router';
 import { Badge } from '@axiom/components/ui';
 import { Wrench, Calculator, CalendarDays, Type, ArrowRight } from 'lucide-react';
+import { createWindowUtil } from '@/core/utils/util';
 
 /* ────────────────────────────────────────────────────────────
  * $util 전역 유틸리티 카테고리 목록
- * ready: 데모 페이지가 준비된 항목만 클릭 가능합니다.
+ *
+ * 카테고리와 fns(함수 이름) 목록은 실제 구현(createWindowUtil)에서
+ * 자동으로 추출합니다. 따라서 util 함수를 추가/삭제하면 이 화면에도
+ * 그대로 반영됩니다.
+ *
+ * 아이콘·설명·데모 경로처럼 구현에서 알 수 없는 표현용 정보만 아래
+ * META에서 카테고리별로 지정합니다. (path가 있으면 데모 준비 완료로 간주)
  * ──────────────────────────────────────────────────────────── */
+type CategoryMeta = {
+	icon: React.ComponentType<{ className?: string }>;
+	desc: string;
+	path?: string;
+};
+
+const CATEGORY_META: Record<string, CategoryMeta> = {
+	number: {
+		icon: Calculator,
+		desc: '천 단위 콤마, 반올림, 범위 제한, 숫자 추출, 백분율 변환 등 숫자 가공 함수 모음입니다.',
+		path: '/example/utils/number',
+	},
+	date: {
+		icon: CalendarDays,
+		desc: '날짜 포맷팅, 파싱, 일/월 가감, 날짜 차이 계산 등 날짜 관련 함수 모음입니다.',
+	},
+	string: {
+		icon: Type,
+		desc: '공백 검사, 대문자 변환, 말줄임, 패딩, 마스킹 등 문자열 가공 함수 모음입니다.',
+	},
+};
+
 type UtilCategory = {
 	key: string;
 	name: string;
@@ -17,36 +46,24 @@ type UtilCategory = {
 	ready: boolean;
 };
 
-const categories: UtilCategory[] = [
-	{
-		key: 'number',
-		name: 'number',
-		access: '$util.number',
-		icon: Calculator,
-		desc: '천 단위 콤마, 반올림, 범위 제한, 숫자 추출, 백분율 변환 등 숫자 가공 함수 모음입니다.',
-		fns: ['comma', 'round', 'clamp', 'toNumber', 'percent'],
-		path: '/example/utils/number',
-		ready: true,
-	},
-	{
-		key: 'date',
-		name: 'date',
-		access: '$util.date',
-		icon: CalendarDays,
-		desc: '날짜 포맷팅, 파싱, 일/월 가감, 날짜 차이 계산 등 날짜 관련 함수 모음입니다.',
-		fns: ['format', 'now', 'parse', 'addDays', 'addMonths', 'diffDays', 'isValid'],
-		ready: false,
-	},
-	{
-		key: 'string',
-		name: 'string',
-		access: '$util.string',
-		icon: Type,
-		desc: '공백 검사, 대문자 변환, 말줄임, 패딩, 마스킹 등 문자열 가공 함수 모음입니다.',
-		fns: ['isEmpty', 'capitalize', 'truncate', 'padStart', 'removeWhitespace', 'mask'],
-		ready: false,
-	},
-];
+/** 실제 util 구현 객체에서 카테고리/함수 목록을 자동 생성합니다. */
+const categories: UtilCategory[] = Object.entries(createWindowUtil())
+	.map(([key, util]): UtilCategory => {
+		const meta = CATEGORY_META[key];
+		return {
+			key,
+			name: key,
+			access: `$util.${key}`,
+			icon: meta?.icon ?? Wrench,
+			desc: meta?.desc ?? '',
+			// 구현 객체의 메서드 이름을 그대로 노출
+			fns: Object.keys(util as Record<string, unknown>),
+			path: meta?.path,
+			ready: Boolean(meta?.path),
+		};
+	})
+	// 데모가 준비된(ready) 카테고리를 앞에 배치
+	.sort((a, b) => Number(b.ready) - Number(a.ready));
 
 function CategoryCard({ cat }: { cat: UtilCategory }) {
 	const Icon = cat.icon;

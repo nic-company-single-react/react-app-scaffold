@@ -1,134 +1,38 @@
-import { useState } from 'react';
 import { Link } from 'react-router';
-import { Input, Label, CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
-import { Calculator, ArrowLeft, CornerDownRight } from 'lucide-react';
+import { Calculator, ArrowLeft, TriangleAlert } from 'lucide-react';
+
+// 자동 생성 데모 카드
+import UtilFunctionDemo from '@/domains/example/components/utils/UtilFunctionDemo';
+
+// number.ts 구현 파일 소스를 그대로 읽어 함수 목록을 자동 생성
+import numberSource from '@/core/utils/util/number.ts?raw';
+import { parseFunctionDocs } from '@/domains/example/common/utils/parseFunctionDocs';
 
 /* ────────────────────────────────────────────────────────────
- * $util.number 함수 메타데이터
- * 우측 함수 목록 + 좌측 데모 앵커(id) 연결에 함께 사용합니다.
+ * $util.number 함수 목록
+ * number.ts 구현 파일의 JSDoc(설명 + @demo 예시값)·시그니처에서 완전 자동으로 추출합니다.
+ * (수동 관리 불필요 — number.ts에 함수를 추가/수정하면 데모까지 그대로 반영)
  * ──────────────────────────────────────────────────────────── */
-const numberFns = [
-	{
-		id: 'comma',
-		name: 'comma',
-		signature: 'comma(value: number | string): string',
-		desc: '천 단위 콤마를 추가한 문자열로 변환',
-	},
-	{
-		id: 'round',
-		name: 'round',
-		signature: 'round(value: number, digits?: number): number',
-		desc: '지정한 소수 자릿수로 반올림 (기본 0)',
-	},
-	{
-		id: 'clamp',
-		name: 'clamp',
-		signature: 'clamp(value: number, min: number, max: number): number',
-		desc: '값을 [min, max] 범위로 제한',
-	},
-	{
-		id: 'toNumber',
-		name: 'toNumber',
-		signature: 'toNumber(value: unknown, fallback?: number): number',
-		desc: '문자열에서 숫자만 추출해 number로 변환',
-	},
-	{
-		id: 'percent',
-		name: 'percent',
-		signature: 'percent(value: number, digits?: number): string',
-		desc: '0~1 비율을 백분율 문자열로 변환',
-	},
-];
-
-/* 작은 라벨 + 인풋 묶음 */
-function Field({
-	label,
-	value,
-	onChange,
-	type = 'text',
-	placeholder,
-	className = '',
-}: {
-	label: string;
-	value: string;
-	onChange: (v: string) => void;
-	type?: string;
-	placeholder?: string;
-	className?: string;
-}) {
-	return (
-		<div className={`space-y-1.5 ${className}`}>
-			<Label className="text-xs text-gray-500 dark:text-gray-400">{label}</Label>
-			<Input
-				type={type}
-				value={value}
-				placeholder={placeholder}
-				onChange={(e) => onChange(e.target.value)}
-				className="font-mono"
-			/>
-		</div>
-	);
-}
-
-/* 실행 결과 출력 박스: 호출식 → 결과 */
-function ResultBox({ call, result }: { call: string; result: React.ReactNode }) {
-	return (
-		<div className="flex flex-wrap items-center gap-2 rounded-lg border border-indigo-200/70 bg-indigo-50/60 px-3 py-2.5 text-sm dark:border-indigo-800/50 dark:bg-indigo-900/20">
-			<CornerDownRight className="size-4 shrink-0 text-indigo-500 dark:text-indigo-400" />
-			<code className="font-mono text-xs text-gray-600 dark:text-gray-400">{call}</code>
-			<span className="text-gray-400">→</span>
-			<code className="font-mono text-sm font-semibold text-indigo-700 dark:text-indigo-300">{result}</code>
-		</div>
-	);
-}
-
-/* 데모 카드 래퍼 */
-function DemoCard({
-	id,
-	signature,
-	description,
-	children,
-}: {
-	id: string;
-	signature: string;
-	description: string;
-	children: React.ReactNode;
-}) {
-	return (
-		<section
-			id={id}
-			className="scroll-mt-6 space-y-3"
-		>
-			<SectionHeader
-				title={signature}
-				description={description}
-			/>
-			<div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-				<div className="space-y-4">{children}</div>
-			</div>
-		</section>
-	);
-}
+const NS = '$util.number';
+const numberFns = parseFunctionDocs(numberSource);
 
 export default function NumberUtil(): React.ReactNode {
-	// comma
-	const [commaValue, setCommaValue] = useState('1234567.89');
-	// round
-	const [roundValue, setRoundValue] = useState('3.14159');
-	const [roundDigits, setRoundDigits] = useState('2');
-	// clamp
-	const [clampValue, setClampValue] = useState('15');
-	const [clampMin, setClampMin] = useState('0');
-	const [clampMax, setClampMax] = useState('10');
-	// toNumber
-	const [toNumberValue, setToNumberValue] = useState('$ 1,234.50 원');
-	const [toNumberFallback, setToNumberFallback] = useState('0');
-	// percent
-	const [percentValue, setPercentValue] = useState('0.1234');
-	const [percentDigits, setPercentDigits] = useState('1');
+	/* HashRouter 환경이라 `<a href="#id">`를 쓰면 라우트 해시가 깨집니다.
+	 * 해시를 건드리지 않고 해당 데모로 직접 스크롤합니다. */
+	const scrollToFn = (id: string) => {
+		document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	};
 
-	const fmt = (v: string | number) => JSON.stringify(v);
+	/* ── 목록 ↔ 실제 구현 동기화 검사 ───────────────────────────
+	 * 파싱된 목록(numberFns)을 실제 $util.number 구현과 대조합니다.
+	 * - missing: 구현에는 있지만 목록에 없는 함수 (JSDoc 누락 등 → 추가 필요)
+	 * - stale  : 목록에는 있지만 구현에서 사라진 함수 (제거 필요)
+	 * ────────────────────────────────────────────────────────── */
+	const documented = numberFns.map((f) => f.name);
+	const implemented = Object.keys($util.number);
+	const missing = implemented.filter((name) => !documented.includes(name));
+	const stale = documented.filter((name) => !implemented.includes(name));
+	const hasMismatch = missing.length > 0 || stale.length > 0;
 
 	return (
 		<div className="p-6">
@@ -159,178 +63,71 @@ export default function NumberUtil(): React.ReactNode {
 
 			{/* ── 본문 2단 레이아웃 ───────────────────────────────── */}
 			<div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_260px]">
-				{/* 좌측: 인터랙티브 데모 */}
+				{/* 좌측: 인터랙티브 데모 (numberFns에서 자동 생성) */}
 				<div className="max-w-3xl space-y-8">
-					{/* comma */}
-					<DemoCard
-						id="comma"
-						signature="comma(value)"
-						description="천 단위 콤마를 추가합니다. 정수부에만 콤마가 적용되고 소수부는 유지됩니다."
-					>
-						<Field
-							label="value (number | string)"
-							value={commaValue}
-							onChange={setCommaValue}
-							placeholder="예: 1234567.89"
+					{numberFns.map((doc) => (
+						<UtilFunctionDemo
+							key={doc.id}
+							doc={doc}
+							ns={NS}
+							impl={$util.number as unknown as Record<string, (...args: never[]) => unknown>}
 						/>
-						<ResultBox
-							call={`$util.number.comma(${fmt(commaValue)})`}
-							result={fmt($util.number.comma(commaValue))}
-						/>
-						<CodeBlock code={`$util.number.comma(${fmt(commaValue)}); // ${fmt($util.number.comma(commaValue))}`} />
-					</DemoCard>
-
-					{/* round */}
-					<DemoCard
-						id="round"
-						signature="round(value, digits?)"
-						description="지정한 소수 자릿수로 반올림합니다. (기본 0자리)"
-					>
-						<div className="grid grid-cols-2 gap-3">
-							<Field
-								label="value (number)"
-								type="number"
-								value={roundValue}
-								onChange={setRoundValue}
-							/>
-							<Field
-								label="digits (number)"
-								type="number"
-								value={roundDigits}
-								onChange={setRoundDigits}
-							/>
-						</div>
-						<ResultBox
-							call={`round(${Number(roundValue)}, ${Number(roundDigits)})`}
-							result={String($util.number.round(Number(roundValue), Number(roundDigits)))}
-						/>
-						<CodeBlock
-							code={`$util.number.round(${Number(roundValue)}, ${Number(roundDigits)}); // ${$util.number.round(
-								Number(roundValue),
-								Number(roundDigits),
-							)}`}
-						/>
-					</DemoCard>
-
-					{/* clamp */}
-					<DemoCard
-						id="clamp"
-						signature="clamp(value, min, max)"
-						description="값이 min보다 작으면 min, max보다 크면 max로 제한합니다."
-					>
-						<div className="grid grid-cols-3 gap-3">
-							<Field
-								label="value"
-								type="number"
-								value={clampValue}
-								onChange={setClampValue}
-							/>
-							<Field
-								label="min"
-								type="number"
-								value={clampMin}
-								onChange={setClampMin}
-							/>
-							<Field
-								label="max"
-								type="number"
-								value={clampMax}
-								onChange={setClampMax}
-							/>
-						</div>
-						<ResultBox
-							call={`clamp(${Number(clampValue)}, ${Number(clampMin)}, ${Number(clampMax)})`}
-							result={String($util.number.clamp(Number(clampValue), Number(clampMin), Number(clampMax)))}
-						/>
-						<CodeBlock
-							code={`$util.number.clamp(${Number(clampValue)}, ${Number(clampMin)}, ${Number(
-								clampMax,
-							)}); // ${$util.number.clamp(Number(clampValue), Number(clampMin), Number(clampMax))}`}
-						/>
-					</DemoCard>
-
-					{/* toNumber */}
-					<DemoCard
-						id="toNumber"
-						signature="toNumber(value, fallback?)"
-						description="콤마·통화기호 등이 섞인 문자열에서 숫자만 추출합니다. 변환 실패 시 fallback을 반환합니다."
-					>
-						<div className="grid grid-cols-[minmax(0,1fr)_120px] gap-3">
-							<Field
-								label="value (unknown)"
-								value={toNumberValue}
-								onChange={setToNumberValue}
-								placeholder="예: $ 1,234.50 원"
-							/>
-							<Field
-								label="fallback (number)"
-								type="number"
-								value={toNumberFallback}
-								onChange={setToNumberFallback}
-							/>
-						</div>
-						<ResultBox
-							call={`toNumber(${fmt(toNumberValue)}, ${Number(toNumberFallback)})`}
-							result={String($util.number.toNumber(toNumberValue, Number(toNumberFallback)))}
-						/>
-						<CodeBlock
-							code={`$util.number.toNumber(${fmt(toNumberValue)}, ${Number(
-								toNumberFallback,
-							)}); // ${$util.number.toNumber(toNumberValue, Number(toNumberFallback))}`}
-						/>
-					</DemoCard>
-
-					{/* percent */}
-					<DemoCard
-						id="percent"
-						signature="percent(value, digits?)"
-						description="0~1 사이의 비율 값을 백분율 문자열로 변환합니다. (기본 소수 1자리)"
-					>
-						<div className="grid grid-cols-2 gap-3">
-							<Field
-								label="value (0~1)"
-								type="number"
-								value={percentValue}
-								onChange={setPercentValue}
-							/>
-							<Field
-								label="digits (number)"
-								type="number"
-								value={percentDigits}
-								onChange={setPercentDigits}
-							/>
-						</div>
-						<ResultBox
-							call={`percent(${Number(percentValue)}, ${Number(percentDigits)})`}
-							result={fmt($util.number.percent(Number(percentValue), Number(percentDigits)))}
-						/>
-						<CodeBlock
-							code={`$util.number.percent(${Number(percentValue)}, ${Number(percentDigits)}); // ${fmt(
-								$util.number.percent(Number(percentValue), Number(percentDigits)),
-							)}`}
-						/>
-					</DemoCard>
+					))}
 				</div>
 
 				{/* 우측: 전체 함수 목록 (sticky) */}
 				<aside className="hidden lg:block">
-					<div className="sticky top-6 space-y-3">
+					<div className="sticky top-24 space-y-3">
 						<p className="px-1 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
 							number 함수 목록
 						</p>
+
+						{/* 목록 ↔ 실제 구현 불일치 경고 */}
+						{hasMismatch && (
+							<div className="space-y-1.5 rounded-xl border border-amber-300 bg-amber-50 p-3 dark:border-amber-700/60 dark:bg-amber-900/20">
+								<div className="flex items-center gap-1.5 text-xs font-semibold text-amber-700 dark:text-amber-400">
+									<TriangleAlert className="size-3.5" />
+									구현과 목록이 다릅니다
+								</div>
+								{missing.length > 0 && (
+									<p className="text-[11px] leading-relaxed text-amber-700 dark:text-amber-300/90">
+										데모 누락: <code className="font-mono font-semibold">{missing.join(', ')}</code> — $util.number에는
+										있지만 목록에 없습니다. (JSDoc 누락 가능)
+									</p>
+								)}
+								{stale.length > 0 && (
+									<p className="text-[11px] leading-relaxed text-amber-700 dark:text-amber-300/90">
+										오래된 항목: <code className="font-mono font-semibold">{stale.join(', ')}</code> — 목록에는 있지만
+										구현에서 사라졌습니다. 제거해 주세요.
+									</p>
+								)}
+							</div>
+						)}
+
 						<nav className="space-y-1 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-							{numberFns.map((fn) => (
-								<a
-									key={fn.id}
-									href={`#${fn.id}`}
-									className="group block rounded-lg px-3 py-2 transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
-								>
-									<code className="font-mono text-sm font-semibold text-gray-800 group-hover:text-indigo-700 dark:text-gray-200 dark:group-hover:text-indigo-300">
-										{fn.name}
-									</code>
-									<p className="mt-0.5 text-xs leading-snug text-gray-500 dark:text-gray-400">{fn.desc}</p>
-								</a>
-							))}
+							{numberFns.map((fn) => {
+								const isStale = stale.includes(fn.name);
+								return (
+									<button
+										key={fn.id}
+										type="button"
+										onClick={() => scrollToFn(fn.id)}
+										className="group block w-full rounded-lg px-3 py-2 text-left transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
+									>
+										<span className="flex items-center gap-1.5">
+											<code className="font-mono text-sm font-semibold text-gray-800 group-hover:text-indigo-700 dark:text-gray-200 dark:group-hover:text-indigo-300">
+												{fn.name}
+											</code>
+											{isStale && (
+												<span className="rounded bg-amber-100 px-1 py-0.5 text-[10px] font-medium text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">
+													구현 없음
+												</span>
+											)}
+										</span>
+										<p className="mt-0.5 text-xs leading-snug text-gray-500 dark:text-gray-400">{fn.desc}</p>
+									</button>
+								);
+							})}
 						</nav>
 						<p className="px-1 text-[11px] leading-relaxed text-gray-400 dark:text-gray-500">
 							함수명을 누르면 해당 데모로 이동합니다.
