@@ -31,7 +31,8 @@ const CATEGORY_META: Record<string, CategoryMeta> = {
 	},
 	string: {
 		icon: Type,
-		desc: '공백 검사, 대문자 변환, 말줄임, 패딩, 마스킹 등 문자열 가공 함수 모음입니다.',
+		desc: '검증, 마스킹, 포맷, 케이스 변환, 한글 처리, 바이트 계산 등 금융권 문자열 가공 함수 모음입니다.',
+		path: '/example/utils/string',
 	},
 };
 

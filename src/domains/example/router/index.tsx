@@ -14,6 +14,7 @@ const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-com
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
 const UtilIndex = loadable(() => import('@/domains/example/pages/utils/UtilIndex'));
 const NumberUtil = loadable(() => import('@/domains/example/pages/utils/NumberUtil'));
+const StringUtil = loadable(() => import('@/domains/example/pages/utils/StringUtil'));
 
 const routes: TAppRoute[] = [
 	{
@@ -75,6 +76,11 @@ const routes: TAppRoute[] = [
 		path: 'utils/number',
 		element: <NumberUtil />,
 		name: 'number 유틸',
+	},
+	{
+		path: 'utils/string',
+		element: <StringUtil />,
+		name: 'string 유틸',
 	},
 ];
 
