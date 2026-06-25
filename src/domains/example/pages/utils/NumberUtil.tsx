@@ -1,5 +1,6 @@
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { Calculator, ArrowLeft, TriangleAlert } from 'lucide-react';
+import { Calculator, ArrowLeft, TriangleAlert, Search, X } from 'lucide-react';
 
 // 자동 생성 데모 카드
 import UtilFunctionDemo from '@/domains/example/components/utils/UtilFunctionDemo';
@@ -34,6 +35,23 @@ export default function NumberUtil(): React.ReactNode {
 	const stale = documented.filter((name) => !implemented.includes(name));
 	const hasMismatch = missing.length > 0 || stale.length > 0;
 
+	/* ── 검색 ────────────────────────────────────────────────────
+	 * 함수명·설명·시그니처에 검색어가 포함된 함수만 남깁니다. (대소문자 무시)
+	 * 좌측 데모 카드와 우측 nav 목록 모두 이 결과를 사용합니다.
+	 * ────────────────────────────────────────────────────────── */
+	const [query, setQuery] = useState('');
+	const filteredFns = useMemo(() => {
+		const q = query.trim().toLowerCase();
+		if (!q) return numberFns;
+		return numberFns.filter(
+			(fn) =>
+				fn.name.toLowerCase().includes(q) ||
+				fn.desc.toLowerCase().includes(q) ||
+				fn.signature.toLowerCase().includes(q),
+		);
+	}, [query]);
+	const noResult = filteredFns.length === 0;
+
 	return (
 		<div className="p-6">
 			{/* ── 페이지 헤더 ─────────────────────────────────────── */}
@@ -59,20 +77,53 @@ export default function NumberUtil(): React.ReactNode {
 						</p>
 					</div>
 				</div>
+
+				{/* ── 검색 입력 ───────────────────────────────────────
+				 * 함수명·설명·시그니처를 대상으로 데모 카드와 목록을 함께 필터링합니다. */}
+				<div className="relative">
+					<Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+					<input
+						type="text"
+						value={query}
+						onChange={(e) => setQuery(e.target.value)}
+						placeholder="함수명 또는 설명으로 검색 (예: 콤마)"
+						className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-9 pr-9 text-sm text-gray-900 shadow-sm transition-colors placeholder:text-gray-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500 dark:focus:ring-indigo-900/40"
+					/>
+					{query && (
+						<button
+							type="button"
+							onClick={() => setQuery('')}
+							aria-label="검색어 지우기"
+							className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+						>
+							<X className="size-4" />
+						</button>
+					)}
+				</div>
 			</div>
 
 			{/* ── 본문 2단 레이아웃 ───────────────────────────────── */}
 			<div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_260px]">
-				{/* 좌측: 인터랙티브 데모 (numberFns에서 자동 생성) */}
+				{/* 좌측: 인터랙티브 데모 (검색 결과 filteredFns에서 자동 생성) */}
 				<div className="max-w-3xl space-y-8">
-					{numberFns.map((doc) => (
-						<UtilFunctionDemo
-							key={doc.id}
-							doc={doc}
-							ns={NS}
-							impl={$util.number as unknown as Record<string, (...args: never[]) => unknown>}
-						/>
-					))}
+					{noResult ? (
+						<div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-12 text-center dark:border-gray-700 dark:bg-gray-900/40">
+							<Search className="mx-auto size-6 text-gray-400 dark:text-gray-500" />
+							<p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+								<code className="font-mono font-semibold text-gray-700 dark:text-gray-300">{query}</code>
+								에 해당하는 함수가 없습니다.
+							</p>
+						</div>
+					) : (
+						filteredFns.map((doc) => (
+							<UtilFunctionDemo
+								key={doc.id}
+								doc={doc}
+								ns={NS}
+								impl={$util.number as unknown as Record<string, (...args: never[]) => unknown>}
+							/>
+						))
+					)}
 				</div>
 
 				{/* 우측: 전체 함수 목록 (sticky) */}
@@ -105,7 +156,10 @@ export default function NumberUtil(): React.ReactNode {
 						)}
 
 						<nav className="min-h-0 flex-1 space-y-1 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-							{numberFns.map((fn) => {
+							{noResult && (
+								<p className="px-3 py-2 text-xs text-gray-400 dark:text-gray-500">검색 결과가 없습니다.</p>
+							)}
+							{filteredFns.map((fn) => {
 								const isStale = stale.includes(fn.name);
 								return (
 									<button
@@ -130,7 +184,9 @@ export default function NumberUtil(): React.ReactNode {
 							})}
 						</nav>
 						<p className="px-1 text-[11px] leading-relaxed text-gray-400 dark:text-gray-500">
-							함수명을 누르면 해당 데모로 이동합니다.
+							{query
+								? `검색 결과 ${filteredFns.length} / ${numberFns.length}개`
+								: '함수명을 누르면 해당 데모로 이동합니다.'}
 						</p>
 					</div>
 				</aside>
