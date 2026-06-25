@@ -1,0 +1,26 @@
+/* fonts.css — 셀프호스팅 @font-face 정의.
+ *
+ * 폰트 실물은 src/assets/fonts/ 아래에 위치 (폐쇄망/오프라인 대응 — 외부 CDN 미사용).
+ * font-family 이름은 디자인 토큰(primitive/typography.json → --font-outfit)과 일치시켜야 함.
+ * 경로는 CSS url() 해석 안정성을 위해 alias(@/) 대신 상대경로 사용.
+ */
+
+/* Outfit (Variable, weight 100–900) — latin */
+@font-face {
+	font-family: 'Outfit';
+	src: url('../../fonts/outfit/Outfit-Variable-latin.woff2') format('woff2');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2074, U+20AC;
+}
+
+/* Outfit (Variable, weight 100–900) — latin-ext */
+@font-face {
+	font-family: 'Outfit';
+	src: url('../../fonts/outfit/Outfit-Variable-latin-ext.woff2') format('woff2');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}

@@ -9,7 +9,6 @@
 /* ───────────── 아래는 건드릴 일 없음 ───────────── */
 
 /* 1. External */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -21,6 +20,7 @@
 @import './tokens/theme-dark.css';
 
 /* 3. Base (전역 reset / 타이포 / 유틸) */
+@import './base/fonts.css';
 @import './base/reset.css';
 @import './base/typography.css';
 @import './base/utilities.css';
