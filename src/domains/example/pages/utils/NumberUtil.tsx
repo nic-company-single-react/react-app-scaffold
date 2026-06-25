@@ -4,17 +4,17 @@ import { Calculator, ArrowLeft, TriangleAlert } from 'lucide-react';
 // 자동 생성 데모 카드
 import UtilFunctionDemo from '@/domains/example/components/utils/UtilFunctionDemo';
 
-// number.ts 구현 파일 소스를 그대로 읽어 함수 목록을 자동 생성
-import numberSource from '@/core/utils/util/number.ts?raw';
+// 타입 정의 파일(단일 출처)을 그대로 읽어 함수 목록을 자동 생성
+import typeSource from '@/types/common/index.ts?raw';
 import { parseFunctionDocs } from '@/domains/example/common/utils/parseFunctionDocs';
 
 /* ────────────────────────────────────────────────────────────
  * $util.number 함수 목록
- * number.ts 구현 파일의 JSDoc(설명 + @demo 예시값)·시그니처에서 완전 자동으로 추출합니다.
- * (수동 관리 불필요 — number.ts에 함수를 추가/수정하면 데모까지 그대로 반영)
+ * INumberUtil 인터페이스(설명 + @demo 예시값 + 시그니처)에서 완전 자동으로 추출합니다.
+ * 단일 출처 = types/common/index.ts. (인터페이스에 함수를 추가하면 데모까지 그대로 반영)
  * ──────────────────────────────────────────────────────────── */
 const NS = '$util.number';
-const numberFns = parseFunctionDocs(numberSource);
+const numberFns = parseFunctionDocs(typeSource, 'INumberUtil');
 
 export default function NumberUtil(): React.ReactNode {
 	/* HashRouter 환경이라 `<a href="#id">`를 쓰면 라우트 해시가 깨집니다.
@@ -77,7 +77,7 @@ export default function NumberUtil(): React.ReactNode {
 
 				{/* 우측: 전체 함수 목록 (sticky) */}
 				<aside className="hidden lg:block">
-					<div className="sticky top-24 space-y-3">
+					<div className="sticky top-24 flex max-h-[calc(100vh-7rem)] flex-col space-y-3">
 						<p className="px-1 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
 							number 함수 목록
 						</p>
@@ -104,7 +104,7 @@ export default function NumberUtil(): React.ReactNode {
 							</div>
 						)}
 
-						<nav className="space-y-1 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+						<nav className="min-h-0 flex-1 space-y-1 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-2 shadow-sm dark:border-gray-800 dark:bg-gray-900">
 							{numberFns.map((fn) => {
 								const isStale = stale.includes(fn.name);
 								return (
