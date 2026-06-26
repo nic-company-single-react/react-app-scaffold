@@ -45,7 +45,7 @@ export function setupAuthInterceptor(): IAuthInterceptorIds {
 			// if (error.response?.status === 401) {
 			// 	clearAccessToken();
 			// 	localStorage.removeItem(import.meta.env.VITE_LOCALSTORAGE_TOKEN_NAME);
-			// 	window.location.href = '/#/auth/login'; // HashRouter라 /#/ 형태
+			// 	$router.push('/auth/login');
 			// }
 
 			// 에러 체인을 끊지 않도록 반드시 reject로 다시 던진다.
