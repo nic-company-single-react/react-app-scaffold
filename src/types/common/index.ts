@@ -5,22 +5,227 @@
  * $router(@/types/router)와 동일하게, 구현은 src/core/utils/util 에 위치합니다.
  */
 
-/** 날짜 유틸 - $util.date */
+/** 날짜 유틸 - $util.date
+ *  설명과 데모 예시값(@demo)의 단일 출처입니다. 데모 페이지는 이 인터페이스를 파싱합니다. */
 export interface IDateUtil {
-	/** 날짜를 지정한 포맷 문자열로 변환합니다. (기본: YYYY-MM-DD) */
+	/* ── 변환 / 파싱 ─────────────────────────────────────── */
+	/**
+	 * 날짜를 지정한 포맷 문자열로 변환합니다. (기본: YYYY-MM-DD)
+	 * @demo date="2026-06-26" template="YYYY-MM-DD"
+	 */
 	format(date?: DateInput, template?: string): string;
-	/** 현재 시각을 지정한 포맷으로 반환합니다. (기본: YYYY-MM-DD HH:mm:ss) */
+	/**
+	 * 현재 시각을 지정한 포맷으로 반환합니다. (기본: YYYY-MM-DD HH:mm:ss)
+	 * @demo template="YYYY-MM-DD HH:mm:ss"
+	 */
 	now(template?: string): string;
-	/** 문자열/숫자/Date를 Date 객체로 파싱합니다. 유효하지 않으면 null을 반환합니다. */
+	/**
+	 * 문자열/숫자/Date를 Date 객체로 파싱합니다. 유효하지 않으면 null을 반환합니다.
+	 * @demo value="2026-06-26" template="YYYY-MM-DD"
+	 */
 	parse(value: DateInput, template?: string): Date | null;
-	/** 날짜에 일(day)을 더합니다. (음수 가능) */
-	addDays(date: DateInput, amount: number): Date;
-	/** 날짜에 월(month)을 더합니다. (음수 가능) */
-	addMonths(date: DateInput, amount: number): Date;
-	/** 두 날짜 간의 일(day) 차이를 반환합니다. (a - b) */
-	diffDays(a: DateInput, b: DateInput): number;
-	/** 유효한 날짜 값인지 확인합니다. */
+	/**
+	 * 유효한 날짜 값인지 확인합니다.
+	 * @demo value="2026-06-26"
+	 */
 	isValid(value: DateInput): boolean;
+
+	/* ── 기본 연산 ───────────────────────────────────────── */
+	/**
+	 * 날짜에 일(day)을 더합니다. (음수 가능)
+	 * @demo date="2026-06-26" amount="7"
+	 */
+	addDays(date: DateInput, amount: number): Date;
+	/**
+	 * 날짜에 월(month)을 더합니다. (음수 가능)
+	 * @demo date="2026-06-26" amount="3"
+	 */
+	addMonths(date: DateInput, amount: number): Date;
+	/**
+	 * 날짜에 년(year)을 더합니다. (음수 가능) — 예금/적금 만기 계산
+	 * @demo date="2026-06-26" amount="1"
+	 */
+	addYears(date: DateInput, amount: number): Date;
+	/**
+	 * 지정한 단위(year/month/week/day/hour/minute/second)로 가감합니다. (음수 가능)
+	 * @demo date="2026-06-26" amount="2" unit="week"
+	 */
+	add(date: DateInput, amount: number, unit: DateUnit): Date;
+	/**
+	 * 두 날짜 간의 일(day) 차이를 반환합니다. (a - b)
+	 * @demo a="2026-06-26" b="2026-06-01"
+	 */
+	diffDays(a: DateInput, b: DateInput): number;
+	/**
+	 * 두 날짜 간의 개월(month) 차이를 반환합니다. (a - b) — 대출 경과 개월/이자 회차
+	 * @demo a="2026-06-26" b="2026-01-01"
+	 */
+	diffMonths(a: DateInput, b: DateInput): number;
+	/**
+	 * 두 날짜 간의 년(year) 차이를 반환합니다. (a - b)
+	 * @demo a="2026-06-26" b="2020-06-26"
+	 */
+	diffYears(a: DateInput, b: DateInput): number;
+
+	/* ── 시작 / 끝 경계 ──────────────────────────────────── */
+	/**
+	 * 지정 단위의 시작 시점을 반환합니다. (예: month → 그 달 1일 00:00:00) — 배치 집계 범위
+	 * @demo date="2026-06-26" unit="month"
+	 */
+	startOf(date: DateInput, unit: DateUnit): Date;
+	/**
+	 * 지정 단위의 끝 시점을 반환합니다. (예: day → 23:59:59.999) — 배치 집계 범위
+	 * @demo date="2026-06-26" unit="day"
+	 */
+	endOf(date: DateInput, unit: DateUnit): Date;
+	/**
+	 * 해당 월의 1일을 반환합니다. — 월 정산 시작일
+	 * @demo date="2026-06-26"
+	 */
+	firstDayOfMonth(date: DateInput): Date;
+	/**
+	 * 해당 월의 마지막 날을 반환합니다. — 월 정산 마감일/카드 결제일
+	 * @demo date="2026-06-26"
+	 */
+	lastDayOfMonth(date: DateInput): Date;
+	/**
+	 * 해당 월의 총 일수를 반환합니다. — 일할 계산(이자/요금)
+	 * @demo date="2026-02-01"
+	 */
+	daysInMonth(date: DateInput): number;
+
+	/* ── 비교 / 판별 ─────────────────────────────────────── */
+	/**
+	 * a가 b보다 이전인지 확인합니다.
+	 * @demo a="2026-06-01" b="2026-06-26"
+	 */
+	isBefore(a: DateInput, b: DateInput): boolean;
+	/**
+	 * a가 b보다 이후인지 확인합니다.
+	 * @demo a="2026-06-26" b="2026-06-01"
+	 */
+	isAfter(a: DateInput, b: DateInput): boolean;
+	/**
+	 * 두 날짜가 같은지(기본 일 단위) 확인합니다.
+	 * @demo a="2026-06-26" b="2026-06-26" unit="day"
+	 */
+	isSame(a: DateInput, b: DateInput, unit?: DateUnit): boolean;
+	/**
+	 * 날짜가 start~end 기간(양 끝 포함) 내에 있는지 확인합니다. — 유효기간/프로모션 검증
+	 * @demo date="2026-06-26" start="2026-06-01" end="2026-06-30"
+	 */
+	isBetween(date: DateInput, start: DateInput, end: DateInput): boolean;
+	/**
+	 * 오늘 날짜인지 확인합니다.
+	 * @demo date="2026-06-26"
+	 */
+	isToday(date: DateInput): boolean;
+	/**
+	 * 현재 시각보다 과거인지 확인합니다.
+	 * @demo date="2020-01-01"
+	 */
+	isPast(date: DateInput): boolean;
+	/**
+	 * 현재 시각보다 미래인지 확인합니다.
+	 * @demo date="2099-12-31"
+	 */
+	isFuture(date: DateInput): boolean;
+	/**
+	 * 두 날짜 중 더 이른 날짜를 반환합니다.
+	 * @demo a="2026-06-26" b="2026-06-01"
+	 */
+	min(a: DateInput, b: DateInput): Date;
+	/**
+	 * 두 날짜 중 더 늦은 날짜를 반환합니다.
+	 * @demo a="2026-06-26" b="2026-06-01"
+	 */
+	max(a: DateInput, b: DateInput): Date;
+
+	/* ── 영업일 (Business Day) ───────────────────────────── */
+	/**
+	 * 주말(토/일)인지 확인합니다.
+	 * @demo date="2026-06-27"
+	 */
+	isWeekend(date: DateInput): boolean;
+	/**
+	 * 공휴일인지 확인합니다. (고정 양력 + 내장/주입된 음력·대체공휴일)
+	 * @demo date="2026-01-01"
+	 */
+	isHoliday(date: DateInput): boolean;
+	/**
+	 * 영업일(주말도 공휴일도 아닌 날)인지 확인합니다.
+	 * @demo date="2026-06-26"
+	 */
+	isBusinessDay(date: DateInput): boolean;
+	/**
+	 * 영업일 기준으로 가감한 날짜를 반환합니다. (음수 가능) — T+2 결제일/어음 만기
+	 * @demo date="2026-06-26" amount="2"
+	 */
+	addBusinessDays(date: DateInput, amount: number): Date;
+	/**
+	 * 두 날짜 간의 영업일 수를 반환합니다. (a - b)
+	 * @demo a="2026-06-30" b="2026-06-26"
+	 */
+	diffBusinessDays(a: DateInput, b: DateInput): number;
+	/**
+	 * 다음 영업일을 반환합니다. — 휴일 이연 결제일
+	 * @demo date="2026-06-26"
+	 */
+	nextBusinessDay(date: DateInput): Date;
+	/**
+	 * 이전 영업일을 반환합니다.
+	 * @demo date="2026-06-26"
+	 */
+	prevBusinessDay(date: DateInput): Date;
+
+	/* ── 표시 / 포맷 ─────────────────────────────────────── */
+	/**
+	 * 한글 날짜로 표기합니다. (예: "2026년 6월 26일")
+	 * @demo date="2026-06-26"
+	 */
+	formatKorean(date: DateInput): string;
+	/**
+	 * 한글 요일을 반환합니다. (예: "금")
+	 * @demo date="2026-06-26"
+	 */
+	dayOfWeek(date: DateInput): string;
+	/**
+	 * 현재 시각 대비 상대 시간을 한글로 반환합니다. (예: "3일 전", "2시간 후")
+	 * @demo date="2026-06-20"
+	 */
+	fromNow(date: DateInput): string;
+	/**
+	 * 분기(1~4)를 반환합니다. — 분기 결산
+	 * @demo date="2026-06-26"
+	 */
+	getQuarter(date: DateInput): number;
+	/**
+	 * 해당 연도의 주차(week)를 반환합니다. — 주간 리포트
+	 * @demo date="2026-06-26"
+	 */
+	weekOfYear(date: DateInput): number;
+	/**
+	 * 전문 통신용 8자리 날짜 문자열로 변환합니다. (예: "20260626")
+	 * @demo date="2026-06-26"
+	 */
+	toBusinessDate(date: DateInput): string;
+
+	/* ── 기타 실무 ───────────────────────────────────────── */
+	/**
+	 * 생년월일로 만 나이를 계산합니다. — KYC/미성년 판별
+	 * @demo birth="1990-05-05"
+	 */
+	age(birth: DateInput): number;
+	/**
+	 * 윤년인지 확인합니다.
+	 * @demo date="2024-01-01"
+	 */
+	isLeapYear(date: DateInput): boolean;
+	/**
+	 * 시작~끝(양 끝 포함) 사이의 날짜 배열을 생성합니다. — 달력 렌더/기간 루프
+	 * @demo start="2026-06-01" end="2026-06-05"
+	 */
+	range(start: DateInput, end: DateInput): Date[];
 }
 
 /** 숫자 유틸 - $util.number
@@ -373,12 +578,177 @@ export interface IStringUtil {
 	base64Decode(value: string): string;
 }
 
+/** 원리금균등상환 1회차 정보 */
+export interface AmortizationRow {
+	/** 회차 (1부터) */
+	round: number;
+	/** 해당 회차 총 상환액 (원금+이자) */
+	payment: number;
+	/** 원금 상환액 */
+	principal: number;
+	/** 이자 */
+	interest: number;
+	/** 상환 후 잔액 */
+	balance: number;
+}
+
+/** 금융 계산 유틸 - $util.finance
+ *  설명과 데모 예시값(@demo)의 단일 출처입니다. 데모 페이지는 이 인터페이스를 파싱합니다. */
+export interface IFinanceUtil {
+	/**
+	 * 단리 이자액을 계산합니다. (원금 × 연이율 × 년수, 원 단위 반올림)
+	 * @demo principal="1000000" annualRate="0.05" years="2"
+	 */
+	simpleInterest(principal: number, annualRate: number, years: number): number;
+	/**
+	 * 복리 이자액을 계산합니다. (원금 제외, 기본 연 1회 복리, 원 단위 반올림)
+	 * @demo principal="1000000" annualRate="0.05" years="2" timesPerYear="12"
+	 */
+	compoundInterest(principal: number, annualRate: number, years: number, timesPerYear?: number): number;
+	/**
+	 * 복리 만기 수령액(원리금 합계)을 계산합니다. (기본 연 1회 복리, 원 단위 반올림) — 예·적금 만기
+	 * @demo principal="1000000" annualRate="0.05" years="2" timesPerYear="12"
+	 */
+	maturityAmount(principal: number, annualRate: number, years: number, timesPerYear?: number): number;
+	/**
+	 * 원리금균등상환의 월 상환액을 계산합니다. (연이율, 총 개월, 원 단위 반올림)
+	 * @demo principal="12000000" annualRate="0.06" months="12"
+	 */
+	monthlyPayment(principal: number, annualRate: number, months: number): number;
+	/**
+	 * 원리금균등상환 스케줄(회차별 원금·이자·잔액)을 반환합니다. — 대출 상환표
+	 * @demo principal="1200000" annualRate="0.06" months="3"
+	 */
+	amortization(principal: number, annualRate: number, months: number): AmortizationRow[];
+	/**
+	 * 환율을 적용해 환산액을 계산합니다. (기본 소수 0자리 반올림)
+	 * @demo amount="100" rate="1350" digits="0"
+	 */
+	exchange(amount: number, rate: number, digits?: number): number;
+	/**
+	 * 총액을 count개로 균등 분할합니다. 나머지는 앞에서부터 1원씩 배분합니다. (1원 오차 보정)
+	 * @demo total="10000" count="3"
+	 */
+	splitAmount(total: number, count: number): number[];
+	/**
+	 * 부가세 포함 금액에서 공급가액을 역산합니다. (기본 세율 10%, 원 단위 반올림)
+	 * @demo total="11000" rate="0.1"
+	 */
+	supplyPrice(total: number, rate?: number): number;
+}
+
+/** 객체 유틸 - $util.object
+ *  설명과 데모 예시값(@demo)의 단일 출처입니다. 데모 페이지는 이 인터페이스를 파싱합니다. */
+export interface IObjectUtil {
+	/**
+	 * 비어있는 값인지 확인합니다. (null/undefined/빈 문자열/빈 배열/빈 객체)
+	 * @demo value='{}'
+	 */
+	isEmpty(value: unknown): boolean;
+	/**
+	 * 깊은 복사본을 반환합니다.
+	 * @demo value='{"a":1,"b":{"c":2}}'
+	 */
+	deepClone(value: unknown): unknown;
+	/**
+	 * 두 값을 깊은 비교합니다.
+	 * @demo a='{"x":1}' b='{"x":1}'
+	 */
+	deepEqual(a: unknown, b: unknown): boolean;
+	/**
+	 * 지정한 키들만 추린 새 객체를 반환합니다.
+	 * @demo obj='{"a":1,"b":2,"c":3}' keys='["a","c"]'
+	 */
+	pick(obj: Record<string, unknown>, keys: string[]): Record<string, unknown>;
+	/**
+	 * 지정한 키들을 제외한 새 객체를 반환합니다.
+	 * @demo obj='{"a":1,"b":2,"c":3}' keys='["b"]'
+	 */
+	omit(obj: Record<string, unknown>, keys: string[]): Record<string, unknown>;
+	/**
+	 * 점 표기 경로로 안전하게 값을 읽습니다. (없으면 fallback)
+	 * @demo obj='{"user":{"name":"Tom"}}' path="user.name" fallback='null'
+	 */
+	get(obj: Record<string, unknown>, path: string, fallback?: unknown): unknown;
+	/**
+	 * 점 표기 경로에 값을 설정한 새 객체를 반환합니다. (원본 불변)
+	 * @demo obj='{"a":1}' path="b.c" value='2'
+	 */
+	set(obj: Record<string, unknown>, path: string, value: unknown): Record<string, unknown>;
+	/**
+	 * null/undefined/빈 문자열 속성을 재귀적으로 제거합니다. — API 요청 페이로드 정리
+	 * @demo obj='{"a":1,"b":null,"c":"","d":"x"}'
+	 */
+	cleanEmpty(obj: Record<string, unknown>): Record<string, unknown>;
+	/**
+	 * 두 객체를 깊게 병합한 새 객체를 반환합니다. (source 우선, 원본 불변)
+	 * @demo target='{"a":1,"b":{"x":1}}' source='{"b":{"y":2},"c":3}'
+	 */
+	merge(target: Record<string, unknown>, source: Record<string, unknown>): Record<string, unknown>;
+}
+
+/** 배열 유틸 - $util.array
+ *  설명과 데모 예시값(@demo)의 단일 출처입니다. 데모 페이지는 이 인터페이스를 파싱합니다. */
+export interface IArrayUtil {
+	/**
+	 * 지정 키 값으로 그룹핑합니다. — 그리드/리포트 집계
+	 * @demo array='[{"type":"A","v":1},{"type":"B","v":2},{"type":"A","v":3}]' key="type"
+	 */
+	groupBy(array: Record<string, unknown>[], key: string): Record<string, Record<string, unknown>[]>;
+	/**
+	 * 지정 키 값 기준으로 정렬한 새 배열을 반환합니다. (기본 오름차순)
+	 * @demo array='[{"n":3},{"n":1},{"n":2}]' key="n" order="asc"
+	 */
+	sortBy(array: Record<string, unknown>[], key: string, order?: 'asc' | 'desc'): Record<string, unknown>[];
+	/**
+	 * 숫자 배열의 합계를 반환합니다.
+	 * @demo array='[1,2,3,4]'
+	 */
+	sum(array: number[]): number;
+	/**
+	 * 지정 키 값의 합계를 반환합니다. — 금액 컬럼 합계
+	 * @demo array='[{"amt":100},{"amt":200}]' key="amt"
+	 */
+	sumBy(array: Record<string, unknown>[], key: string): number;
+	/**
+	 * 중복을 제거한 새 배열을 반환합니다. (원시값 기준)
+	 * @demo array='[1,1,2,3,3]'
+	 */
+	uniq(array: unknown[]): unknown[];
+	/**
+	 * 지정 키 값 기준으로 중복을 제거합니다.
+	 * @demo array='[{"id":1},{"id":1},{"id":2}]' key="id"
+	 */
+	uniqBy(array: Record<string, unknown>[], key: string): Record<string, unknown>[];
+	/**
+	 * 지정 크기로 분할한 2차원 배열을 반환합니다. — 페이지/배치 분할
+	 * @demo array='[1,2,3,4,5]' size="2"
+	 */
+	chunk(array: unknown[], size: number): unknown[][];
+	/**
+	 * 평면 목록을 트리로 변환합니다. (기본 키: id/parentId/children) — 메뉴·조직도·계층코드
+	 * @demo flat='[{"id":1,"parentId":null},{"id":2,"parentId":1},{"id":3,"parentId":1}]' idKey="id" parentKey="parentId" childrenKey="children"
+	 */
+	toTree(flat: Record<string, unknown>[], idKey?: string, parentKey?: string, childrenKey?: string): Record<string, unknown>[];
+	/**
+	 * 트리를 평면 목록으로 펼칩니다. (children 제거)
+	 * @demo tree='[{"id":1,"children":[{"id":2,"children":[]}]}]' childrenKey="children"
+	 */
+	flattenTree(tree: Record<string, unknown>[], childrenKey?: string): Record<string, unknown>[];
+}
+
 /** 전역 $util 루트 타입 */
 export interface IUtils {
 	date: IDateUtil;
 	number: INumberUtil;
 	string: IStringUtil;
+	finance: IFinanceUtil;
+	object: IObjectUtil;
+	array: IArrayUtil;
 }
 
 /** date 유틸이 허용하는 입력 타입 */
 export type DateInput = Date | string | number;
+
+/** date 유틸의 가감/경계 단위 */
+export type DateUnit = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second';

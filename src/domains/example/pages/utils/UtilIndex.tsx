@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { Badge } from '@axiom/components/ui';
-import { Wrench, Calculator, CalendarDays, Type, ArrowRight } from 'lucide-react';
+import { Wrench, Calculator, CalendarDays, Type, Landmark, Braces, ListTree, ArrowRight } from 'lucide-react';
 import { createWindowUtil } from '@/core/utils/util';
 
 /* ────────────────────────────────────────────────────────────
@@ -27,12 +27,28 @@ const CATEGORY_META: Record<string, CategoryMeta> = {
 	},
 	date: {
 		icon: CalendarDays,
-		desc: '날짜 포맷팅, 파싱, 일/월 가감, 날짜 차이 계산 등 날짜 관련 함수 모음입니다.',
+		desc: '날짜 포맷팅·파싱, 일/월/년 가감, 영업일(T+2) 계산, 기간 검증, 만 나이, 한글/전문 표기 등 금융권 날짜 함수 모음입니다.',
+		path: '/example/utils/date',
 	},
 	string: {
 		icon: Type,
 		desc: '검증, 마스킹, 포맷, 케이스 변환, 한글 처리, 바이트 계산 등 금융권 문자열 가공 함수 모음입니다.',
 		path: '/example/utils/string',
+	},
+	finance: {
+		icon: Landmark,
+		desc: '단리·복리 이자, 원리금균등상환 스케줄, 만기 수령액, 환율 변환, 금액 분할 등 금융 계산 함수 모음입니다.',
+		path: '/example/utils/finance',
+	},
+	object: {
+		icon: Braces,
+		desc: 'cleanEmpty, pick/omit, 경로 get/set, deepClone/deepEqual, merge 등 객체 가공 함수 모음입니다.',
+		path: '/example/utils/object',
+	},
+	array: {
+		icon: ListTree,
+		desc: 'groupBy, sortBy, sum/sumBy, uniq, chunk, 평면↔트리 변환 등 목록 집계 함수 모음입니다.',
+		path: '/example/utils/array',
 	},
 };
 
@@ -101,17 +117,6 @@ function CategoryCard({ cat }: { cat: UtilCategory }) {
 					</code>
 				</div>
 				<p className="text-xs leading-relaxed text-gray-500 dark:text-gray-400">{cat.desc}</p>
-			</div>
-
-			<div className="mt-auto flex flex-wrap gap-1.5 pt-1">
-				{cat.fns.map((fn) => (
-					<span
-						key={fn}
-						className="rounded-md bg-gray-100 px-1.5 py-0.5 font-mono text-[11px] text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-					>
-						{fn}
-					</span>
-				))}
 			</div>
 		</div>
 	);

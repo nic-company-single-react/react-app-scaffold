@@ -13,6 +13,9 @@ import {
 	Wrench,
 	Calculator,
 	Type,
+	Landmark,
+	Braces,
+	ListTree,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -78,6 +81,10 @@ export const navItems: NavItem[] = [
 			{ name: '전체 목록', icon: <Wrench />, path: '/example/utils' },
 			{ name: 'number', icon: <Calculator />, path: '/example/utils/number' },
 			{ name: 'string', icon: <Type />, path: '/example/utils/string' },
+			{ name: 'date', icon: <CalendarDays />, path: '/example/utils/date' },
+			{ name: 'finance', icon: <Landmark />, path: '/example/utils/finance' },
+			{ name: 'object', icon: <Braces />, path: '/example/utils/object' },
+			{ name: 'array', icon: <ListTree />, path: '/example/utils/array' },
 		],
 	},
 ];

@@ -15,6 +15,10 @@ const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-comp
 const UtilIndex = loadable(() => import('@/domains/example/pages/utils/UtilIndex'));
 const NumberUtil = loadable(() => import('@/domains/example/pages/utils/NumberUtil'));
 const StringUtil = loadable(() => import('@/domains/example/pages/utils/StringUtil'));
+const DateUtil = loadable(() => import('@/domains/example/pages/utils/DateUtil'));
+const FinanceUtil = loadable(() => import('@/domains/example/pages/utils/FinanceUtil'));
+const ObjectUtil = loadable(() => import('@/domains/example/pages/utils/ObjectUtil'));
+const ArrayUtil = loadable(() => import('@/domains/example/pages/utils/ArrayUtil'));
 
 const routes: TAppRoute[] = [
 	{
@@ -81,6 +85,26 @@ const routes: TAppRoute[] = [
 		path: 'utils/string',
 		element: <StringUtil />,
 		name: 'string 유틸',
+	},
+	{
+		path: 'utils/date',
+		element: <DateUtil />,
+		name: 'date 유틸',
+	},
+	{
+		path: 'utils/finance',
+		element: <FinanceUtil />,
+		name: 'finance 유틸',
+	},
+	{
+		path: 'utils/object',
+		element: <ObjectUtil />,
+		name: 'object 유틸',
+	},
+	{
+		path: 'utils/array',
+		element: <ArrayUtil />,
+		name: 'array 유틸',
 	},
 ];
 

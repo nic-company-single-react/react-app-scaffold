@@ -46,8 +46,10 @@ export interface IFunctionDoc {
  * 1: JSDoc 본문 / 2: 함수명 / 3: 파라미터 / 4: 반환 타입 */
 const DOC_METHOD_RE = /\/\*\*([\s\S]*?)\*\/\s*(\w+)\s*\(([^)]*)\)\s*:\s*([^;]+?)\s*;/g;
 
-/** `@demo name="value"` 형식의 예시값 쌍 */
-const DEMO_PAIR_RE = /(\w+)="([^"]*)"/g;
+/** `@demo name="value"` 형식의 예시값 쌍.
+ * 값에 큰따옴표가 포함된 JSON 예시를 위해 작은따옴표 표기도 허용합니다.
+ * (예: obj='{"a":1}') */
+const DEMO_PAIR_RE = /(\w+)=(?:"([^"]*)"|'([^']*)')/g;
 
 /** `interface <name> { ... }` 의 본문을 중괄호 깊이로 정확히 잘라냅니다. */
 function extractInterfaceBody(source: string, interfaceName: string): string {
@@ -92,7 +94,8 @@ function parseJsDoc(rawDoc: string): { desc: string; examples: Record<string, st
 			let pair: RegExpExecArray | null;
 			DEMO_PAIR_RE.lastIndex = 0;
 			while ((pair = DEMO_PAIR_RE.exec(t)) !== null) {
-				examples[pair[1]] = pair[2];
+				// 큰따옴표(2) 또는 작은따옴표(3) 중 매칭된 값을 사용합니다.
+					examples[pair[1]] = pair[2] ?? pair[3] ?? '';
 			}
 		} else if (t && !t.startsWith('@')) {
 			descLines.push(t);
