@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router';
 // 라우터 페이지 이동 시 token 인증처리 컴포넌트
 // token 인증처리 관련 로직은 상황에 따라 변경하여 사용합니다.
 const ProtectedRoute = () => {
-	const token = localStorage.getItem('access_token');
+	const token = localStorage.getItem(import.meta.env.VITE_LOCALSTORAGE_TOKEN_NAME);
 	return token ? (
 		<Outlet />
 	) : (

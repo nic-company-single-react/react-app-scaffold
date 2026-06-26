@@ -57,15 +57,33 @@ class BaseAxiosClient {
 	 *
 	 * @returns 등록 해제에 사용할 interceptor id
 	 */
-	registerRequestInterceptor(
-		onFulfilled: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig,
-	): number {
+	registerRequestInterceptor(onFulfilled: (config: InternalAxiosRequestConfig) => InternalAxiosRequestConfig): number {
 		return this.axiosInstance.interceptors.request.use(onFulfilled);
 	}
 
 	/** 등록된 요청 인터셉터를 해제한다. */
 	ejectRequestInterceptor(id: number): void {
 		this.axiosInstance.interceptors.request.eject(id);
+	}
+
+	/**
+	 * 외부(shared 등)에서 응답 인터셉터를 등록할 수 있는 창구.
+	 * core는 등록만 위임하며, 401 처리/리다이렉트 등 구체 로직은 호출 측이 소유한다.
+	 *
+	 * @param onFulfilled 정상 응답(2xx) 가공 콜백
+	 * @param onRejected  에러 응답(non-2xx) 처리 콜백. reject를 이어가려면 Promise.reject(error)를 반환한다.
+	 * @returns 등록 해제에 사용할 interceptor id
+	 */
+	registerResponseInterceptor(
+		onFulfilled?: (response: AxiosResponse) => AxiosResponse | Promise<AxiosResponse>,
+		onRejected?: (error: AxiosError) => unknown,
+	): number {
+		return this.axiosInstance.interceptors.response.use(onFulfilled, onRejected);
+	}
+
+	/** 등록된 응답 인터셉터를 해제한다. */
+	ejectResponseInterceptor(id: number): void {
+		this.axiosInstance.interceptors.response.eject(id);
 	}
 
 	makeRequestConfig(endpoint: string, config: ApiRequestConfig): AxiosRequestConfig {
