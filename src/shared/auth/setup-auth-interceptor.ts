@@ -37,8 +37,23 @@ export function setupAuthInterceptor(): IAuthInterceptorIds {
 	// 지금은 통과만 시키는 스캐폴드. 401 자동 로그아웃/리다이렉트, 토큰 갱신(refresh) 등
 	// 인증 관련 공통 처리가 생기면 여기에 추가한다.
 	const responseId = registerResponseInterceptor(
-		// onFulfilled: 정상 응답(2xx)은 매 응답마다 실행. 현재는 그대로 통과.
-		(response) => response,
+		// onFulfilled: 정상 응답(2xx)은 매 응답마다 실행.
+		(response) => {
+			//// 로그인 응답이면 결과 값에서 토큰을 꺼내 저장한다.
+			//// config.url은 절대 URL로 변환되어 있으므로 endpoint 포함 여부로 판별한다.
+			//if (response.config.url?.includes(LOGIN_ENDPOINT)) {
+			//	// ⚠️ 백엔드 응답 구조가 확정되면 아래 토큰 키를 실제 키 하나로 고정할 것.
+			//	//    (지금은 흔한 형태들을 방어적으로 탐색한다)
+			//	const body = (response.data ?? {}) as Record<string, any>;
+			//	const token: string | undefined = body.accessToken ?? body.token ?? body.data?.accessToken ?? body.data?.token;
+
+			//	if (token) {
+			//		setAccessToken(token); // 메모리 즉시 갱신 → 다음 요청부터 헤더에 주입
+			//		localStorage.setItem(import.meta.env.VITE_LOCALSTORAGE_TOKEN_NAME, token); // 영속 저장(새로고침 유지)
+			//	}
+			//}
+			return response;
+		},
 		// onRejected: 에러 응답(non-2xx)은 매 에러마다 실행.
 		(error) => {
 			// 예시) 401이면 토큰 정리 후 로그인 페이지로 보내기 — 필요해지면 주석 해제해서 사용.
