@@ -28,6 +28,19 @@
 		"editor.formatOnSave": false,
 		"editor.defaultFormatter": null
 	},
+	"_comment_autoImport": "자동 import 출처 제한 — 컴포넌트는 @axiom/components/ui 배럴을 우선 사용. 내부 의존성(@base-ui/react, react-day-picker)과 raw shadcn 경로는 제안에서 제외한다.",
+	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
+		"^@base-ui/react",
+		"^react-day-picker",
+		"^@/shared/lib/shadcn",
+		"^@/shared/ui"
+	],
+	"javascript.preferences.autoImportSpecifierExcludeRegexes": [
+		"^@base-ui/react",
+		"^react-day-picker",
+		"^@/shared/lib/shadcn",
+		"^@/shared/ui"
+	],
 	"update.mode": "none",
 	"telemetry.telemetryLevel": "off",
 	"extensions.autoUpdate": false,

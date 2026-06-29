@@ -22,11 +22,12 @@ import { useUIStore } from './store';
 import type { TDialogReason, TUIDialogType, IDialogResult } from '@/types/components';
 
 /**
- * alert/confirm 은 페이지·다른 다이얼로그·팝오버 위에 무조건 떠야 한다.
- * shadcn 의 다른 레이어들이 모두 z-50 이라, 더 높은 전용 z-index 로 덮어쓴다.
- * (cn/twMerge 가 AlertDialogContent 의 기본 z-50 을 이 값으로 치환한다.)
+ * alert/confirm 은 페이지·헤더·사이드바·다른 다이얼로그·팝오버 위에 무조건 떠야 한다.
+ * 앱 헤더(AppHeader)가 sticky 로 z-99999 를 쓰므로, 그보다 높은 값으로 덮어쓴다.
+ * Content 와 Overlay(딤 배경) 둘 다에 적용해야 헤더까지 가려진다.
+ * (cn/twMerge 가 AlertDialog 기본 z-50 을 이 값으로 치환한다.)
  */
-const Z_INDEX_CLASS = 'z-[1000]';
+const Z_INDEX_CLASS = 'z-[100000]';
 
 /**
  * 닫기 시 exit 애니메이션(AlertDialog 의 duration-100)이 끝난 뒤 큐에서 제거하기 위한 지연(ms).
@@ -123,7 +124,7 @@ export function UIDialogHost() {
 				if (!next) closeWith('escape');
 			}}
 		>
-			<AlertDialogContent className={Z_INDEX_CLASS}>
+			<AlertDialogContent className={Z_INDEX_CLASS} overlayClassName={Z_INDEX_CLASS}>
 				{option.close && (
 					<Button
 						type="button"
