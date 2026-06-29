@@ -5,5 +5,13 @@ export * from '../lib/shadcn/ui';
 
 // ── 내가 만든 커스텀 컴포넌트 re-export ─────────────────────
 export { CodeBlock } from '../components/ui/codeblock';
+export { SmartTable, defineColumns } from './smart-table';
+export type {
+	ISmartTableProps,
+	ISmartTableHandle,
+	ISmartColumn,
+	SmartColumns,
+	SmartFormat,
+} from './smart-table';
 //export { DataTable } from './DataTable';
 //export { MyCustomCard } from './MyCustomCard';

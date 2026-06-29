@@ -58,6 +58,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Combobox', icon: <ChevronsUpDown />, path: '/example/ui-components/combobox' },
 			{ name: 'Calendar', icon: <CalendarDays />, path: '/example/ui-components/calendar' },
 			{ name: 'Data Table', icon: <Table2 />, path: '/example/ui-components/data-table' },
+			{ name: 'SmartTable', icon: <Table2 />, path: '/example/ui-components/smart-table', new: true },
 		],
 	},
 	{

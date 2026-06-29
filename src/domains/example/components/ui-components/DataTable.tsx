@@ -32,6 +32,12 @@ import {
 
 import { DataTablePagination } from './DataTablePagination';
 
+/**
+ * @deprecated 신규 화면은 `SmartTable`(`@axiom/components/ui`)을 사용하세요.
+ * SmartTable은 컬럼 DSL + 자동 포맷($util) + 클라이언트/서버 모드 + export/행액션을
+ * 한 API로 제공합니다. 저수준 ColumnDef 제어가 꼭 필요할 때만 DataTable을 사용하세요.
+ * 데모: /#/example/ui-components/smart-table
+ */
 export interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];

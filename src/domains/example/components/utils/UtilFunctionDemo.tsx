@@ -66,7 +66,7 @@ export default function UtilFunctionDemo({ doc, ns, impl }: IUtilFunctionDemoPro
 
 	// 호출식 표기: number/문자열/리터럴은 보기 좋게, 객체·배열은 입력한 JSON 텍스트 그대로
 	const display = doc.params
-		.map((p, i) => {
+		.map((_, i) => {
 			const a = args[i];
 			if (typeof a === 'string') return JSON.stringify(a);
 			if (typeof a === 'number' || typeof a === 'boolean') return String(a);

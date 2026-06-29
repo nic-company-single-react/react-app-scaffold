@@ -11,6 +11,7 @@ const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-comp
 const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
+const SmartTableComponent = loadable(() => import('@/domains/example/pages/ui-components/SmartTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
 const UtilIndex = loadable(() => import('@/domains/example/pages/utils/UtilIndex'));
 const NumberUtil = loadable(() => import('@/domains/example/pages/utils/NumberUtil'));
@@ -65,6 +66,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/data-table',
 		element: <DataTableComponent />,
 		name: 'Data Table 컴포넌트',
+	},
+	{
+		path: 'ui-components/smart-table',
+		element: <SmartTableComponent />,
+		name: 'SmartTable 컴포넌트',
 	},
 	{
 		path: 'ui-components/calendar',
