@@ -43,6 +43,7 @@ export function useSmartTable<TRow, TRaw>(props: ISmartTableProps<TRow, TRaw>) {
 		searchKeys,
 		renderRowActions,
 		paginated = true,
+		sortRemoval = true,
 	} = props;
 
 	const mode: 'client' | 'server' = endpoint ? 'server' : 'client';
@@ -96,6 +97,8 @@ export function useSmartTable<TRow, TRaw>(props: ISmartTableProps<TRow, TRaw>) {
 		columns: columnDefs,
 		getRowId,
 		getCoreRowModel: getCoreRowModel(),
+		// false면 오름↔내림 2단계만 순환(해제 단계 제거)
+		enableSortingRemoval: sortRemoval,
 		enableRowSelection: isSelectable,
 		enableMultiRowSelection: selectable !== 'single',
 		onRowSelectionChange: setRowSelection,

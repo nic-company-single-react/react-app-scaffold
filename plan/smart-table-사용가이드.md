@@ -257,6 +257,43 @@ const columns = defineColumns<Ledger>({
 > - `'toggle'` 모드에는 헤더의 "컬럼 숨기기" 항목이 없지만, 컬럼 숨기기는 **상단 툴바의 "컬럼" 버튼**으로 그대로 가능합니다.
 > - 특정 컬럼의 정렬 자체를 끄려면 컬럼 옵션의 `sortable: false`를 쓰면 됩니다(이 경우 라벨만 표시).
 
+#### 정렬 순환 단계 (`sortRemoval`)
+
+`toggle` 모드에서 헤더를 반복 클릭할 때의 순환 단계를 `sortRemoval`로 고를 수 있습니다. 기본은 `true`(3단계)입니다.
+
+| `sortRemoval` | 순환 |
+|---|---|
+| `true` (기본) | 오름차순 → 내림차순 → **해제(원래 순서)** → ... 3단계 |
+| `false` | 오름차순 ↔ 내림차순 2단계만 (해제 없음) |
+
+```tsx
+<SmartTable data={members} columns={columns} />                    // 3단계 (기본)
+<SmartTable data={members} columns={columns} sortRemoval={false} /> // 2단계 (오름/내림만)
+```
+
+#### 정렬 아이콘 (호버 노출 · 교체)
+
+- **호버 노출** — 미정렬 컬럼의 "정렬 가능" 힌트 아이콘은 평소 숨겨져 있다가 **헤더에 마우스를 올리면** 나타납니다. 정렬된 컬럼은 항상 ↑/↓를 진하게 표시합니다. (별도 설정 없이 기본 동작)
+- **아이콘 교체** — `sortIcons`로 오름/내림/미정렬 세 아이콘을 프로젝트 톤에 맞게 갈아끼울 수 있습니다. lucide 아이콘 등 `className`을 받는 컴포넌트를 넘기면 됩니다.
+
+```tsx
+import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
+
+<SmartTable
+  data={members}
+  columns={columns}
+  sortIcons={{ asc: ChevronUp, desc: ChevronDown, unsorted: ChevronsUpDown }}
+/>
+```
+
+| `sortIcons` 키 | 기본 아이콘 | 의미 |
+|---|---|---|
+| `asc` | `ArrowUp` | 오름차순 |
+| `desc` | `ArrowDown` | 내림차순 |
+| `unsorted` | `ChevronsUpDown` | 미정렬(정렬 가능 힌트) |
+
+> 일부만 지정해도 됩니다(나머지는 기본값 유지). `menu` 모드의 드롭다운 항목 아이콘에도 동일하게 적용됩니다.
+
 ### 7.2 서버 모드
 
 `endpoint`만 주면 페이징/정렬/검색이 서버 쿼리 파라미터로 자동 전송됩니다(내부적으로 `useApi` 사용). 검색어는 **300ms 디바운스**됩니다.
@@ -413,6 +450,8 @@ ref.current?.goToPage(0);        // 페이지 이동 (0-base)
 | `searchable` | `boolean` | 검색창 표시 |
 | `searchPlaceholder` | `string` | 검색창 placeholder |
 | `sortMode` | `'menu' \| 'toggle'` | 정렬 헤더 동작 (기본 `toggle`=클릭 토글, `menu`=드롭다운) |
+| `sortRemoval` | `boolean` | 정렬 해제 단계 허용 (기본 `true`=3단계, `false`=오름/내림 2단계) |
+| `sortIcons` | `{ asc?, desc?, unsorted? }` | 정렬 아이콘 교체 (className 받는 컴포넌트) |
 | `searchKeys` | `(keyof TRow)[]` | 클라이언트 검색 대상 (미지정=전 컬럼) |
 | `toolbar` | `boolean` | 상단 툴바 표시 (기본 `true`, `false`면 툴바 전체 숨김) |
 | `paginated` | `boolean` | 하단 페이징 표시 (기본 `true`, 클라이언트 모드 `false`면 전체 데이터 노출) |

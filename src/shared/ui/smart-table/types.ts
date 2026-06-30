@@ -14,6 +14,19 @@ import type { THttpMethod } from '@/core/types/api-types';
 /** 셀/헤더 정렬 */
 export type SmartAlign = 'left' | 'center' | 'right';
 
+/** 아이콘 컴포넌트 타입 (lucide 아이콘 등 className을 받는 컴포넌트) */
+export type SmartIconComponent = React.ComponentType<{ className?: string }>;
+
+/** 정렬 헤더 아이콘 커스터마이즈 (미지정 시 lucide 기본값) */
+export interface ISmartTableSortIcons {
+	/** 오름차순 (기본 ArrowUp) */
+	asc?: SmartIconComponent;
+	/** 내림차순 (기본 ArrowDown) */
+	desc?: SmartIconComponent;
+	/** 미정렬 — 정렬 가능 힌트 (기본 ChevronsUpDown) */
+	unsorted?: SmartIconComponent;
+}
+
 /** Badge 컴포넌트가 지원하는 variant */
 export type BadgeVariant = NonNullable<VariantProps<typeof badgeVariants>['variant']>;
 
@@ -225,11 +238,23 @@ export interface ISmartTableProps<TRow = Record<string, unknown>, TRaw = unknown
 	searchPlaceholder?: string;
 	/**
 	 * 정렬 헤더 동작 방식 (기본 `'toggle'`).
-	 * - `'toggle'`: 헤더 클릭 시 드롭다운 없이 정렬만 토글(오름↔내림↔해제), 상/하 아이콘만 표시
+	 * - `'toggle'`: 헤더 클릭 시 드롭다운 없이 정렬만 토글, 상/하 아이콘만 표시
 	 * - `'menu'`: 헤더 클릭 시 드롭다운(오름차순/내림차순/컬럼 숨기기) 표시
 	 *   (컬럼 숨기기는 `'toggle'`에서도 상단 툴바의 "컬럼" 버튼으로 가능합니다.)
 	 */
 	sortMode?: 'menu' | 'toggle';
+	/**
+	 * 정렬 해제 단계 허용 여부 (기본 `true`).
+	 * - `true`: 오름차순 → 내림차순 → 해제(원래 순서) 3단계 순환
+	 * - `false`: 오름차순 ↔ 내림차순 2단계만 순환 (해제 없음)
+	 * `sortMode='toggle'`의 클릭 순환에 적용됩니다.
+	 */
+	sortRemoval?: boolean;
+	/**
+	 * 정렬 헤더 아이콘 교체 (오름/내림/미정렬). 미지정 시 lucide 기본 아이콘.
+	 * @example sortIcons={{ asc: ChevronUp, desc: ChevronDown, unsorted: ChevronsUpDown }}
+	 */
+	sortIcons?: ISmartTableSortIcons;
 	/** 클라이언트 검색 대상 컬럼 (미지정=전 컬럼) */
 	searchKeys?: (keyof TRow)[];
 	/**
