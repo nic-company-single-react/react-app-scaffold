@@ -240,6 +240,23 @@ const columns = defineColumns<Ledger>({
 
 > **서버 모드 주의** — `paginated={false}`는 클라이언트 모드에서만 "전체 표시"가 됩니다. 서버 모드(`endpoint`)에서는 UI만 숨겨지고 데이터는 여전히 서버 페이지 단위로 조회되므로, 전체를 받으려면 `pageSize`를 충분히 크게 주세요.
 
+### 7.1.2 정렬 헤더 동작 방식 (`sortMode`)
+
+정렬 가능한 컬럼의 헤더 클릭 동작을 `sortMode` prop으로 고를 수 있습니다. 기본은 `'toggle'`(헤더 클릭 시 바로 정렬)입니다.
+
+| `sortMode` | 동작 |
+|---|---|
+| `'toggle'` (기본) | 드롭다운 없이 **헤더 클릭으로 정렬만 토글**(오름↔내림↔해제), 상/하 아이콘만 표시 |
+| `'menu'` | 헤더 클릭 시 **드롭다운**(오름차순 / 내림차순 / 컬럼 숨기기) 표시 |
+
+```tsx
+<SmartTable data={members} columns={columns} />                 // 기본 toggle
+<SmartTable data={members} columns={columns} sortMode="menu" /> // 드롭다운 방식
+```
+
+> - `'toggle'` 모드에는 헤더의 "컬럼 숨기기" 항목이 없지만, 컬럼 숨기기는 **상단 툴바의 "컬럼" 버튼**으로 그대로 가능합니다.
+> - 특정 컬럼의 정렬 자체를 끄려면 컬럼 옵션의 `sortable: false`를 쓰면 됩니다(이 경우 라벨만 표시).
+
 ### 7.2 서버 모드
 
 `endpoint`만 주면 페이징/정렬/검색이 서버 쿼리 파라미터로 자동 전송됩니다(내부적으로 `useApi` 사용). 검색어는 **300ms 디바운스**됩니다.
@@ -395,6 +412,7 @@ ref.current?.goToPage(0);        // 페이지 이동 (0-base)
 | `pageSizeOptions` | `number[]` | 페이지 크기 옵션 (기본 `[10,20,30,50]`) |
 | `searchable` | `boolean` | 검색창 표시 |
 | `searchPlaceholder` | `string` | 검색창 placeholder |
+| `sortMode` | `'menu' \| 'toggle'` | 정렬 헤더 동작 (기본 `toggle`=클릭 토글, `menu`=드롭다운) |
 | `searchKeys` | `(keyof TRow)[]` | 클라이언트 검색 대상 (미지정=전 컬럼) |
 | `toolbar` | `boolean` | 상단 툴바 표시 (기본 `true`, `false`면 툴바 전체 숨김) |
 | `paginated` | `boolean` | 하단 페이징 표시 (기본 `true`, 클라이언트 모드 `false`면 전체 데이터 노출) |

@@ -223,6 +223,13 @@ export interface ISmartTableProps<TRow = Record<string, unknown>, TRaw = unknown
 	searchable?: boolean;
 	/** 검색창 placeholder */
 	searchPlaceholder?: string;
+	/**
+	 * 정렬 헤더 동작 방식 (기본 `'toggle'`).
+	 * - `'toggle'`: 헤더 클릭 시 드롭다운 없이 정렬만 토글(오름↔내림↔해제), 상/하 아이콘만 표시
+	 * - `'menu'`: 헤더 클릭 시 드롭다운(오름차순/내림차순/컬럼 숨기기) 표시
+	 *   (컬럼 숨기기는 `'toggle'`에서도 상단 툴바의 "컬럼" 버튼으로 가능합니다.)
+	 */
+	sortMode?: 'menu' | 'toggle';
 	/** 클라이언트 검색 대상 컬럼 (미지정=전 컬럼) */
 	searchKeys?: (keyof TRow)[];
 	/**

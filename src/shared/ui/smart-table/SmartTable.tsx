@@ -45,6 +45,7 @@ export default function SmartTable<TRow = Record<string, unknown>, TRaw = unknow
 		searchPlaceholder = '검색...',
 		toolbar = true,
 		paginated = true,
+		sortMode = 'toggle',
 		selectable,
 		exportable,
 		exporter,
@@ -142,6 +143,7 @@ export default function SmartTable<TRow = Record<string, unknown>, TRaw = unknow
 				column={column}
 				title={cell.label}
 				align={cell.align}
+				sortMode={sortMode}
 			/>
 		) : (
 			cell.label
