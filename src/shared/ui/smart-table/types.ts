@@ -255,6 +255,14 @@ export interface ISmartTableProps<TRow = Record<string, unknown>, TRaw = unknown
 	 * @example sortIcons={{ asc: ChevronUp, desc: ChevronDown, unsorted: ChevronsUpDown }}
 	 */
 	sortIcons?: ISmartTableSortIcons;
+	/**
+	 * 정렬 표시/동작 방식 (기본 `'hover'`).
+	 * - `'hover'`: 미정렬 힌트 아이콘을 헤더 호버 시 노출 (정렬되면 항상 화살표)
+	 * - `'always'`: 미정렬 힌트 아이콘도 항상 표시
+	 * - `'none'`: 정렬 아이콘을 모두 숨김 (헤더 클릭 정렬은 동작)
+	 * - `'off'`: 정렬 기능 자체 비활성 (클릭해도 정렬 안 됨, 라벨만)
+	 */
+	sortDisplay?: 'hover' | 'always' | 'none' | 'off';
 	/** 클라이언트 검색 대상 컬럼 (미지정=전 컬럼) */
 	searchKeys?: (keyof TRow)[];
 	/**

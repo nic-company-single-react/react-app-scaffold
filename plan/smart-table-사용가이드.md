@@ -271,10 +271,29 @@ const columns = defineColumns<Ledger>({
 <SmartTable data={members} columns={columns} sortRemoval={false} /> // 2단계 (오름/내림만)
 ```
 
-#### 정렬 아이콘 (호버 노출 · 교체)
+#### 정렬 표시/동작 방식 (`sortDisplay`)
 
-- **호버 노출** — 미정렬 컬럼의 "정렬 가능" 힌트 아이콘은 평소 숨겨져 있다가 **헤더에 마우스를 올리면** 나타납니다. 정렬된 컬럼은 항상 ↑/↓를 진하게 표시합니다. (별도 설정 없이 기본 동작)
-- **아이콘 교체** — `sortIcons`로 오름/내림/미정렬 세 아이콘을 프로젝트 톤에 맞게 갈아끼울 수 있습니다. lucide 아이콘 등 `className`을 받는 컴포넌트를 넘기면 됩니다.
+정렬 아이콘 노출과 정렬 기능 on/off를 `sortDisplay` 하나로 조절합니다. 기본은 `'hover'`입니다.
+
+| `sortDisplay` | 동작 |
+|---|---|
+| `'hover'` (기본) | 미정렬 힌트 아이콘을 **헤더 호버 시** 노출 (정렬된 컬럼은 항상 ↑/↓) |
+| `'always'` | 미정렬 힌트 아이콘도 **항상 표시** |
+| `'none'` | 정렬 아이콘을 **모두 숨김** (헤더 클릭 정렬은 그대로 동작) |
+| `'off'` | **정렬 기능 자체 비활성** (클릭해도 정렬 안 됨, 라벨만) |
+
+```tsx
+<SmartTable data={members} columns={columns} />                   // hover (기본)
+<SmartTable data={members} columns={columns} sortDisplay="always" />
+<SmartTable data={members} columns={columns} sortDisplay="none" />
+<SmartTable data={members} columns={columns} sortDisplay="off" />  // 정렬 끄기
+```
+
+> 특정 컬럼만 정렬을 끄려면 컬럼 옵션의 `sortable: false`를 쓰세요. `sortDisplay="off"`는 **테이블 전체** 정렬을 끕니다.
+
+#### 정렬 아이콘 교체 (`sortIcons`)
+
+`sortIcons`로 오름/내림/미정렬 세 아이콘을 프로젝트 톤에 맞게 갈아끼울 수 있습니다. lucide 아이콘 등 `className`을 받는 컴포넌트를 넘기면 됩니다.
 
 ```tsx
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
@@ -452,6 +471,7 @@ ref.current?.goToPage(0);        // 페이지 이동 (0-base)
 | `sortMode` | `'menu' \| 'toggle'` | 정렬 헤더 동작 (기본 `toggle`=클릭 토글, `menu`=드롭다운) |
 | `sortRemoval` | `boolean` | 정렬 해제 단계 허용 (기본 `true`=3단계, `false`=오름/내림 2단계) |
 | `sortIcons` | `{ asc?, desc?, unsorted? }` | 정렬 아이콘 교체 (className 받는 컴포넌트) |
+| `sortDisplay` | `'hover'\|'always'\|'none'\|'off'` | 정렬 아이콘 노출/기능 (기본 `hover`) |
 | `searchKeys` | `(keyof TRow)[]` | 클라이언트 검색 대상 (미지정=전 컬럼) |
 | `toolbar` | `boolean` | 상단 툴바 표시 (기본 `true`, `false`면 툴바 전체 숨김) |
 | `paginated` | `boolean` | 하단 페이징 표시 (기본 `true`, 클라이언트 모드 `false`면 전체 데이터 노출) |

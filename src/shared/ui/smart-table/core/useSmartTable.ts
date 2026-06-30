@@ -44,6 +44,7 @@ export function useSmartTable<TRow, TRaw>(props: ISmartTableProps<TRow, TRaw>) {
 		renderRowActions,
 		paginated = true,
 		sortRemoval = true,
+		sortDisplay = 'hover',
 	} = props;
 
 	const mode: 'client' | 'server' = endpoint ? 'server' : 'client';
@@ -97,6 +98,8 @@ export function useSmartTable<TRow, TRaw>(props: ISmartTableProps<TRow, TRaw>) {
 		columns: columnDefs,
 		getRowId,
 		getCoreRowModel: getCoreRowModel(),
+		// sortDisplay='off'면 정렬 기능 자체 비활성 (헤더는 라벨만 렌더)
+		enableSorting: sortDisplay !== 'off',
 		// false면 오름↔내림 2단계만 순환(해제 단계 제거)
 		enableSortingRemoval: sortRemoval,
 		enableRowSelection: isSelectable,

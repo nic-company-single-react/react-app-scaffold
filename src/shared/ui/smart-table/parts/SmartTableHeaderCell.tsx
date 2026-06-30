@@ -30,6 +30,8 @@ export interface ISmartTableHeaderCellProps<TData, TValue> {
 	sortMode?: 'menu' | 'toggle';
 	/** 정렬 아이콘 교체 (오름/내림/미정렬) */
 	sortIcons?: ISmartTableSortIcons;
+	/** 정렬 아이콘 표시 방식 ('off'는 useSmartTable에서 getCanSort=false로 처리) */
+	sortDisplay?: 'hover' | 'always' | 'none' | 'off';
 }
 
 export default function SmartTableHeaderCell<TData, TValue>({
@@ -38,9 +40,11 @@ export default function SmartTableHeaderCell<TData, TValue>({
 	align = 'left',
 	sortMode = 'toggle',
 	sortIcons,
+	sortDisplay = 'hover',
 }: ISmartTableHeaderCellProps<TData, TValue>): React.ReactNode {
 	const justify = align === 'right' ? 'justify-end' : align === 'center' ? 'justify-center' : 'justify-start';
 
+	// 정렬 불가(sortDisplay='off' 포함): 라벨만
 	if (!column.getCanSort()) {
 		return <div className={cn('flex items-center', justify)}>{title}</div>;
 	}
@@ -51,10 +55,16 @@ export default function SmartTableHeaderCell<TData, TValue>({
 
 	const sorted = column.getIsSorted();
 	const SortIcon = sorted === 'desc' ? DescIcon : sorted === 'asc' ? AscIcon : UnsortedIcon;
-	// 정렬됨: 진하게 항상 표시 / 미정렬: 평소 숨김, 헤더(group) 호버 시 노출
+	// 'none'이면 아이콘 자체를 렌더하지 않음 (정렬 클릭은 동작)
+	const showIcon = sortDisplay !== 'none';
+	// 정렬됨: 진하게 항상 표시 / 미정렬: always=항상 / hover=평소 숨김, 헤더(group) 호버 시 노출
 	const iconClassName = cn(
 		'size-4',
-		sorted ? 'text-foreground' : 'text-muted-foreground/70 opacity-0 transition-opacity group-hover:opacity-100',
+		sorted
+			? 'text-foreground'
+			: sortDisplay === 'always'
+				? 'text-muted-foreground/70'
+				: 'text-muted-foreground/70 opacity-0 transition-opacity group-hover:opacity-100',
 	);
 
 	// toggle 모드: 드롭다운 없이 클릭으로 정렬만 토글
@@ -68,7 +78,7 @@ export default function SmartTableHeaderCell<TData, TValue>({
 					onClick={column.getToggleSortingHandler()}
 				>
 					<span>{title}</span>
-					<SortIcon className={iconClassName} />
+					{showIcon && <SortIcon className={iconClassName} />}
 				</Button>
 			</div>
 		);
@@ -84,7 +94,7 @@ export default function SmartTableHeaderCell<TData, TValue>({
 						className="group -ml-2 h-8 data-[state=open]:bg-accent"
 					>
 						<span>{title}</span>
-						<SortIcon className={iconClassName} />
+						{showIcon && <SortIcon className={iconClassName} />}
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="start">
