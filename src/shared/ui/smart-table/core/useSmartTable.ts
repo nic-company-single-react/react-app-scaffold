@@ -42,6 +42,7 @@ export function useSmartTable<TRow, TRaw>(props: ISmartTableProps<TRow, TRaw>) {
 		pageSize = 10,
 		searchKeys,
 		renderRowActions,
+		paginated = true,
 	} = props;
 
 	const mode: 'client' | 'server' = endpoint ? 'server' : 'client';
@@ -104,7 +105,8 @@ export function useSmartTable<TRow, TRaw>(props: ISmartTableProps<TRow, TRaw>) {
 			? {
 					getSortedRowModel: getSortedRowModel(),
 					getFilteredRowModel: getFilteredRowModel(),
-					getPaginationRowModel: getPaginationRowModel(),
+					// paginated=false면 페이지네이션 row model을 빼서 전체 행을 한 번에 노출
+					...(paginated ? { getPaginationRowModel: getPaginationRowModel() } : {}),
 					onSortingChange: setClientSorting,
 					onPaginationChange: setClientPagination,
 					onGlobalFilterChange: setSearchValue,

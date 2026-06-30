@@ -218,6 +218,28 @@ const columns = defineColumns<Ledger>({
 
 정렬/검색/페이지/컬럼토글/행선택이 모두 **로컬(tanstack row model)** 로 처리됩니다.
 
+### 7.1.1 툴바/페이징 숨기기 (가장 기본 테이블만)
+
+상단 툴바(검색·컬럼토글·export·일괄액션·슬롯)와 하단 페이징 UI는 각각 `toolbar`/`paginated` prop으로 끌 수 있습니다. 둘 다 **기본값 `true`(표시)** 라 기존 사용처에는 영향이 없습니다.
+
+```tsx
+<SmartTable
+  data={members}
+  columns={columns}
+  toolbar={false}     // 상단 툴바 전체 숨김 (어떤 툴바 요소가 켜져 있어도 숨김)
+  paginated={false}   // 하단 페이징 UI 숨김
+/>
+```
+
+| prop | 동작 |
+|---|---|
+| `toolbar={false}` | 검색/컬럼토글/export/일괄액션/슬롯을 포함한 **툴바 전체**를 숨김 |
+| `paginated={false}` | 하단 페이징 UI를 숨김. **클라이언트 모드에선 페이지 분할도 빠져 입력한 데이터가 전부 렌더됨** |
+
+위 예시처럼 둘 다 끄면 **머리글 + 본문 행만** 남는 가장 기본 형태가 됩니다.
+
+> **서버 모드 주의** — `paginated={false}`는 클라이언트 모드에서만 "전체 표시"가 됩니다. 서버 모드(`endpoint`)에서는 UI만 숨겨지고 데이터는 여전히 서버 페이지 단위로 조회되므로, 전체를 받으려면 `pageSize`를 충분히 크게 주세요.
+
 ### 7.2 서버 모드
 
 `endpoint`만 주면 페이징/정렬/검색이 서버 쿼리 파라미터로 자동 전송됩니다(내부적으로 `useApi` 사용). 검색어는 **300ms 디바운스**됩니다.
@@ -374,6 +396,8 @@ ref.current?.goToPage(0);        // 페이지 이동 (0-base)
 | `searchable` | `boolean` | 검색창 표시 |
 | `searchPlaceholder` | `string` | 검색창 placeholder |
 | `searchKeys` | `(keyof TRow)[]` | 클라이언트 검색 대상 (미지정=전 컬럼) |
+| `toolbar` | `boolean` | 상단 툴바 표시 (기본 `true`, `false`면 툴바 전체 숨김) |
+| `paginated` | `boolean` | 하단 페이징 표시 (기본 `true`, 클라이언트 모드 `false`면 전체 데이터 노출) |
 
 ### 스타일
 | prop | 타입 | 설명 |

@@ -225,6 +225,17 @@ export interface ISmartTableProps<TRow = Record<string, unknown>, TRaw = unknown
 	searchPlaceholder?: string;
 	/** 클라이언트 검색 대상 컬럼 (미지정=전 컬럼) */
 	searchKeys?: (keyof TRow)[];
+	/**
+	 * 상단 툴바(검색/컬럼토글/export/일괄액션/슬롯) 표시 여부 (기본 true).
+	 * `false`면 어떤 툴바 요소가 켜져 있어도 툴바 전체를 숨깁니다.
+	 */
+	toolbar?: boolean;
+	/**
+	 * 하단 페이징 UI 표시 여부 (기본 true).
+	 * 클라이언트 모드에서 `false`면 페이지 분할 없이 전체 데이터를 한 번에 렌더합니다.
+	 * (서버 모드에서는 UI만 숨겨지고 데이터는 여전히 서버 페이지 단위로 조회됩니다.)
+	 */
+	paginated?: boolean;
 
 	// ── 스타일 ───────────────────────────────────────────────
 	/** 외형 (기본 card) */

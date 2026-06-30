@@ -43,6 +43,8 @@ export default function SmartTable<TRow = Record<string, unknown>, TRaw = unknow
 		pageSizeOptions = [10, 20, 30, 50],
 		searchable = false,
 		searchPlaceholder = '검색...',
+		toolbar = true,
+		paginated = true,
 		selectable,
 		exportable,
 		exporter,
@@ -63,7 +65,9 @@ export default function SmartTable<TRow = Record<string, unknown>, TRaw = unknow
 	const isSelectable = !!selectable;
 	const isExportable = !!exportable;
 	const visibleColumnCount = table.getVisibleLeafColumns().length;
-	const showToolbar = searchable || isExportable || !!toolbarStart || !!toolbarEnd || table.getAllColumns().some((c) => c.getCanHide()) || (!!bulkActions?.length && isSelectable);
+	const showToolbar =
+		toolbar &&
+		(searchable || isExportable || !!toolbarStart || !!toolbarEnd || table.getAllColumns().some((c) => c.getCanHide()) || (!!bulkActions?.length && isSelectable));
 
 	// ── 명령형 핸들 ──────────────────────────────────────────
 	useImperativeHandle(
@@ -288,12 +292,14 @@ export default function SmartTable<TRow = Record<string, unknown>, TRaw = unknow
 				</Table>
 			</div>
 
-			<SmartTablePagination
-				table={table}
-				pageSizeOptions={pageSizeOptions}
-				selectable={isSelectable}
-				className={classNames?.pagination}
-			/>
+			{paginated && (
+				<SmartTablePagination
+					table={table}
+					pageSizeOptions={pageSizeOptions}
+					selectable={isSelectable}
+					className={classNames?.pagination}
+				/>
+			)}
 		</div>
 	);
 }
