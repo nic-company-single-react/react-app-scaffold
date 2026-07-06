@@ -14,11 +14,20 @@ const defaultQueryConfig: DefaultOptions = {
 };
 
 export function makeQueryClient(config?: QueryClientConfig): QueryClient {
+	const userDefaults = config?.defaultOptions ?? {};
 	return new QueryClient({
 		...config,
 		defaultOptions: {
 			...defaultQueryConfig,
-			...(config?.defaultOptions ?? {}),
+			...userDefaults,
+			queries: {
+				...defaultQueryConfig.queries,
+				...userDefaults.queries,       // staleTime만 넘기면 나머지 기본값 유지
+			},
+			mutations: {
+				...defaultQueryConfig.mutations,
+				...userDefaults.mutations,
+			},
 		},
 	});
 }
