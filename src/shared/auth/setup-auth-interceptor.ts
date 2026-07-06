@@ -1,5 +1,7 @@
 import { registerRequestInterceptor, registerResponseInterceptor } from '@/core/api';
 import { getAccessToken } from './token-store';
+// 아래 주석 예시(토큰 영속 저장 / 401 로그아웃)를 활성화할 때 사용합니다.
+// import { authConfig } from '@/config';
 
 /** setupAuthInterceptor가 등록한 인터셉터들의 해제용 id 묶음. */
 export interface IAuthInterceptorIds {
@@ -49,7 +51,7 @@ export function setupAuthInterceptor(): IAuthInterceptorIds {
 
 			//	if (token) {
 			//		setAccessToken(token); // 메모리 즉시 갱신 → 다음 요청부터 헤더에 주입
-			//		localStorage.setItem(import.meta.env.VITE_LOCALSTORAGE_TOKEN_NAME, token); // 영속 저장(새로고침 유지)
+			//		localStorage.setItem(authConfig.tokenStorageKey, token); // 영속 저장(새로고침 유지)
 			//	}
 			//}
 			return response;
@@ -59,8 +61,8 @@ export function setupAuthInterceptor(): IAuthInterceptorIds {
 			// 예시) 401이면 토큰 정리 후 로그인 페이지로 보내기 — 필요해지면 주석 해제해서 사용.
 			// if (error.response?.status === 401) {
 			// 	clearAccessToken();
-			// 	localStorage.removeItem(import.meta.env.VITE_LOCALSTORAGE_TOKEN_NAME);
-			// 	$router.push('/auth/login');
+			// 	localStorage.removeItem(authConfig.tokenStorageKey);
+			// 	$router.push(authConfig.loginPath);
 			// }
 
 			// 에러 체인을 끊지 않도록 반드시 reject로 다시 던진다.

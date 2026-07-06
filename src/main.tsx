@@ -4,7 +4,7 @@ import App from './App.tsx';
 import './assets/styles/app.css';
 import { initApiConfig } from '@/core/api/api-config';
 import { initQueryConfig } from '@/core/query';
-import { apiConfig, queryConfig } from '@/config';
+import { apiConfig, queryConfig, authConfig } from '@/config';
 import { registerWindowUtil } from '@/core/utils/util';
 import { registerWindowUI } from '@/core/ui';
 import { setupAuthInterceptor, setAccessToken } from '@/shared/auth';
@@ -22,7 +22,7 @@ initApiConfig(apiConfig);
 initQueryConfig(queryConfig);
 
 // JWT access token을 모든 API 요청 헤더에 자동 주입(필요 시 주석제거해서 사용) =============================
-const saved = localStorage.getItem(import.meta.env.VITE_LOCALSTORAGE_TOKEN_NAME);
+const saved = localStorage.getItem(authConfig.tokenStorageKey);
 if (saved) setAccessToken(saved);
 setupAuthInterceptor();
 

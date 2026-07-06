@@ -5,3 +5,4 @@
  */
 export { queryConfig } from './query.config';
 export { apiConfig } from './api.config';
+export { authConfig } from './auth.config';
