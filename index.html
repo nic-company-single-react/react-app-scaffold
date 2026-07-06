@@ -16,7 +16,8 @@
 			// FOUC 방지: React 마운트 전에 저장된 테마를 미리 적용
 			(function () {
 				try {
-					var stored = localStorage.getItem('theme');
+					// 저장 키는 .env 의 VITE_THEME_STORAGE_KEY 를 Vite 가 빌드시 치환 (src/config/theme.config.ts 와 동일 소스)
+					var stored = localStorage.getItem('%VITE_THEME_STORAGE_KEY%');
 					var isDark =
 						stored === 'dark' ||
 						(!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);

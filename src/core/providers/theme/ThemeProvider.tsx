@@ -1,16 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ThemeContext, type Theme } from '@/core/context/theme/ThemeContext';
+import { themeConfig } from '@/config';
 
 export interface IThemeProviderProps {
 	children: React.ReactNode;
 }
 
-const STORAGE_KEY = 'theme';
-
 function getInitialTheme(): Theme {
-	if (typeof window === 'undefined') return 'light';
+	if (typeof window === 'undefined') return themeConfig.defaultTheme;
 
-	const stored = window.localStorage.getItem(STORAGE_KEY);
+	const stored = window.localStorage.getItem(themeConfig.storageKey);
 	if (stored === 'light' || stored === 'dark') {
 		return stored;
 	}
@@ -23,8 +22,8 @@ export default function ThemeProvider({ children }: IThemeProviderProps): React.
 
 	useEffect(() => {
 		const root = document.documentElement;
-		root.classList.toggle('dark', theme === 'dark');
-		window.localStorage.setItem(STORAGE_KEY, theme);
+		root.classList.toggle(themeConfig.darkClassName, theme === 'dark');
+		window.localStorage.setItem(themeConfig.storageKey, theme);
 	}, [theme]);
 
 	const setTheme = useCallback((next: Theme) => {

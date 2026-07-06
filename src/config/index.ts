@@ -7,3 +7,4 @@ export { queryConfig } from './query.config';
 export { apiConfig } from './api.config';
 export { authConfig } from './auth.config';
 export { routerConfig } from './router.config';
+export { themeConfig } from './theme.config';
