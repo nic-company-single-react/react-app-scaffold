@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
 				'@': resolve(__dirname, './src'),
 				'@axiom/components/ui': resolve(__dirname, './src/shared/ui'),
 				'@axiom/hooks': resolve(__dirname, './src/core/hooks'),
+				'@axiom/store': resolve(__dirname, './src/core/store'),
 				'@app-types': resolve(__dirname, './src/types'),
 			},
 		},

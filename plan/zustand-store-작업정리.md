@@ -30,7 +30,9 @@
 ### 2-2. 생성: `defineStore` (표준 — 작성 편의 우선, `this` 안 씀)
 
 ```ts
-// src/core/store/defineStore.ts (도구, 불가침) — immer 내장
+// 도메인 스토어 파일 — 팩토리는 @axiom/store 로 import (아래 2-4 참고)
+import { defineStore } from '@axiom/store';   // immer 내장 표준 팩토리
+
 export const useXxxStore = defineStore({
   name: 'xxx',
   persist: true,
@@ -94,6 +96,23 @@ const { items, toggle } = useFavoritesStore();   // 항상 이 형태
 - **거대한 만능 스토어를 만들지 말 것** — 이게 이 규칙의 유일한 전제.
 - (참고: 셀렉터 방식은 "무관한 값이 많은 큰 스토어"에서만 이득인데, 위 원칙을 지키면 그런 스토어를 안 만들게 됨.)
 
+### 2-4. import 경로: 팩토리는 `@axiom/store` 로 가져온다
+
+스캐폴드 공개 API(`@axiom/*`) 규칙에 맞춰, core 스토어 인프라도 alias 로 노출한다.
+
+```ts
+// ✅ 팩토리(도구) — @axiom/store 로 import
+import { defineStore, createStore } from '@axiom/store';
+
+// ❌ 내부 경로 직접 import 금지
+import { defineStore } from '@/core/store/defineStore';
+```
+
+- `@axiom/store` → `src/core/store/index.ts`(배럴). `@axiom/hooks`(`useApi`)가 `core/hooks/index.ts` 로 나가는 것과 **완전히 같은 대칭**.
+- **인프라(core)만** 이 alias 로 노출한다. **도메인 스토어**(`useFavoritesStore` 등)는 여전히 `@/domains/<도메인>/store/...` 로 import → core/domain 경계 유지.
+- alias 는 4곳에 대칭 등록되어 있다(하나라도 빠지면 빌드/타입/스토리북 중 하나가 깨짐): `tsconfig.json`, `tsconfig.app.json`, `vite.config.ts`, `.storybook/main.ts`.
+- 배럴이 노출하는 것: `defineStore` / `createStore` + 각 config 타입(`IDefineStoreConfig`, `ICreateStoreOptions`).
+
 ---
 
 ## 3. 만든/바꾼 파일
@@ -103,6 +122,7 @@ const { items, toggle } = useFavoritesStore();   // 항상 이 형태
 |---|---|---|
 | `src/core/store/defineStore.ts` | **표준 팩토리**(Pinia 스타일, immer 내장) | core(불가침) |
 | `src/core/store/createStore.ts` | 저수준 팩토리(immer 없이 순정 불변 업데이트) | core(불가침) |
+| `src/core/store/index.ts` | **배럴** — `@axiom/store` 공개 API(`defineStore`/`createStore` + 타입) | core(불가침) |
 | `src/domains/example/store/favoritesStore.ts` | 즐겨찾기 스토어 인스턴스(`useFavoritesStore`, `defineStore` 사용) | 도메인 전용 |
 | `src/domains/example/pages/store/FavoriteCatalog.tsx` | **저장 페이지** — 하트로 담기 | pages |
 | `src/domains/example/pages/store/FavoriteList.tsx` | **사용 페이지** — 스토어에서 읽기 | pages |
@@ -112,6 +132,8 @@ const { items, toggle } = useFavoritesStore();   // 항상 이 형태
 |---|---|
 | `src/domains/example/router/index.tsx` | 라우트 2개 등록: `store/catalog`, `store/favorites` |
 | `src/shared/layouts/default/config/navigation.tsx` | 사이드바 "Store (Zustand)" 그룹 추가 |
+| `src/domains/example/store/favoritesStore.ts` | import 경로 `@/core/store/defineStore` → **`@axiom/store`** |
+| `tsconfig.json` / `tsconfig.app.json` / `vite.config.ts` / `.storybook/main.ts` | `@axiom/store` alias 4곳 대칭 등록 |
 
 ### 데모 동작
 - 담기 페이지(`/example/store/catalog`): 상품 목록에서 하트 → `useFavoritesStore.toggle(item)` 저장
@@ -144,7 +166,7 @@ npm run dev                # 사이드바 > Store (Zustand) 에서 실제 동작
 ## 5. 남은 일 / 다음 후보 (선택)
 
 - [ ] **브라우저 실동작 확인** (아직 안 함): 담기 → 목록 이동 → 새로고침 유지까지 눈으로 검증
-- [ ] `src/core/store/index.ts` 배럴 export 추가 여부 (현재는 `@/core/store/createStore` 직접 import). `useApi`가 `@axiom/hooks` 로 나가는 것과 대칭 맞출지 결정
+- [x] `src/core/store/index.ts` 배럴 export 추가 + `@axiom/store` alias 도입 완료 → 아래 **2-4** 참고. `useApi`(`@axiom/hooks`)와 대칭 맞춤.
 - [ ] Storybook / 문서에 사용법 반영할지
 - [ ] `shared/store/` 로 승격하는 실제 케이스가 생기면 그때 예시 하나 더
 

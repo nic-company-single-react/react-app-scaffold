@@ -51,6 +51,7 @@ const config: StorybookConfig = {
 					'@': normalizePath(resolve(root, 'src')),
 					'@axiom/components/ui': normalizePath(resolve(root, 'src/shared/ui')),
 					'@axiom/hooks': normalizePath(resolve(root, 'src/core/hooks/index.ts')),
+					'@axiom/store': normalizePath(resolve(root, 'src/core/store/index.ts')),
 					'@app-types': normalizePath(resolve(root, 'src/types')),
 				},
 			},

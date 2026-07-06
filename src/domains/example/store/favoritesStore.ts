@@ -1,4 +1,4 @@
-import { defineStore } from '@/core/store/defineStore';
+import { defineStore } from '@axiom/store';
 
 /**
  * 즐겨찾기 한 항목의 스냅샷.

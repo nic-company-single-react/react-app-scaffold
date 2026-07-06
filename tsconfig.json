@@ -6,7 +6,8 @@
 			"@/*": ["./src/*"],
 			"@axiom/components/ui": ["./src/shared/ui"],
 			"@axiom/components/ui/*": ["./src/shared/ui/*"],
-			"@axiom/hooks": ["./src/core/hooks/index.ts"]
+			"@axiom/hooks": ["./src/core/hooks/index.ts"],
+			"@axiom/store": ["./src/core/store/index.ts"]
 		}
 	}
 }
