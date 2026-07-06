@@ -4,7 +4,7 @@ import App from './App.tsx';
 import './assets/styles/app.css';
 import { initApiConfig } from '@/core/api/api-config';
 import { initQueryConfig } from '@/core/query';
-import { queryConfig } from '@/config';
+import { apiConfig, queryConfig } from '@/config';
 import { registerWindowUtil } from '@/core/utils/util';
 import { registerWindowUI } from '@/core/ui';
 import { setupAuthInterceptor, setAccessToken } from '@/shared/auth';
@@ -15,10 +15,7 @@ registerWindowUtil();
 // 전역 $ui 등록(window.$ui : $ui.alert / $ui.confirm) =============================
 registerWindowUI();
 
-// 앱에서 REST API 호출용 API 설정(전역에 저장된 : window.__MF_APP_CONFIG__) =============================
-const apiConfig = {
-	baseURL: import.meta.env.VITE_API_BASE_URL,
-};
+// 앱에서 REST API 호출용 API 설정 주입(push): src/config/api.config.ts → core(전역 저장: window.__MF_APP_CONFIG__) =====
 initApiConfig(apiConfig);
 
 // Query(캐시) 설정 주입(push): src/config/query.config.ts 의 override를 core에 전달 ====================
