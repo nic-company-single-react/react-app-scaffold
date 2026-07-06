@@ -20,6 +20,8 @@ const DateUtil = loadable(() => import('@/domains/example/pages/utils/DateUtil')
 const FinanceUtil = loadable(() => import('@/domains/example/pages/utils/FinanceUtil'));
 const ObjectUtil = loadable(() => import('@/domains/example/pages/utils/ObjectUtil'));
 const ArrayUtil = loadable(() => import('@/domains/example/pages/utils/ArrayUtil'));
+const FavoriteCatalog = loadable(() => import('@/domains/example/pages/store/FavoriteCatalog'));
+const FavoriteList = loadable(() => import('@/domains/example/pages/store/FavoriteList'));
 
 const routes: TAppRoute[] = [
 	{
@@ -111,6 +113,16 @@ const routes: TAppRoute[] = [
 		path: 'utils/array',
 		element: <ArrayUtil />,
 		name: 'array 유틸',
+	},
+	{
+		path: 'store/catalog',
+		element: <FavoriteCatalog />,
+		name: '즐겨찾기 담기',
+	},
+	{
+		path: 'store/favorites',
+		element: <FavoriteList />,
+		name: '즐겨찾기 목록',
 	},
 ];
 

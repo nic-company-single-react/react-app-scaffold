@@ -58,15 +58,18 @@ export interface ICreateStoreOptions<TState> {
  */
 export function createStore<TState extends object, TActions extends object>(
 	initialState: TState,
-	createActions: (set: SetState<TState & TActions>, get: () => TState & TActions) => TActions,
+	createActions: (set: SetState<TState>, get: () => TState) => TActions,
 	options: ICreateStoreOptions<TState>,
 ) {
 	type Store = TState & TActions;
 
 	// 초기 상태 + 액션을 하나의 스토어 초기화 함수로 합친다.
+	// createActions 의 set/get 은 TState 로 좁혀 전달한다.
+	// (이렇게 해야 TActions 가 반환값에서 순환 없이 추론된다. 액션끼리 호출이 필요하면
+	//  get() 대신 스토어 훅의 getState() 를 직접 쓰면 된다.)
 	const initializer: StateCreator<Store, [], []> = (set, get) => ({
 		...initialState,
-		...createActions(set as SetState<Store>, get),
+		...createActions(set as SetState<TState>, get as unknown as () => TState),
 	});
 
 	// 미들웨어를 단계적으로 씌운다. 각 단계의 mutator 튜플이 달라 타입 합성이 까다로우므로,

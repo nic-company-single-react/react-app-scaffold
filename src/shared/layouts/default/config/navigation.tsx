@@ -16,6 +16,9 @@ import {
 	Landmark,
 	Braces,
 	ListTree,
+	Boxes,
+	Store,
+	Heart,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -86,6 +89,14 @@ export const navItems: NavItem[] = [
 			{ name: 'finance', icon: <Landmark />, path: '/example/utils/finance' },
 			{ name: 'object', icon: <Braces />, path: '/example/utils/object' },
 			{ name: 'array', icon: <ListTree />, path: '/example/utils/array' },
+		],
+	},
+	{
+		icon: <Boxes />,
+		name: 'Store (Zustand)',
+		subItems: [
+			{ name: '즐겨찾기 담기', icon: <Store />, path: '/example/store/catalog', new: true },
+			{ name: '즐겨찾기 목록', icon: <Heart />, path: '/example/store/favorites' },
 		],
 	},
 ];
