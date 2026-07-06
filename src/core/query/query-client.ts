@@ -1,4 +1,5 @@
-import { QueryClient, type DefaultOptions, type QueryClientConfig } from '@tanstack/react-query';
+import { QueryClient, type DefaultOptions } from '@tanstack/react-query';
+import { queryConfig } from '@/config';
 
 const defaultQueryConfig: DefaultOptions = {
 	queries: {
@@ -13,31 +14,31 @@ const defaultQueryConfig: DefaultOptions = {
 	},
 };
 
-export function makeQueryClient(config?: QueryClientConfig): QueryClient {
-	const userDefaults = config?.defaultOptions ?? {};
-	return new QueryClient({
-		...config,
-		defaultOptions: {
-			...defaultQueryConfig,
-			...userDefaults,
-			queries: {
-				...defaultQueryConfig.queries,
-				...userDefaults.queries,       // staleTime만 넘기면 나머지 기본값 유지
-			},
-			mutations: {
-				...defaultQueryConfig.mutations,
-				...userDefaults.mutations,
-			},
-		},
-	});
+// core 기본값 ⊕ SI override(src/config) 키 단위 깊은 병합.
+// queryConfig에 적힌 키만 덮어쓰고, 나머지는 기본값 유지.
+const mergedDefaults: DefaultOptions = {
+	...defaultQueryConfig,
+	...queryConfig,
+	queries: {
+		...defaultQueryConfig.queries,
+		...queryConfig.queries,
+	},
+	mutations: {
+		...defaultQueryConfig.mutations,
+		...queryConfig.mutations,
+	},
+};
+
+export function makeQueryClient(): QueryClient {
+	return new QueryClient({ defaultOptions: mergedDefaults });
 }
 
 let browserQueryClient: QueryClient | undefined = undefined;
 
-export function getQueryClient(config?: QueryClientConfig): QueryClient {
+export function getQueryClient(): QueryClient {
 	if (typeof window === 'undefined') {
-		return makeQueryClient(config);
+		return makeQueryClient();
 	}
-	if (!browserQueryClient) browserQueryClient = makeQueryClient(config);
+	if (!browserQueryClient) browserQueryClient = makeQueryClient();
 	return browserQueryClient;
 }
