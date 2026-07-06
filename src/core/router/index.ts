@@ -1,10 +1,11 @@
 import { createAppRouter } from './app-common-router.ts';
 import { registerWindowRouter } from '@/core/utils/router';
 import routes from '@/shared/router';
+import { routerConfig } from '@/config';
 
 const router = createAppRouter(routes, {
-	// .env 파일에 설정된 VITE_ROUTER_BASENAME 값을 사용합니다.
-	basename: import.meta.env.VITE_ROUTER_BASENAME,
+	// 라우터 설정은 src/config/router.config.ts 에서 관리합니다. (basename ← .env VITE_ROUTER_BASENAME)
+	basename: routerConfig.basename,
 });
 
 // window.$router를 전역 변수로 등록
