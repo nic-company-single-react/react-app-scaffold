@@ -27,21 +27,61 @@
 - `src/core/` 는 **불가침**. 업무 상태를 새로 넣지 않는다.
 - 승격 흐름: 처음엔 `domains/<도메인>/store/` 로 시작 → 다른 업무에서도 필요해지면 파일을 `shared/store/` 로 옮기고 import 경로만 수정 (코드는 동일 → 이동 비용 거의 0). **처음부터 과하게 shared로 올리지 말 것.**
 
-### 2-2. 생성: 순정 `create` 대신 팩토리 `createStore` 사용
+### 2-2. 생성: `defineStore` (표준 — 작성 편의 우선, `this` 안 씀)
 
 ```ts
-// src/core/store/createStore.ts (도구, 불가침)
-createStore(
-  초기상태,                       // 여기 있는 키가 persist 저장 대상
-  (set, get) => ({ ...액션 }),    // 액션은 스토어 안에 정의
-  { name, persist },              // name 필수
-)
+// src/core/store/defineStore.ts (도구, 불가침) — immer 내장
+export const useXxxStore = defineStore({
+  name: 'xxx',
+  persist: true,
+  state: { items: [] as T[] },                     // 여기 있는 키가 persist 저장 대상
+  actions: {
+    add: (state, x: T) => { state.items.push(x); },  // 첫 인자 state = 현재 상태, 직접 변경
+    clear: (state) => { state.items = []; },
+  },
+});
+
+// 소비: 첫 인자 state 는 자동 주입 → 나머지 인자만 넘긴다
+const { items, add } = useXxxStore();
+add(x);
 ```
 
-- `persist: true` → 새로고침 유지(기본 localStorage, `{ storage: 'session' }` 전환). **액션(함수)은 저장에서 자동 제외.**
+- **set/get 없음, 불변 스프레드 없음, `this` 없음.** 액션의 첫 인자 `state`(immer draft)를 직접 바꾸면 불변 업데이트로 처리됨.
+- 액션은 화살표/메서드 어느 쪽으로 써도 됨 (`this` 안 쓰므로 규칙 없음).
+- 컴포넌트 호출 시 첫 인자 `state` 는 자동 주입되므로 **나머지 인자만** 넘긴다 (정의 `add(state, x)` → 호출 `add(x)`).
+- `persist: true` → 새로고침 유지(기본 localStorage, `{ storage: 'session' }` 전환). **액션은 저장에서 자동 제외.**
 - devtools는 개발환경(`import.meta.env.DEV`)에서 자동 부착.
-- 액션끼리 호출이 필요하면 `get()` 대신 `useXxxStore.getState().다른액션()`.
+- 액션끼리 호출이 필요하면 `useXxxStore.getState().다른액션()`.
+- 저수준 대안: `createStore(초기상태, (set,get)=>({액션}), opts)` 도 `src/core/store/createStore.ts` 에 남아있음(immer 없이 순정 불변 업데이트). **기본은 defineStore.**
 - `useApi`(도구)가 `core/hooks` 에 있고 실제 호출은 도메인에서 하는 것과 **동일한 대칭 구조**.
+- 의존성: **immer(`^11`) 추가됨** (`npm install immer` 완료).
+
+#### ⚠️ 헷갈리기 쉬운 점: `state` 인자는 "정의부에만" 있고 "호출부엔 없다"
+
+액션을 정의할 땐 첫 인자 `state` 가 있는데, 컴포넌트에서 부를 땐 없다. **이게 정상이다.**
+
+```ts
+// 정의 (스토어 파일)          →  // 호출 (컴포넌트)
+toggle: (state, item) => {...}  →  toggle(item)   // state 없음
+```
+
+이유: `state`(현재 상태 = immer draft)는 **defineStore 가 실행 시점에 자동으로 앞에 끼워넣는다.** 개발자가 넘기는 게 아니다.
+
+```ts
+// defineStore.ts 내부 — 각 액션을 이렇게 감싼다
+boundActions[key] = (...args) =>      // 컴포넌트가 부르는 함수. args = [item]
+  set((draft) => {
+    action(draft, ...args);           // draft(=state)를 앞에 끼우고 그 뒤에 args
+  });
+```
+
+흐름: `컴포넌트 toggle(item)` → 팩토리가 현재 상태(draft) 자동 주입 → `정의 toggle(state=draft, item)` → state 직접 변경 → 스토어 갱신.
+
+타입도 맞춰져 있다 — `PublicActions` 타입이 노출 시그니처에서 첫 인자 `state` 를 벗긴다. 그래서:
+- 정의 타입: `(state, item) => void`
+- 호출 타입: `(item) => void` (state 사라짐)
+
+→ 컴포넌트에서 실수로 `toggle(state, item)` 처럼 부르면 **타입 에러**. `toggle(item)` 이 정답. 즉 **`state` 는 "작성자만 보는 인자"** 다.
 
 ### 2-3. 사용: **한 방향으로 고정 = 구조분해 한 줄**
 
@@ -61,8 +101,9 @@ const { items, toggle } = useFavoritesStore();   // 항상 이 형태
 ### 새로 만든 파일
 | 파일 | 역할 | 계층 |
 |---|---|---|
-| `src/core/store/createStore.ts` | Zustand 팩토리(persist/devtools 배선, 표준화) | core(불가침) |
-| `src/domains/example/store/favoritesStore.ts` | 즐겨찾기 스토어 인스턴스(`useFavoritesStore`) | 도메인 전용 |
+| `src/core/store/defineStore.ts` | **표준 팩토리**(Pinia 스타일, immer 내장) | core(불가침) |
+| `src/core/store/createStore.ts` | 저수준 팩토리(immer 없이 순정 불변 업데이트) | core(불가침) |
+| `src/domains/example/store/favoritesStore.ts` | 즐겨찾기 스토어 인스턴스(`useFavoritesStore`, `defineStore` 사용) | 도메인 전용 |
 | `src/domains/example/pages/store/FavoriteCatalog.tsx` | **저장 페이지** — 하트로 담기 | pages |
 | `src/domains/example/pages/store/FavoriteList.tsx` | **사용 페이지** — 스토어에서 읽기 | pages |
 
@@ -83,16 +124,18 @@ const { items, toggle } = useFavoritesStore();   // 항상 이 형태
 
 - ✅ 타입체크: `npx tsc --noEmit -p tsconfig.app.json` → **0 에러**
 - ✅ 린트: 변경 파일 `npx eslint ...` → **0 에러**
-- ⚠️ **미커밋 변경 있음**: `FavoriteCatalog.tsx`, `FavoriteList.tsx`
-  - 내용: 소비 코드를 "필드별 셀렉터 여러 줄" → **"구조분해 한 줄"** 로 단순화한 것 (위 2-3 규칙 반영)
-  - 이미 커밋된 것: `createStore.ts`, `favoritesStore.ts`, 라우터, 네비게이션, 페이지 초안
-    - `51cf4b2 store 상태 저장, 사용 예제 페이지 생성`
-    - `9cbebe4 zustand를 활용한 상태저장 생성 파일 추가`
+- ✅ 런타임 스모크 테스트: defineStore 의 immer `this` 변경(toggle/remove/clear) 정상 동작 확인
+- ⚠️ **미커밋 변경 있음** (defineStore 도입분):
+  - 신규: `src/core/store/defineStore.ts`
+  - 수정: `src/domains/example/store/favoritesStore.ts` (createStore → **defineStore** 로 재작성)
+  - 수정: `package.json` / `package-lock.json` (**immer 추가**)
+  - 참고: 앞서 소비 코드 "구조분해 한 줄" 단순화분(`FavoriteCatalog.tsx`, `FavoriteList.tsx`)은 사용자가 이미 커밋함. 소비 코드는 defineStore 전환과 무관하게 그대로 동작(스토어 훅 shape 동일).
 
 ### 집에서 시작하면 먼저 할 일
 ```bash
-git status                 # FavoriteCatalog.tsx / FavoriteList.tsx 수정 확인
-git add -A && git commit   # "store 소비 코드 구조분해 한 줄로 단순화" 등
+npm install                # immer 등 의존성 반영 (package-lock 기준)
+git status                 # defineStore.ts / favoritesStore.ts / package*.json 확인
+git add -A && git commit    # "store: defineStore(Pinia풍, immer) 도입" 등
 npm run dev                # 사이드바 > Store (Zustand) 에서 실제 동작 확인
 ```
 

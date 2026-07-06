@@ -1,4 +1,4 @@
-import { createStore } from '@/core/store/createStore';
+import { defineStore } from '@/core/store/defineStore';
 
 /**
  * 즐겨찾기 한 항목의 스냅샷.
@@ -17,22 +17,29 @@ export interface IFavoriteItem {
  *
  * - 배치: 이 도메인 안에서만 공유하므로 `src/domains/example/store/` 에 둔다.
  *   (다른 도메인에서도 필요해지면 `src/shared/store/` 로 승격)
- * - persist: 새로고침 후에도 담아둔 목록이 유지된다. 액션(함수)은 저장에서 자동 제외된다.
+ * - persist: 새로고침 후에도 담아둔 목록이 유지된다. 액션은 저장에서 자동 제외된다.
+ * - 액션은 첫 인자 `state` 로 현재 상태를 받는다. immer 로 감싸므로 직접 변경하면 된다.
  */
-export const useFavoritesStore = createStore(
-	{ items: [] as IFavoriteItem[] },
-	(set, get) => ({
+export const useFavoritesStore = defineStore({
+	name: 'example-favorites',
+	persist: true,
+	state: { items: [] as IFavoriteItem[] },
+	// 각 액션의 첫 인자 state 는 현재 상태(immer draft)이며, defineStore 가 실행 시 자동 주입한다.
+	// → 정의는 (state, item) 이지만, 컴포넌트에서 부를 땐 state 없이 toggle(item) 으로 호출한다.
+	actions: {
 		/** 이미 있으면 제거, 없으면 추가 (하트 토글) */
-		toggle: (item: IFavoriteItem) => {
-			const exists = get().items.some((i) => i.id === item.id);
-			set({
-				items: exists ? get().items.filter((i) => i.id !== item.id) : [...get().items, item],
-			});
+		toggle: (state, item: IFavoriteItem) => {
+			const i = state.items.findIndex((x) => x.id === item.id);
+			if (i >= 0) state.items.splice(i, 1);
+			else state.items.push(item);
 		},
 		/** id 로 한 항목 제거 */
-		remove: (id: string) => set((s) => ({ items: s.items.filter((i) => i.id !== id) })),
+		remove: (state, id: string) => {
+			state.items = state.items.filter((x) => x.id !== id);
+		},
 		/** 전체 비우기 */
-		clear: () => set({ items: [] }),
-	}),
-	{ name: 'example-favorites', persist: true },
-);
+		clear: (state) => {
+			state.items = [];
+		},
+	},
+});
