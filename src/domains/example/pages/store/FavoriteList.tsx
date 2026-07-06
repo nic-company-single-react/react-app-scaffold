@@ -8,10 +8,8 @@ import { useFavoritesStore } from '@/domains/example/store/favoritesStore';
  * 이 페이지는 상품 마스터를 몰라도 되고, 오직 useFavoritesStore 만 구독한다.
  */
 export default function FavoriteList(): React.ReactNode {
-	// 셀렉터로 필요한 조각만 구독
-	const items = useFavoritesStore((s) => s.items);
-	const remove = useFavoritesStore((s) => s.remove);
-	const clear = useFavoritesStore((s) => s.clear);
+	// 필요한 상태·액션을 한 줄로 구조분해. (set 이 일어날 때만 리렌더된다)
+	const { items, remove, clear } = useFavoritesStore();
 
 	const total = items.reduce((sum, i) => sum + i.price, 0);
 

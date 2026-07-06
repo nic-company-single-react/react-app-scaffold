@@ -22,10 +22,8 @@ const PRODUCTS: IFavoriteItem[] = [
  * 담는 값은 useFavoritesStore(Zustand) 에 저장되므로, 라우트를 옮겨도 유지된다.
  */
 export default function FavoriteCatalog(): React.ReactNode {
-	// 스토어 구독: 이 페이지는 담긴 목록에 따라 하트 상태가 바뀌므로 items 전체를 구독한다.
-	const items = useFavoritesStore((s) => s.items);
-	// 액션만 꺼내 쓰기 (참조가 고정이라 리렌더를 유발하지 않는다)
-	const toggle = useFavoritesStore((s) => s.toggle);
+	// 필요한 상태·액션을 한 줄로 구조분해. (set 이 일어날 때만 리렌더된다)
+	const { items, toggle } = useFavoritesStore();
 
 	// 빠른 조회를 위해 담긴 id 집합으로 변환
 	const favoriteIds = useMemo(() => new Set(items.map((i) => i.id)), [items]);
