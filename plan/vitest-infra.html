@@ -458,7 +458,7 @@
 					font-size="12.5"
 					class="s-muted"
 				>
-					test: &#123; &#125; 설정
+					test.projects 설정
 				</text>
 				<rect
 					x="610"
@@ -490,7 +490,7 @@
 					font-size="13.5"
 					class="s-ink"
 				>
-					environment:'jsdom'
+					projects: unit · browser
 				</text>
 				<text
 					x="486"
@@ -498,7 +498,7 @@
 					font-size="13"
 					class="s-muted"
 				>
-					가상 브라우저 ON
+					jsdom + 실제 Chromium
 				</text>
 				<text
 					x="274"
@@ -778,7 +778,7 @@
 					font-size="11"
 					class="s-amber b"
 				>
-					현재 0개
+					예시 2개
 				</text>
 				<text
 					x="550"
@@ -802,7 +802,7 @@
 					font-size="12.5"
 					class="s-muted"
 				>
-					개발자 작성 영역 (앞으로)
+					또는 *.browser.test.tsx (브라우저)
 				</text>
 
 				<!-- converge -->
@@ -847,15 +847,15 @@
 	<section>
 		<h2><span class="num">도식 2</span> 라이브러리 계층 &mdash; 누가 무슨 일을 하나</h2>
 		<p>
-			하나의 테스트 요청이 위 <b>러너</b>에서 아래 <b>검증</b>까지 층층이 협력합니다. 아래 4개만 이번에 새로 설치(<code
+			하나의 테스트 요청이 위 <b>러너</b>에서 아래 <b>검증</b>까지 층층이 협력합니다. jsdom 계열 4개와 브라우저 모드 2개를 <code
 				style="font-family: var(--mono)"
 				>-D</code
-			>)했고, 맨 위 러너는 Storybook이 딸려 깔아둔 것을 재사용했습니다.
+			>로 설치했고, 맨 위 러너는 Storybook이 딸려 깔아둔 것을 재사용했습니다.
 		</p>
 
 		<div class="board">
 			<svg
-				viewBox="0 0 960 430"
+				viewBox="0 0 960 500"
 				role="img"
 				aria-label="테스트 러너부터 검증까지 5개 라이브러리 계층 스택"
 			>
@@ -878,7 +878,7 @@
 							x="8"
 							y="8"
 							width="944"
-							height="414"
+							height="484"
 							rx="18"
 						/>
 					</clipPath>
@@ -902,7 +902,7 @@
 					x="8"
 					y="8"
 					width="944"
-					height="414"
+					height="484"
 					rx="18"
 					fill="var(--surface-2)"
 					stroke="var(--line)"
@@ -911,7 +911,7 @@
 					x="8"
 					y="8"
 					width="944"
-					height="414"
+					height="484"
 					fill="url(#gridB)"
 					clip-path="url(#clipB)"
 				/>
@@ -925,7 +925,7 @@
 					요청 흐름 : 위(러너) → 아래(검증)
 				</text>
 				<path
-					d="M58 78 L58 384"
+					d="M58 78 L58 450"
 					class="side"
 					style="opacity: 0.9"
 					marker-end="url(#arM2)"
@@ -1222,12 +1222,70 @@
 				>
 					NEW &nbsp;-D
 				</text>
+
+				<!-- band6 : 브라우저 모드 (선택) -->
+				<rect
+					x="84"
+					y="400"
+					width="836"
+					height="52"
+					rx="10"
+					class="box"
+				/>
+				<rect
+					x="84"
+					y="400"
+					width="7"
+					height="52"
+					class="tab-accent"
+				/>
+				<text
+					x="112"
+					y="431"
+					font-size="13"
+					class="s-muted b"
+				>
+					브라우저 모드
+				</text>
+				<text
+					x="300"
+					y="424"
+					font-size="14"
+					class="s-ink b"
+				>
+					@vitest/browser-playwright · playwright
+				</text>
+				<text
+					x="300"
+					y="442"
+					font-size="12"
+					class="s-muted"
+				>
+					jsdom 대신 실제 Chromium을 띄워 *.browser.test 실행
+				</text>
+				<rect
+					x="800"
+					y="414"
+					width="104"
+					height="24"
+					rx="12"
+					class="fill-accsoft"
+				/>
+				<text
+					x="852"
+					y="431"
+					text-anchor="middle"
+					font-size="11"
+					class="s-accent b"
+				>
+					NEW &nbsp;-D
+				</text>
 			</svg>
 		</div>
 	</section>
 
 	<section>
-		<h2><span class="num">요약</span> 핵심 3가지</h2>
+		<h2><span class="num">요약</span> 핵심 4가지</h2>
 		<div class="cards">
 			<div class="card">
 				<h3>1 · Vite 설정 재사용</h3>
@@ -1244,6 +1302,13 @@
 				<h3>3 · 인프라는 끝, 이제 파일만</h3>
 				<p>설정은 다시 안 건드림. 파일 옆에 <code>xxx.test.tsx</code> 를 만들면 Vitest가 자동으로 찾아 실행.</p>
 			</div>
+			<div class="card">
+				<h3>4 · 브라우저가 필요하면</h3>
+				<p>
+					파일명을 <code>xxx.browser.test.tsx</code> 로 지으면 실제 Chromium(Playwright)에서 실행. Windows에선
+					예약 포트 회피용으로 <code>browser.api.port</code>를 고정해 둠.
+				</p>
+			</div>
 		</div>
 	</section>
 
@@ -1258,6 +1323,12 @@
 			</div>
 			<div class="cmd">
 				<code>npm run coverage</code><span class="desc">어느 코드가 테스트됐는지 커버리지 리포트</span>
+			</div>
+			<div class="cmd">
+				<code>npx vitest --project unit</code><span class="desc">jsdom 묶음만 — 평소 개발 중 빠르게</span>
+			</div>
+			<div class="cmd">
+				<code>npx vitest --project browser</code><span class="desc">브라우저(Chromium) 묶음만</span>
 			</div>
 		</div>
 	</section>
