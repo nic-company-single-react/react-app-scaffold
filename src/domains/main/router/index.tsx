@@ -1,7 +1,8 @@
 import type { TAppRoute } from '@/types/router';
+import loadable from '@loadable/component';
 
 // 메인화면 컴포넌트 가져오기
-import MainIndex from '../pages/MainIndex';
+const MainIndex = loadable(() => import('@/domains/main/pages/MainIndex'));
 
 const routes: TAppRoute[] = [
 	{
