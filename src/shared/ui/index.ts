@@ -13,5 +13,8 @@ export type { ISmartTableProps, ISmartTableHandle, ISmartColumn, SmartColumns, S
 
 // ── 무거운 것: 배럴 안에서 동적 import로 분리 ──────────────────
 // 표면은 동일하지만, 실제 코드는 별도 청크로 빠지고 렌더될 때만 로드됨
-export const SmartTable = loadable(() => import('./smart-table/SmartTable'));
+// loadable은 제네릭(<TRow, TRaw>)을 지워버리므로, 원본 컴포넌트 타입으로 캐스팅해 제네릭을 복원한다.
+export const SmartTable = loadable(
+	() => import('./smart-table/SmartTable'),
+) as unknown as typeof import('./smart-table/SmartTable').default;
 export const CodeBlock = loadable(() => import('../components/ui/codeblock').then((m) => ({ default: m.CodeBlock })));

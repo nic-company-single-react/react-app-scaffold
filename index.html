@@ -18,16 +18,67 @@
 				try {
 					// 저장 키는 .env 의 VITE_THEME_STORAGE_KEY 를 Vite 가 빌드시 치환 (src/config/theme.config.ts 와 동일 소스)
 					var stored = localStorage.getItem('%VITE_THEME_STORAGE_KEY%');
-					var isDark =
-						stored === 'dark' ||
-						(!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+					var isDark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
 					if (isDark) document.documentElement.classList.add('dark');
+
+					// 스플래시 색상 주입: .env 의 VITE_SPLASH_* 를 CSS 변수로 전달.
+					// (CSS 안에 %VITE_%를 직접 쓰면 편집기가 잘못된 CSS 값으로 오인해 에러 표시를 내므로,
+					//  값은 JS 문자열로 주입하고 CSS 는 var()만 사용한다.)
+					var rootStyle = document.documentElement.style;
+					rootStyle.setProperty('--splash-bg', '%VITE_SPLASH_BG%');
+					rootStyle.setProperty('--splash-bg-dark', '%VITE_SPLASH_BG_DARK%');
+					rootStyle.setProperty('--splash-accent', '%VITE_SPLASH_ACCENT%');
 				} catch (e) {}
 			})();
 		</script>
 	</head>
 	<body>
-		<div id="root"></div>
+		<div id="root">
+			<!--
+				즉시 스플래시(instant shell): JS 없이 그려져 WebView 흰 화면을 없앤다.
+				React 마운트 시 createRoot(#root).render()가 이 내용을 자동 교체하므로 제거 코드 불필요.
+				사이트별 커스터마이즈는 index.html이 아니라 .env 의 VITE_SPLASH_* 값만 수정한다.
+			-->
+			<style>
+				#app-splash {
+					position: fixed;
+					inset: 0;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					gap: 16px;
+					background: var(--splash-bg, #ffffff);
+				}
+				.dark #app-splash {
+					background: var(--splash-bg-dark, #0b0f19);
+				}
+				#app-splash img {
+					width: 64px;
+					height: 64px;
+				}
+				#app-splash .spin {
+					width: 28px;
+					height: 28px;
+					border-radius: 50%;
+					border: 3px solid var(--splash-accent, #4f46e5);
+					border-top-color: transparent;
+					animation: app-splash-spin 0.7s linear infinite;
+				}
+				@keyframes app-splash-spin {
+					to {
+						transform: rotate(360deg);
+					}
+				}
+			</style>
+			<div id="app-splash">
+				<img
+					src="%VITE_BASE_URL%%VITE_SPLASH_LOGO%"
+					alt=""
+				/>
+				<div class="spin"></div>
+			</div>
+		</div>
 		<script
 			type="module"
 			src="/src/main.tsx"
