@@ -25,7 +25,13 @@ const routes: TAppRoute[] = [
 				},
 				// 여기에 추후 추가된 publishing 라우터를 추가.
 			]
-		: []),
+		: [
+				{
+					path: '/example',
+					element: <RootLayout />,
+					children: ExampleRouter,
+				},
+			]),
 	{
 		path: '*',
 		element: (
