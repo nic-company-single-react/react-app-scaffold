@@ -28,18 +28,18 @@
 		"editor.formatOnSave": false,
 		"editor.defaultFormatter": null
 	},
-	"_comment_autoImport": "자동 import 출처 제한 — 컴포넌트는 @axiom/components/ui 배럴을 우선 사용. 내부 의존성(@base-ui/react, react-day-picker)과 raw shadcn 경로는 제안에서 제외한다.",
+	"_comment_autoImport": "자동 import 출처 제한 — 컴포넌트는 @axiom/components/ui 배럴을 우선 사용. tsconfig의 paths에서 @axiom/* 를 @/* 보다 먼저 선언해야 TS가 이 별칭을 생성한다. raw shadcn·내부 의존성(@base-ui/react, react-day-picker)·비정상 node_modules 경로는 제안에서 제외한다.",
 	"typescript.preferences.autoImportSpecifierExcludeRegexes": [
 		"^@base-ui/react",
 		"^react-day-picker",
 		"(^|/)shared/lib/shadcn",
-		"(^|/)shared/ui"
+		"(^|/)node_modules"
 	],
 	"javascript.preferences.autoImportSpecifierExcludeRegexes": [
 		"^@base-ui/react",
 		"^react-day-picker",
 		"(^|/)shared/lib/shadcn",
-		"(^|/)shared/ui"
+		"(^|/)node_modules"
 	],
 	"update.mode": "none",
 	"telemetry.telemetryLevel": "off",

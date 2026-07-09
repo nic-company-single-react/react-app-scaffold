@@ -21,11 +21,11 @@
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
-			"@/*": ["./src/*"],
 			"@axiom/components/ui": ["./src/shared/ui"],
 			"@axiom/components/ui/*": ["./src/shared/ui/*"],
 			"@axiom/hooks": ["./src/core/hooks/index.ts"],
-			"@axiom/store": ["./src/core/store/index.ts"]
+			"@axiom/store": ["./src/core/store/index.ts"],
+			"@/*": ["./src/*"]
 		}
 	},
 	"include": ["src"],
