@@ -1,13 +1,8 @@
 import { useState } from 'react';
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-	CodeBlock,
-} from '@axiom/components/ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, CodeBlock } from '@axiom/components/ui';
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
 import ExCard from '@/domains/example/components/ui-components/ExCard';
+import TransactionDetailAccordion from '@/domains/example/components/ui-components/TransactionDetailAccordion';
 import { LayoutList } from 'lucide-react';
 
 export default function AccordionComponent(): React.ReactNode {
@@ -67,15 +62,21 @@ export default function AccordionComponent(): React.ReactNode {
 						>
 							<AccordionItem value="item-1">
 								<AccordionTrigger>배송 옵션은 어떻게 되나요?</AccordionTrigger>
-								<AccordionContent>일반 배송(5~7일), 빠른 배송(2~3일), 당일 배송을 제공합니다. 해외 주문은 무료 배송이 적용됩니다.</AccordionContent>
+								<AccordionContent>
+									일반 배송(5~7일), 빠른 배송(2~3일), 당일 배송을 제공합니다. 해외 주문은 무료 배송이 적용됩니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem value="item-2">
 								<AccordionTrigger>반품 정책이 어떻게 되나요?</AccordionTrigger>
-								<AccordionContent>구매 후 30일 이내에 반품 신청이 가능합니다. 단, 개봉 또는 사용한 상품은 반품이 제한될 수 있습니다.</AccordionContent>
+								<AccordionContent>
+									구매 후 30일 이내에 반품 신청이 가능합니다. 단, 개봉 또는 사용한 상품은 반품이 제한될 수 있습니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem value="item-3">
 								<AccordionTrigger>고객 지원에 어떻게 연락하나요?</AccordionTrigger>
-								<AccordionContent>이메일(support@example.com), 전화(1588-0000), 채팅으로 24시간 지원받을 수 있습니다.</AccordionContent>
+								<AccordionContent>
+									이메일(support@example.com), 전화(1588-0000), 채팅으로 24시간 지원받을 수 있습니다.
+								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
 					</div>
@@ -113,11 +114,15 @@ export default function AccordionComponent(): React.ReactNode {
 						>
 							<AccordionItem value="item-1">
 								<AccordionTrigger>비밀번호를 재설정하려면?</AccordionTrigger>
-								<AccordionContent>로그인 페이지에서 '비밀번호 찾기'를 클릭한 후 이메일 주소를 입력하세요. 링크는 24시간 동안 유효합니다.</AccordionContent>
+								<AccordionContent>
+									로그인 페이지에서 '비밀번호 찾기'를 클릭한 후 이메일 주소를 입력하세요. 링크는 24시간 동안 유효합니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem value="item-2">
 								<AccordionTrigger>구독 플랜을 변경할 수 있나요?</AccordionTrigger>
-								<AccordionContent>마이페이지 &gt; 구독 관리 메뉴에서 언제든 플랜 변경 및 취소가 가능합니다.</AccordionContent>
+								<AccordionContent>
+									마이페이지 &gt; 구독 관리 메뉴에서 언제든 플랜 변경 및 취소가 가능합니다.
+								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
 					</div>
@@ -159,7 +164,9 @@ export default function AccordionComponent(): React.ReactNode {
 							</AccordionItem>
 							<AccordionItem value="item-3">
 								<AccordionTrigger>결제 및 구독</AccordionTrigger>
-								<AccordionContent>등록된 결제 수단 목록과 현재 구독 중인 플랜을 확인하고 변경할 수 있습니다.</AccordionContent>
+								<AccordionContent>
+									등록된 결제 수단 목록과 현재 구독 중인 플랜을 확인하고 변경할 수 있습니다.
+								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
 					</div>
@@ -244,21 +251,27 @@ export default function AccordionComponent(): React.ReactNode {
 								className="border-b last:border-b-0 border-gray-200 dark:border-gray-700"
 							>
 								<AccordionTrigger>결제는 어떻게 이루어지나요?</AccordionTrigger>
-								<AccordionContent>월간 및 연간 구독 플랜을 제공하며, 각 주기 시작 시 자동으로 청구됩니다. 언제든지 취소할 수 있습니다.</AccordionContent>
+								<AccordionContent>
+									월간 및 연간 구독 플랜을 제공하며, 각 주기 시작 시 자동으로 청구됩니다. 언제든지 취소할 수 있습니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem
 								value="item-2"
 								className="border-b last:border-b-0 border-gray-200 dark:border-gray-700"
 							>
 								<AccordionTrigger>데이터는 안전한가요?</AccordionTrigger>
-								<AccordionContent>모든 데이터는 AES-256으로 암호화되어 저장되며, SSL/TLS로 전송됩니다.</AccordionContent>
+								<AccordionContent>
+									모든 데이터는 AES-256으로 암호화되어 저장되며, SSL/TLS로 전송됩니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem
 								value="item-3"
 								className="border-b last:border-b-0 border-gray-200 dark:border-gray-700"
 							>
 								<AccordionTrigger>어떤 연동(Integration)을 지원하나요?</AccordionTrigger>
-								<AccordionContent>Slack, GitHub, Jira, Notion 등 50개 이상의 서비스와 연동을 지원합니다.</AccordionContent>
+								<AccordionContent>
+									Slack, GitHub, Jira, Notion 등 50개 이상의 서비스와 연동을 지원합니다.
+								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
 					</div>
@@ -309,15 +322,21 @@ export default function AccordionComponent(): React.ReactNode {
 						>
 							<AccordionItem value="item-1">
 								<AccordionTrigger>스타터 플랜 ($9/월)</AccordionTrigger>
-								<AccordionContent>기본 저장 공간, API 접근, 이메일 지원이 포함됩니다. 개인 프로젝트에 적합합니다.</AccordionContent>
+								<AccordionContent>
+									기본 저장 공간, API 접근, 이메일 지원이 포함됩니다. 개인 프로젝트에 적합합니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem value="item-2">
 								<AccordionTrigger>프로 플랜 ($29/월)</AccordionTrigger>
-								<AccordionContent>스타터의 모든 기능과 함께 우선 지원, 팀 협업 기능, 고급 분석 도구가 제공됩니다.</AccordionContent>
+								<AccordionContent>
+									스타터의 모든 기능과 함께 우선 지원, 팀 협업 기능, 고급 분석 도구가 제공됩니다.
+								</AccordionContent>
 							</AccordionItem>
 							<AccordionItem value="item-3">
 								<AccordionTrigger>엔터프라이즈 플랜 ($99/월)</AccordionTrigger>
-								<AccordionContent>모든 기능과 전담 지원, 무제한 저장 공간, SLA 보장, 커스텀 연동을 제공합니다.</AccordionContent>
+								<AccordionContent>
+									모든 기능과 전담 지원, 무제한 저장 공간, SLA 보장, 커스텀 연동을 제공합니다.
+								</AccordionContent>
 							</AccordionItem>
 						</Accordion>
 					</div>
@@ -418,6 +437,15 @@ export default function AccordionComponent(): React.ReactNode {
 						</tbody>
 					</table>
 				</div>
+			</section>
+			{/* ── 7. 실전 예제 ─────────────────────────────── */}
+			<section className="space-y-4">
+				<SectionHeader
+					title="기타. 실전 예제 — 거래내역 상세"
+					description="리스트에서 한 건을 펼치면 상세(수취인, 수수료, 잔액, 승인번호 등)가 나오는 마스터-디테일 패턴."
+				/>
+
+				<TransactionDetailAccordion />
 			</section>
 		</div>
 	);
