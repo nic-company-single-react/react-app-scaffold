@@ -4,13 +4,7 @@ import SectionHeader from '@/domains/example/components/ui-components/SectionHea
 import ExCard from '@/domains/example/components/ui-components/ExCard';
 import BadgeCustomColors from '@/domains/example/components/ui-components/BadgeCustomColors';
 
-import {
-	BadgeCheck,
-	Bookmark,
-	Loader2,
-	Tag,
-	X,
-} from 'lucide-react';
+import { BadgeCheck, Bookmark, Loader2, Tag, X } from 'lucide-react';
 
 export default function BadgeComponent(): React.ReactNode {
 	const [tags, setTags] = useState<string[]>(['React', 'TypeScript', 'Tailwind', 'Vite']);
