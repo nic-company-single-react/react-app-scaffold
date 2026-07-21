@@ -31,8 +31,9 @@
 	--nic-badge-bg: #f2f7f7;
 
 	/* scaffold Accordion 테마 계약 — 공개 CSS 변수만 세팅(내부 구조 몰라도 됨).
-	 * ＋ 아이콘을 열림 시 45° 회전시켜 ×로 전환하고, 펼침 속도를 회전과 250ms로 맞춘다. */
-	--accordion-icon-rotate: 45deg;
+	 * 아이콘은 ＋/－ 스트로크 모프(.plusMinus)로 처리하므로 겉 아이콘 회전은 끈다(0deg).
+	 * 펼침 속도는 모프 속도와 250ms로 맞춘다. */
+	--accordion-icon-rotate: 0deg;
 	--accordion-icon-duration: 250ms;
 	--accordion-content-duration: 250ms;
 
@@ -169,11 +170,44 @@
 .wrap :global([data-slot='accordion-trigger']) :global([data-slot='accordion-trigger-icon']) {
 	color: var(--nic-muted);
 	align-self: center;
+	margin-left: 12px;
 }
 .wrap
 	:global([data-slot='accordion-trigger'][aria-expanded='true'])
 	:global([data-slot='accordion-trigger-icon']) {
 	color: var(--nic-teal);
+}
+
+/* ＋/－ 스트로크 모프 아이콘 ──────────────────────────────
+ * 가로 바(::before) + 세로 바(::after) 두 선으로 그린다.
+ * 닫힘: 세로 바가 서 있어 ＋. 열림: 세로 바를 눕혀(90°→0°) 가로 바와 겹쳐 －.
+ * 색은 currentColor 라 위 아이콘 색 규칙(muted↔teal)을 그대로 따른다. */
+.plusMinus {
+	position: relative;
+	display: inline-block;
+	width: var(--accordion-icon-size, 1rem);
+	height: var(--accordion-icon-size, 1rem);
+}
+.plusMinus::before,
+.plusMinus::after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 2px;
+	border-radius: 2px;
+	background: currentColor;
+	transform: translate(-50%, -50%);
+}
+/* 세로 바: 닫힘 상태에서 90°로 세워 ＋ 완성 */
+.plusMinus::after {
+	transform: translate(-50%, -50%) rotate(90deg);
+	transition: transform var(--accordion-icon-duration, 200ms) ease;
+}
+/* 열림: 세로 바를 0°로 눕혀 가로 바와 겹침 → － */
+.wrap :global([data-slot='accordion-trigger'][aria-expanded='true']) .plusMinus::after {
+	transform: translate(-50%, -50%) rotate(0deg);
 }
 
 /* 콘텐츠 영역: 기본 패딩 제거(내부 .detail 이 자체 여백을 가짐) */

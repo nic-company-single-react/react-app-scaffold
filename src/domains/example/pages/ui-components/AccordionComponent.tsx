@@ -3,6 +3,12 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, CodeBlock
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
 import ExCard from '@/domains/example/components/ui-components/ExCard';
 import TransactionDetailAccordion from '@/domains/example/components/ui-components/TransactionDetailAccordion';
+import TermsAgreementAccordion from '@/domains/example/components/ui-components/TermsAgreementAccordion';
+import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
+import txSource from '@/domains/example/components/ui-components/TransactionDetailAccordion.tsx?raw';
+import txCss from '@/domains/example/components/ui-components/TransactionDetailAccordion.module.css?raw';
+import termsSource from '@/domains/example/components/ui-components/TermsAgreementAccordion.tsx?raw';
+import termsCss from '@/domains/example/components/ui-components/TermsAgreementAccordion.module.css?raw';
 import { LayoutList } from 'lucide-react';
 
 export default function AccordionComponent(): React.ReactNode {
@@ -446,6 +452,30 @@ export default function AccordionComponent(): React.ReactNode {
 				/>
 
 				<TransactionDetailAccordion />
+
+				<SourceTabs
+					files={[
+						{ filename: 'TransactionDetailAccordion.tsx', code: txSource, lang: 'tsx' },
+						{ filename: 'TransactionDetailAccordion.module.css', code: txCss, lang: 'css' },
+					]}
+				/>
+			</section>
+
+			{/* ── 기타. 실전 예제 — 약관 동의 ─────────────────────── */}
+			<section className="space-y-4">
+				<SectionHeader
+					title="기타. 실전 예제 — 약관 동의 화면"
+					description="회원 가입 시 자주 쓰이는 약관 동의 플로우. 앞선 거래내역 예제와 동일하게 제공 Accordion을 그대로 쓰되, *.module.css 를 전혀 다른 인디고 컨센트 톤으로 입혔습니다. 전체 동의 / 개별 체크 / 필수 미동의 시 버튼 비활성화까지 실제로 동작합니다."
+				/>
+
+				<TermsAgreementAccordion />
+
+				<SourceTabs
+					files={[
+						{ filename: 'TermsAgreementAccordion.tsx', code: termsSource, lang: 'tsx' },
+						{ filename: 'TermsAgreementAccordion.module.css', code: termsCss, lang: 'css' },
+					]}
+				/>
 			</section>
 		</div>
 	);

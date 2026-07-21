@@ -1,0 +1,305 @@
+/* =========================================================================
+ * TermsAgreementAccordion.module.css
+ * 예제 목적: scaffold가 제공하는 Accordion / Checkbox / Button(@axiom/components/ui,
+ *            shadcn/radix 기반)을 "그대로 사용"하면서, 거래내역 예제(청록 톤)와는
+ *            전혀 다른 인디고 톤 "약관 동의(Consent)" UI로 재스타일링한다.
+ *
+ * 재스타일링 방식은 거래내역 예제와 동일하게 data-slot 오버라이드를 쓴다.
+ *     - [data-slot="accordion-item"]         : 각 약관 항목
+ *     - [data-slot="accordion-trigger"]      : 약관 헤더 버튼(배지+제목)
+ *     - [data-slot="accordion-trigger-icon"] : 펼침 셰브론(컴포넌트가 자동 렌더)
+ *     - [data-slot="accordion-content"]      : 약관 본문
+ *     - [data-slot="checkbox"]               : scaffold Checkbox(전체 동의/개별 동의)
+ *     - [data-slot="button"]                 : scaffold Button(하단 CTA)
+ *   래퍼(.wrap) 아래에서 이 슬롯들을 선택자로 오버라이드해 Tailwind 유틸리티보다
+ *   명시도를 확보한다.
+ *
+ * 톤앤매너: 인디고(#4f46e5) 컨센트 UI. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--tc-brand: #4f46e5;
+	--tc-brand-deep: #4338ca;
+	--tc-brand-soft: #eef0fe;
+	--tc-brand-soft-border: #c7cbf7;
+	--tc-ink: #1e1b2e;
+	--tc-sub: #5b5870;
+	--tc-muted: #8b88a0;
+	--tc-card: #ffffff;
+	--tc-border: #e7e5f2;
+	--tc-line: #d7d5e6;
+	--tc-line-soft: #eeecf6;
+	--tc-body-bg: #f7f7fc;
+	--tc-badge-opt: #f0eff5;
+	--tc-req: #e11d48;
+	--tc-req-soft: #fdecef;
+	--tc-disabled: #e4e3ee;
+	--tc-disabled-text: #a5a2b8;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--tc-ink);
+}
+
+:global(.dark) .wrap {
+	--tc-brand: #7c74f0;
+	--tc-brand-deep: #9891f5;
+	--tc-brand-soft: #201d3a;
+	--tc-brand-soft-border: #3a3566;
+	--tc-ink: #ece9fb;
+	--tc-sub: #a7a3c2;
+	--tc-muted: #726e8f;
+	--tc-card: #14121f;
+	--tc-border: #262239;
+	--tc-line: #322d4c;
+	--tc-line-soft: #211d33;
+	--tc-body-bg: #0f0d1a;
+	--tc-badge-opt: #201d30;
+	--tc-req: #fb7185;
+	--tc-req-soft: #3a1d24;
+	--tc-disabled: #2a2740;
+	--tc-disabled-text: #6b6788;
+}
+
+/* ── 시트 컨테이너 ─────────────────────────────────────── */
+.sheet {
+	background: var(--tc-card);
+	border: 1px solid var(--tc-border);
+	border-radius: 18px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.head {
+	margin-bottom: 16px;
+}
+.title {
+	font-size: 18px;
+	font-weight: 800;
+	color: var(--tc-ink);
+	letter-spacing: -0.01em;
+}
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--tc-sub);
+}
+
+/* =========================================================================
+ * scaffold Checkbox 슬롯 오버라이드 — 인디고 톤으로 재스타일
+ * (radix-ui Checkbox는 켜지면 data-checked / data-state="checked" 를 노출)
+ * ========================================================================= */
+.wrap :global([data-slot='checkbox']) {
+	width: 22px;
+	height: 22px;
+	border-radius: 7px;
+	border: 2px solid var(--tc-line);
+	background: var(--tc-card);
+	transition:
+		background 0.18s ease,
+		border-color 0.18s ease;
+}
+.wrap :global([data-slot='checkbox'])[data-checked],
+.wrap :global([data-slot='checkbox'])[data-state='checked'] {
+	border-color: var(--tc-brand);
+	background: var(--tc-brand);
+	color: #fff;
+}
+.wrap :global([data-slot='checkbox']):focus-visible {
+	outline: 2px solid var(--tc-brand);
+	outline-offset: 2px;
+}
+/* 전체 동의용 큰 체크박스 */
+.wrap :global([data-slot='checkbox']).checkLg {
+	width: 26px;
+	height: 26px;
+	border-radius: 9px;
+}
+
+/* ── 전체 동의 히어로 ──────────────────────────────────── */
+.allAgree {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	width: 100%;
+	padding: 18px;
+	border: 1.5px solid var(--tc-line);
+	border-radius: 14px;
+	background: var(--tc-card);
+	transition:
+		background 0.18s ease,
+		border-color 0.18s ease;
+}
+.allAgreeOn {
+	border-color: var(--tc-brand);
+	background: var(--tc-brand-soft);
+}
+.allAgreeText {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+	cursor: pointer;
+	flex: 1;
+}
+.allAgreeTitle {
+	font-size: 16px;
+	font-weight: 800;
+	color: var(--tc-ink);
+	letter-spacing: -0.01em;
+}
+.allAgreeDesc {
+	font-size: 12px;
+	color: var(--tc-sub);
+}
+
+/* =========================================================================
+ * scaffold Accordion 슬롯 오버라이드
+ * ========================================================================= */
+
+.list {
+	margin-top: 8px;
+}
+
+/* 항목 구분선 */
+.wrap :global([data-slot='accordion']) :global([data-slot='accordion-item']) {
+	border-bottom: 1px solid var(--tc-line-soft);
+}
+.wrap :global([data-slot='accordion']) :global([data-slot='accordion-item']):last-child {
+	border-bottom: none;
+}
+
+/* 체크박스(형제) + 트리거를 한 줄에 나란히 두는 그리드 */
+.itemHead {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	align-items: center;
+	gap: 12px;
+	padding: 0 6px;
+}
+
+/* 헤더 버튼(트리거): 기본 여백/hover 밑줄 제거. 좌우 여백은 itemHead가 담당 */
+.wrap :global([data-slot='accordion']) :global([data-slot='accordion-trigger']) {
+	padding: 14px 0;
+	border-radius: 0;
+	font-weight: 600;
+	align-items: center;
+}
+.wrap :global([data-slot='accordion']) :global([data-slot='accordion-trigger']):hover {
+	text-decoration: none;
+}
+.wrap :global([data-slot='accordion']) :global([data-slot='accordion-trigger']):focus-visible {
+	outline: 2px solid var(--tc-brand);
+	outline-offset: -2px;
+	border-radius: 8px;
+}
+
+/* 셰브론 아이콘 색 */
+.wrap :global([data-slot='accordion-trigger']) :global([data-slot='accordion-trigger-icon']) {
+	color: var(--tc-muted);
+	align-self: center;
+	margin-left: 8px;
+}
+.wrap
+	:global([data-slot='accordion-trigger'][aria-expanded='true'])
+	:global([data-slot='accordion-trigger-icon']) {
+	color: var(--tc-brand);
+}
+
+/* 콘텐츠 기본 패딩 제거(내부 .body 가 자체 여백을 가짐) */
+.wrap :global([data-slot='accordion']) :global([data-slot='accordion-content']) > div {
+	padding: 0;
+}
+
+/* ── 트리거 내부 커스텀 레이아웃 ─────────────────────────── */
+.row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	flex: 1;
+	min-width: 0;
+}
+/* scaffold Badge 슬롯 오버라이드 — 알약형 기본 모양을 사각 태그로, 색은 인디고/레드 토큰으로 */
+.wrap :global([data-slot='badge']) {
+	height: auto;
+	padding: 2px 7px;
+	border: none;
+	border-radius: 6px;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+}
+.wrap :global([data-slot='badge']).badgeReq {
+	color: var(--tc-req);
+	background: var(--tc-req-soft);
+}
+.wrap :global([data-slot='badge']).badgeOpt {
+	color: var(--tc-muted);
+	background: var(--tc-badge-opt);
+}
+.rowTitle {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--tc-ink);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* ── 약관 본문 ─────────────────────────────────────────── */
+.body {
+	margin: 0 6px 14px 40px;
+	padding: 14px 16px;
+	font-size: 12.5px;
+	line-height: 1.7;
+	color: var(--tc-sub);
+	background: var(--tc-body-bg);
+	border-radius: 10px;
+	max-height: 168px;
+	overflow-y: auto;
+}
+
+/* =========================================================================
+ * scaffold Button(하단 CTA) 슬롯 오버라이드 — 풀폭 인디고 버튼
+ * ========================================================================= */
+.footer {
+	margin-top: 18px;
+}
+.wrap :global([data-slot='button']) {
+	width: 100%;
+	height: auto;
+	padding: 15px;
+	border-radius: 14px;
+	font-size: 15px;
+	font-weight: 800;
+	color: #fff;
+	background: var(--tc-brand);
+}
+.wrap :global([data-slot='button']):hover:not(:disabled) {
+	background: var(--tc-brand-deep);
+}
+.wrap :global([data-slot='button']):disabled {
+	background: var(--tc-disabled);
+	color: var(--tc-disabled-text);
+	opacity: 1;
+	cursor: not-allowed;
+	pointer-events: auto;
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.sheet {
+		padding: 18px;
+	}
+	.itemHead {
+		padding: 0 4px;
+		gap: 10px;
+	}
+	.body {
+		margin: 0 4px 12px 34px;
+	}
+}

@@ -1,5 +1,4 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@axiom/components/ui';
-import { Plus } from 'lucide-react';
 import styles from './TransactionDetailAccordion.module.css';
 
 /** 거래 한 건의 상세 데이터 */
@@ -132,7 +131,14 @@ export default function TransactionDetailAccordion(): React.ReactNode {
 								key={tx.id}
 								value={tx.id}
 							>
-								<AccordionTrigger icon={<Plus />}>
+								<AccordionTrigger
+									icon={
+										<span
+											className={styles.plusMinus}
+											aria-hidden
+										/>
+									}
+								>
 									<span className={styles.triggerInner}>
 										<span className={styles.dateBadge}>
 											<span className={styles.m}>{tx.month}월</span>
