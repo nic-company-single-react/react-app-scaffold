@@ -438,11 +438,11 @@ export default function AccordionComponent(): React.ReactNode {
 					</table>
 				</div>
 			</section>
-			{/* ── 7. 실전 예제 ─────────────────────────────── */}
+			{/* ── 기타. 실전 예제 ─────────────────────────────── */}
 			<section className="space-y-4">
 				<SectionHeader
 					title="기타. 실전 예제 — 거래내역 상세"
-					description="리스트에서 한 건을 펼치면 상세(수취인, 수수료, 잔액, 승인번호 등)가 나오는 마스터-디테일 패턴."
+					description="리스트에서 한 건을 펼치면 상세(수취인, 수수료, 잔액, 승인번호 등)가 나오는 마스터-디테일 패턴. 이번 예제는 *.module.css 를 활용하여 스타일을 전혀 다른 방식으로 적용하였고, 실제 사용할 만한 예제로 구현하였습니다."
 				/>
 
 				<TransactionDetailAccordion />
