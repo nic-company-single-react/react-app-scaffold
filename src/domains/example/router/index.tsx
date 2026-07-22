@@ -14,6 +14,7 @@ const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-comp
 const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
 const DrawerComponent = loadable(() => import('@/domains/example/pages/ui-components/DrawerComponent'));
+const RadioGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/RadioGroupComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 const SmartTableComponent = loadable(() => import('@/domains/example/pages/ui-components/SmartTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
@@ -87,6 +88,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/drawer',
 		element: <DrawerComponent />,
 		name: '드로어 컴포넌트',
+	},
+	{
+		path: 'ui-components/radio-group',
+		element: <RadioGroupComponent />,
+		name: '라디오 그룹 컴포넌트',
 	},
 	{
 		path: 'ui-components/data-table',

@@ -1,0 +1,150 @@
+/* =========================================================================
+ * SurveyRatingRadioGroup.module.css
+ * 예제 목적: 앞의 결제수단 예제(카드형·틸 톤)와 "동일한 scaffold RadioGroup"으로
+ *            전혀 다른 모양 — 라디오 동그라미를 아예 숨기고 가로 세그먼트
+ *            (Segmented Control) 형태로 바꾼다.
+ *
+ * 퍼블리셔 관점 포인트:
+ *   1) 라디오 원형은 시각적으로만 숨기고(.srOnly 방식) 포커스는 살려 둔다.
+ *      → display:none / visibility:hidden 은 키보드 접근성을 죽이므로 쓰지 않는다.
+ *   2) 포커스 링은 감싸는 <Label>에 :focus-within 으로 그린다.
+ *   3) 그룹 컨테이너의 기본 `grid`는 가로 배치를 위해 flex로 덮어쓴다.
+ *
+ * 톤앤매너: 앰버(#f59e0b) 설문 UI. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--sv-brand: #f59e0b;
+	--sv-brand-deep: #d97706;
+	--sv-brand-soft: #fff7e8;
+	--sv-ink: #3a2c12;
+	--sv-sub: #7a6644;
+	--sv-card: #ffffff;
+	--sv-border: #ece3d3;
+	--sv-track: #f6f2ea;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--sv-ink);
+}
+
+:global(.dark) .wrap {
+	--sv-brand: #fbbf24;
+	--sv-brand-deep: #fcd34d;
+	--sv-brand-soft: #33270f;
+	--sv-ink: #f6ecd9;
+	--sv-sub: #bda880;
+	--sv-card: #1a1710;
+	--sv-border: #322b1d;
+	--sv-track: #221d13;
+}
+
+.sheet {
+	background: var(--sv-card);
+	border: 1px solid var(--sv-border);
+	border-radius: 18px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.question {
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+.hint {
+	margin: 4px 0 16px;
+	font-size: 12.5px;
+	color: var(--sv-sub);
+}
+
+/* ── 그룹: 기본 grid → 가로 세그먼트 트랙 ─────────────────── */
+.wrap :global([data-slot='radio-group']) {
+	display: flex;
+	gap: 6px;
+	padding: 6px;
+	border-radius: 14px;
+	background: var(--sv-track);
+}
+
+/* ── 라디오 원형은 시각적으로만 숨김(포커스는 유지) ────────── */
+.wrap :global([data-slot='radio-group-item']) {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip-path: inset(50%);
+	border: 0;
+	white-space: nowrap;
+}
+
+/* ── 세그먼트 한 칸 ────────────────────────────────────── */
+.seg {
+	position: relative;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	padding: 12px 6px;
+	border-radius: 10px;
+	cursor: pointer;
+	color: var(--sv-sub);
+	transition:
+		background 0.18s ease,
+		color 0.18s ease,
+		transform 0.12s ease;
+}
+.seg:hover {
+	background: var(--sv-brand-soft);
+}
+.seg:focus-within {
+	outline: 2px solid var(--sv-brand);
+	outline-offset: 2px;
+}
+.segOn {
+	background: var(--sv-brand);
+	color: #fff;
+	box-shadow: 0 2px 8px rgba(245, 158, 11, 0.28);
+	transform: translateY(-1px);
+}
+.segOn:hover {
+	background: var(--sv-brand-deep);
+}
+
+.segEmoji {
+	font-size: 22px;
+	line-height: 1;
+}
+.segLabel {
+	font-size: 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+/* ── 결과 ─────────────────────────────────────────────── */
+.result {
+	margin-top: 16px;
+	font-size: 13px;
+	color: var(--sv-sub);
+}
+.resultValue {
+	font-weight: 800;
+	color: var(--sv-brand-deep);
+}
+
+@media (max-width: 520px) {
+	.sheet {
+		padding: 16px;
+	}
+	.segLabel {
+		font-size: 11px;
+	}
+}

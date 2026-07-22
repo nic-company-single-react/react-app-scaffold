@@ -1,0 +1,220 @@
+/* =========================================================================
+ * PaymentMethodRadioGroup.module.css
+ * 예제 목적: scaffold가 제공하는 RadioGroup / RadioGroupItem / Label
+ *            (@axiom/components/ui, shadcn/radix 기반)을 "그대로 사용"하면서,
+ *            기본 동그라미 라디오를 "선택 가능한 카드(Selectable Card)" 형태로
+ *            완전히 재스타일링한다.
+ *
+ * 퍼블리셔가 실제 SI 프로젝트에서 손대게 될 지점이 바로 이 파일이다.
+ * 컴포넌트(.tsx)는 건드리지 않고, data-slot 선택자만 오버라이드하면 된다.
+ *     - [data-slot="radio-group"]           : 그룹 컨테이너(기본 grid gap-2)
+ *     - [data-slot="radio-group-item"]      : 라디오 버튼 원형(기본 size-4 border rounded-full)
+ *     - [data-slot="radio-group-indicator"] : 체크 시 나타나는 안쪽 점
+ *     - [data-slot="label"]                 : scaffold Label
+ *   래퍼(.wrap) 아래에서 이 슬롯들을 선택자로 오버라이드해 Tailwind 유틸리티보다
+ *   명시도를 확보한다.
+ *
+ * 선택 상태 감지:
+ *   radix RadioGroup.Item 은 선택되면 data-state="checked" (버전에 따라 data-checked)
+ *   속성을 노출한다. 두 가지를 모두 걸어두면 버전 업에도 안전하다.
+ *
+ * 톤앤매너: 틸(#0d9488) 결제 UI. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--pm-brand: #0d9488;
+	--pm-brand-deep: #0f766e;
+	--pm-brand-soft: #ecfdf9;
+	--pm-ink: #10312e;
+	--pm-sub: #4d6a67;
+	--pm-muted: #86a3a0;
+	--pm-card: #ffffff;
+	--pm-border: #e2e8e7;
+	--pm-line: #d3dedd;
+	--pm-body-bg: #f5faf9;
+	--pm-disabled: #eef1f1;
+	--pm-disabled-text: #a7b3b2;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--pm-ink);
+}
+
+:global(.dark) .wrap {
+	--pm-brand: #2dd4bf;
+	--pm-brand-deep: #5eead4;
+	--pm-brand-soft: #10302d;
+	--pm-ink: #e6f5f3;
+	--pm-sub: #9fc0bc;
+	--pm-muted: #6a8a86;
+	--pm-card: #101c1b;
+	--pm-border: #233735;
+	--pm-line: #2d4442;
+	--pm-body-bg: #0c1817;
+	--pm-disabled: #1d2b2a;
+	--pm-disabled-text: #5f7573;
+}
+
+/* ── 시트 컨테이너 ─────────────────────────────────────── */
+.sheet {
+	background: var(--pm-card);
+	border: 1px solid var(--pm-border);
+	border-radius: 18px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.head {
+	margin-bottom: 16px;
+}
+.title {
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	color: var(--pm-ink);
+}
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--pm-sub);
+}
+
+/* =========================================================================
+ * scaffold RadioGroup 슬롯 오버라이드
+ * ========================================================================= */
+
+/* 그룹: 기본 grid gap-2 → 카드 사이 간격 확보 */
+.wrap :global([data-slot='radio-group']) {
+	gap: 10px;
+}
+
+/* 카드 한 장(=label로 감싸서 카드 전체가 클릭 영역이 된다) */
+.option {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 14px;
+	padding: 16px;
+	border: 1.5px solid var(--pm-line);
+	border-radius: 14px;
+	background: var(--pm-card);
+	cursor: pointer;
+	transition:
+		border-color 0.18s ease,
+		background 0.18s ease,
+		box-shadow 0.18s ease;
+}
+.option:hover {
+	border-color: var(--pm-brand);
+}
+/* 선택된 카드 — 컴포넌트가 aria-checked 를 label에 직접 주지 않으므로
+   .tsx 에서 선택 여부를 계산해 .optionOn 클래스를 붙인다. */
+.optionOn {
+	border-color: var(--pm-brand);
+	background: var(--pm-brand-soft);
+	box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+}
+.optionDisabled {
+	cursor: not-allowed;
+	background: var(--pm-disabled);
+	border-color: var(--pm-line);
+}
+.optionDisabled .optionTitle,
+.optionDisabled .optionDesc {
+	color: var(--pm-disabled-text);
+}
+
+/* 라디오 원형 자체 — 기본 size-4(16px) → 22px 큰 원으로 */
+.wrap :global([data-slot='radio-group-item']) {
+	width: 22px;
+	height: 22px;
+	border: 2px solid var(--pm-line);
+	background: var(--pm-card);
+	transition:
+		border-color 0.18s ease,
+		background 0.18s ease;
+}
+.wrap :global([data-slot='radio-group-item'])[data-state='checked'],
+.wrap :global([data-slot='radio-group-item'])[data-checked] {
+	border-color: var(--pm-brand);
+	background: var(--pm-brand);
+}
+.wrap :global([data-slot='radio-group-item']):focus-visible {
+	outline: 2px solid var(--pm-brand);
+	outline-offset: 2px;
+}
+
+/* 안쪽 점 — 기본 size-2 → 8px 흰 점 */
+.wrap :global([data-slot='radio-group-indicator']) > span {
+	width: 8px;
+	height: 8px;
+	background: #fff;
+}
+
+/* ── 카드 내부 레이아웃 ─────────────────────────────────── */
+.optionBody {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+.optionTitle {
+	font-size: 14.5px;
+	font-weight: 700;
+	color: var(--pm-ink);
+	letter-spacing: -0.01em;
+}
+.optionDesc {
+	font-size: 12px;
+	color: var(--pm-sub);
+}
+.optionIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 10px;
+	background: var(--pm-body-bg);
+	color: var(--pm-sub);
+}
+.optionOn .optionIcon {
+	background: var(--pm-brand);
+	color: #fff;
+}
+
+/* ── 하단 요약 ─────────────────────────────────────────── */
+.summary {
+	margin-top: 18px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	background: var(--pm-body-bg);
+	font-size: 13px;
+	color: var(--pm-sub);
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+}
+.summaryValue {
+	font-weight: 800;
+	color: var(--pm-brand);
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.sheet {
+		padding: 18px;
+	}
+	.option {
+		gap: 10px;
+		padding: 13px;
+	}
+	.optionIcon {
+		width: 32px;
+		height: 32px;
+	}
+}

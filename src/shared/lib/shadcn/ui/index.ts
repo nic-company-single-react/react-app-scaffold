@@ -17,6 +17,7 @@ export * from './label';
 export * from './skeleton';
 export * from './carousel';
 export * from './drawer';
+export * from './radio-group';
 
 // 추후 다른 UI적용 시 (예를 들어 MUI 추가 시 확장방법)
 //import { Button as MuiButton } from '@mui/material';
