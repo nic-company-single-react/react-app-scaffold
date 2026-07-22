@@ -9,7 +9,7 @@ import {
 	CarouselItem,
 	CarouselNext,
 	CarouselPrevious,
-} from '@/shared/lib/shadcn/ui/carousel';
+} from '@axiom/components/ui';
 import { GalleryHorizontal } from 'lucide-react';
 
 const SLIDE_COLORS = [
