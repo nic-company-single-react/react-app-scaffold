@@ -172,9 +172,7 @@
 	align-self: center;
 	margin-left: 12px;
 }
-.wrap
-	:global([data-slot='accordion-trigger'][aria-expanded='true'])
-	:global([data-slot='accordion-trigger-icon']) {
+.wrap :global([data-slot='accordion-trigger'][aria-expanded='true']) :global([data-slot='accordion-trigger-icon']) {
 	color: var(--nic-teal);
 }
 

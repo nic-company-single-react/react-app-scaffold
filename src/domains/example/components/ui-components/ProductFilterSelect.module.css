@@ -1,0 +1,169 @@
+/* =========================================================================
+ * ProductFilterSelect.module.css
+ * 예제 목적: 같은 scaffold Select 를 앞선 WithdrawAccountSelect 와 전혀 다른
+ *            "목록 상단 필터 바(pill 형)"로 재스타일링한다.
+ *            → 컴포넌트는 그대로 두고 CSS 만으로 톤을 완전히 바꿀 수 있음을 보여준다.
+ *
+ * 포인트
+ *  - 트리거를 알약(pill) 형태로 축소하고, 값이 선택되면 강조 색으로 전환한다.
+ *    (선택 여부는 .tsx 에서 계산해 .triggerOn 클래스를 붙인다)
+ *  - 드롭다운(.content)은 Portal 이므로 className 으로 직접 전달한다.
+ *  - 명시도 확보를 위해 클래스를 두 번 겹쳐 쓴다(.trigger.trigger).
+ *
+ * 톤앤매너: 앰버/슬레이트 커머스 UI.
+ * ========================================================================= */
+
+.bar {
+	--pf-brand: #b45309;
+	--pf-brand-soft: #fff7ed;
+	--pf-ink: #1f2937;
+	--pf-sub: #6b7280;
+	--pf-card: #ffffff;
+	--pf-line: #e5e7eb;
+	--pf-bg: #fafafa;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--pf-ink);
+	border: 1px solid var(--pf-line);
+	border-radius: 16px;
+	background: var(--pf-bg);
+	padding: 14px 16px;
+}
+
+:global(.dark) .bar,
+:global(.dark) .content {
+	--pf-brand: #fbbf24;
+	--pf-brand-soft: #2a2113;
+	--pf-ink: #f3f4f6;
+	--pf-sub: #9ca3af;
+	--pf-card: #17181c;
+	--pf-line: #2e3138;
+	--pf-bg: #121317;
+}
+
+.content {
+	--pf-brand: #b45309;
+	--pf-brand-soft: #fff7ed;
+	--pf-ink: #1f2937;
+	--pf-sub: #6b7280;
+	--pf-card: #ffffff;
+	--pf-line: #e5e7eb;
+}
+
+.barTop {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+.barTitle {
+	font-size: 15px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+.barCount {
+	font-size: 12.5px;
+	color: var(--pf-sub);
+	font-variant-numeric: tabular-nums;
+}
+.barCount b {
+	color: var(--pf-brand);
+	font-weight: 800;
+}
+
+.filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+}
+
+/* ── 트리거: 알약(pill) ─────────────────────────────────── */
+.trigger.trigger {
+	height: 34px;
+	padding: 0 10px 0 12px;
+	border-radius: 999px;
+	border: 1px solid var(--pf-line);
+	background: var(--pf-card);
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--pf-ink);
+	gap: 6px;
+	transition:
+		border-color 0.16s ease,
+		background 0.16s ease,
+		color 0.16s ease;
+}
+.trigger.trigger:hover {
+	border-color: var(--pf-brand);
+}
+.trigger.trigger[data-state='open'] {
+	border-color: var(--pf-brand);
+	box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.12);
+}
+/* 값이 선택된 필터는 채워진 pill 로 */
+.triggerOn.triggerOn {
+	border-color: var(--pf-brand);
+	background: var(--pf-brand-soft);
+	color: var(--pf-brand);
+}
+.triggerOn.triggerOn svg {
+	color: var(--pf-brand);
+}
+
+.prefix {
+	color: var(--pf-sub);
+	font-weight: 500;
+	margin-right: 2px;
+}
+.triggerOn .prefix {
+	color: var(--pf-brand);
+}
+
+/* ── 드롭다운 ───────────────────────────────────────────── */
+.content.content {
+	border-radius: 12px;
+	padding: 5px;
+	background: var(--pf-card);
+	border: 1px solid var(--pf-line);
+	box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+	--tw-ring-shadow: 0 0 #0000;
+}
+.item.item {
+	border-radius: 8px;
+	padding: 7px 30px 7px 10px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+}
+.item.item:focus,
+.item.item[data-highlighted] {
+	background: var(--pf-brand-soft);
+	color: var(--pf-brand);
+}
+.item.item svg {
+	color: var(--pf-brand);
+}
+
+.reset {
+	height: 34px;
+	padding: 0 12px;
+	border-radius: 999px;
+	border: 1px dashed var(--pf-line);
+	background: transparent;
+	color: var(--pf-sub);
+	font-size: 12.5px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: color 0.16s ease;
+}
+.reset:hover {
+	color: var(--pf-brand);
+	border-color: var(--pf-brand);
+}

@@ -1,0 +1,309 @@
+/* =========================================================================
+ * WithdrawAccountSelect.module.css
+ * 예제 목적: scaffold가 제공하는 Select(@axiom/components/ui, shadcn/radix 기반)를
+ *            "그대로 사용"하면서, 기본 회색 셀렉트를 금융 이체 화면용
+ *            2줄짜리 계좌 선택 UI로 완전히 재스타일링한다.
+ *
+ * ⚠️ 퍼블리셔가 반드시 알아야 할 2가지
+ *
+ * 1) SelectContent 는 Portal(document.body 직속)로 렌더된다.
+ *    → 래퍼(.wrap) 하위 선택자(`.wrap [data-slot="select-content"]`)로는
+ *      절대 잡히지 않는다. 드롭다운 패널 스타일은 반드시
+ *      <SelectContent className={styles.content}> 처럼 "직접" 클래스를 넘겨야 한다.
+ *    → 트리거(.trigger)는 래퍼 안에 있으므로 둘 다 가능하지만,
+ *      일관성을 위해 이 파일은 전부 직접 클래스 방식으로 통일했다.
+ *
+ * 2) 컴포넌트 기본 스타일이 Tailwind 유틸리티(단일 클래스, 명시도 0,1,0)라서
+ *    CSS Module 클래스도 같은 명시도가 되어 "나중에 선언된 쪽"이 이긴다.
+ *    → 확실히 이기기 위해 `.trigger.trigger` 처럼 클래스를 두 번 겹쳐
+ *      명시도(0,2,0)를 올린다. !important 없이 안전하게 덮어쓰는 방법이다.
+ *
+ * 오버라이드 대상 data-slot 목록:
+ *   select-trigger / select-value / select-content / select-item /
+ *   select-label / select-group / select-separator /
+ *   select-scroll-up-button / select-scroll-down-button
+ *
+ * 톤앤매너: 블루(#2563eb) 뱅킹 UI. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--wa-brand: #2563eb;
+	--wa-brand-deep: #1d4ed8;
+	--wa-brand-soft: #eff6ff;
+	--wa-ink: #0f1e3d;
+	--wa-sub: #56698c;
+	--wa-muted: #93a3bd;
+	--wa-card: #ffffff;
+	--wa-border: #e3e8f0;
+	--wa-line: #d6deea;
+	--wa-body-bg: #f5f8fd;
+	--wa-disabled-text: #a9b4c6;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--wa-ink);
+}
+
+/* 다크 토큰 — .content 는 포털로 빠지므로 :root 레벨에서도 잡히도록 별도 선언 */
+:global(.dark) .wrap,
+:global(.dark) .content {
+	--wa-brand: #60a5fa;
+	--wa-brand-deep: #93c5fd;
+	--wa-brand-soft: #16233c;
+	--wa-ink: #e6edf9;
+	--wa-sub: #9db0d0;
+	--wa-muted: #6b7d99;
+	--wa-card: #0f1626;
+	--wa-border: #22304a;
+	--wa-line: #2c3c58;
+	--wa-body-bg: #0b1120;
+	--wa-disabled-text: #5c6b83;
+}
+
+.content {
+	--wa-brand: #2563eb;
+	--wa-brand-soft: #eff6ff;
+	--wa-ink: #0f1e3d;
+	--wa-sub: #56698c;
+	--wa-muted: #93a3bd;
+	--wa-card: #ffffff;
+	--wa-line: #d6deea;
+	--wa-disabled-text: #a9b4c6;
+}
+
+/* ── 시트 컨테이너 ─────────────────────────────────────── */
+.sheet {
+	background: var(--wa-card);
+	border: 1px solid var(--wa-border);
+	border-radius: 18px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.head {
+	margin-bottom: 18px;
+}
+.title {
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--wa-sub);
+}
+
+.field + .field {
+	margin-top: 14px;
+}
+.fieldLabel {
+	display: block;
+	margin-bottom: 7px;
+	font-size: 12.5px;
+	font-weight: 700;
+	color: var(--wa-sub);
+}
+
+/* =========================================================================
+ * 1) 트리거 — 기본 h-8 / w-fit / rounded-lg 를 2줄 카드형 필드로 교체
+ * ========================================================================= */
+.trigger.trigger {
+	display: flex;
+	width: 100%;
+	height: auto;
+	min-height: 62px;
+	padding: 12px 14px;
+	border: 1.5px solid var(--wa-line);
+	border-radius: 14px;
+	background: var(--wa-card);
+	text-align: left;
+	transition:
+		border-color 0.18s ease,
+		box-shadow 0.18s ease;
+}
+.trigger.trigger:hover {
+	border-color: var(--wa-brand);
+}
+/* 열려 있는 동안(radix 가 data-state="open" 부여) */
+.trigger.trigger[data-state='open'] {
+	border-color: var(--wa-brand);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.trigger.trigger:focus-visible {
+	border-color: var(--wa-brand);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+/* 트리거 안 화살표 아이콘 확대 */
+.trigger.trigger svg {
+	width: 18px;
+	height: 18px;
+	color: var(--wa-muted);
+}
+
+/* 트리거 기본 스타일은 SelectValue 에 line-clamp-1 을 걸어 1줄로 자른다.
+   2줄 표시가 필요하므로 해제한다. */
+.trigger.trigger :global([data-slot='select-value']) {
+	display: flex;
+	overflow: visible;
+	-webkit-line-clamp: unset;
+}
+
+/* 선택값 표시(placeholder 상태 포함) */
+.valuePlaceholder {
+	font-size: 14px;
+	color: var(--wa-muted);
+}
+.valueBox {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+.valueName {
+	font-size: 14.5px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--wa-ink);
+}
+.valueSub {
+	font-size: 12px;
+	color: var(--wa-sub);
+}
+
+/* =========================================================================
+ * 2) 드롭다운 패널 — Portal 이므로 className 으로 직접 전달해야 한다
+ * ========================================================================= */
+.content.content {
+	border-radius: 14px;
+	background: var(--wa-card);
+	box-shadow: 0 12px 32px rgba(15, 30, 61, 0.16);
+	--tw-ring-shadow: 0 0 #0000; /* shadcn 의 ring-1 제거 */
+	border: 1px solid var(--wa-line);
+	padding: 6px;
+}
+
+.groupLabel.groupLabel {
+	padding: 8px 10px 6px;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+	color: var(--wa-muted);
+	text-transform: uppercase;
+}
+
+.separator.separator {
+	background: var(--wa-line);
+	margin: 6px 4px;
+}
+
+/* 항목 한 줄 — 기본 py-1 pl-1.5 pr-8 을 2줄 카드로 */
+.item.item {
+	align-items: flex-start;
+	padding: 10px 34px 10px 12px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.item.item:focus,
+.item.item[data-highlighted] {
+	background: var(--wa-brand-soft);
+	color: var(--wa-ink);
+}
+.item.item[data-state='checked'] {
+	background: var(--wa-brand-soft);
+}
+.item.item[data-disabled] {
+	opacity: 1;
+	color: var(--wa-disabled-text);
+	cursor: not-allowed;
+}
+/* 체크 아이콘 색 */
+.item.item svg {
+	color: var(--wa-brand);
+}
+
+.itemBody {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+.itemTop {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+.itemBadge {
+	padding: 1px 6px;
+	border-radius: 999px;
+	background: var(--wa-brand);
+	color: #fff;
+	font-size: 10px;
+	font-weight: 800;
+	letter-spacing: 0;
+}
+.itemSub {
+	font-size: 12px;
+	color: var(--wa-sub);
+	font-variant-numeric: tabular-nums;
+}
+.item.item[data-disabled] .itemSub {
+	color: var(--wa-disabled-text);
+}
+
+/* ── 하단 요약 / 액션 ───────────────────────────────────── */
+.summary {
+	margin-top: 18px;
+	padding: 14px 16px;
+	border-radius: 12px;
+	background: var(--wa-body-bg);
+	font-size: 13px;
+	color: var(--wa-sub);
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+}
+.summaryValue {
+	font-weight: 800;
+	color: var(--wa-brand);
+	font-variant-numeric: tabular-nums;
+}
+
+.submit {
+	margin-top: 12px;
+	width: 100%;
+	height: 46px;
+	border: 0;
+	border-radius: 12px;
+	background: var(--wa-brand);
+	color: #fff;
+	font-size: 14.5px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.18s ease;
+}
+.submit:hover:not(:disabled) {
+	background: var(--wa-brand-deep);
+}
+.submit:disabled {
+	background: var(--wa-line);
+	color: var(--wa-disabled-text);
+	cursor: not-allowed;
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.sheet {
+		padding: 18px;
+	}
+	.trigger.trigger {
+		padding: 10px 12px;
+	}
+}
