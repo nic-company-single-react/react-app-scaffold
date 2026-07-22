@@ -1,0 +1,208 @@
+/* =========================================================================
+ * AccountNoticeAlert.module.css
+ * 예제 목적: scaffold가 제공하는 Alert(@axiom/components/ui, shadcn 기반)를
+ *            "그대로 사용"하면서, 기본 제공 variant(default / destructive) 2가지를
+ *            info / success / warning / danger 4가지 톤으로 확장한다.
+ *
+ * 확장 방식은 컴포넌트를 고치지 않고 data 속성 + data-slot 오버라이드로 처리한다.
+ *     - .notice[data-tone="..."]        : Alert 루트(직접 넘긴 data-tone 값으로 톤 분기)
+ *     - [data-slot="alert-title"]       : 알림 제목
+ *     - [data-slot="alert-description"] : 알림 본문
+ *     - [data-slot="alert-action"]      : 우측 액션 영역(액션/닫기 버튼)
+ *     - [data-slot="button"]            : scaffold Button
+ *   래퍼(.wrap) 아래에서 선택자를 겹쳐 Tailwind 유틸리티보다 명시도를 확보한다.
+ *
+ * 다크 모드는 앱 규칙에 맞춰 :global(.dark) 로 처리한다.
+ * ========================================================================= */
+
+.wrap {
+	--an-card: #ffffff;
+	--an-border: #e5e7eb;
+	--an-line: #f1f2f5;
+	--an-head-bg: #f8fafc;
+	--an-ink: #111827;
+	--an-sub: #6b7280;
+
+	--an-info: #2563eb;
+	--an-info-bg: #eff6ff;
+	--an-info-border: #bfdbfe;
+
+	--an-success: #059669;
+	--an-success-bg: #ecfdf5;
+	--an-success-border: #a7f3d0;
+
+	--an-warning: #b45309;
+	--an-warning-bg: #fffbeb;
+	--an-warning-border: #fde68a;
+
+	--an-danger: #dc2626;
+	--an-danger-bg: #fef2f2;
+	--an-danger-border: #fecaca;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--an-ink);
+	background: var(--an-card);
+	border: 1px solid var(--an-border);
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 1px 2px rgb(16 24 40 / 6%);
+}
+
+:global(.dark) .wrap {
+	--an-card: #0f1420;
+	--an-border: #26304a;
+	--an-line: #1c2436;
+	--an-head-bg: #141b2b;
+	--an-ink: #e6e9f2;
+	--an-sub: #97a0b8;
+
+	--an-info: #7aa7ff;
+	--an-info-bg: #16233d;
+	--an-info-border: #2c4879;
+
+	--an-success: #57d6a5;
+	--an-success-bg: #102b23;
+	--an-success-border: #1f5a45;
+
+	--an-warning: #f0b354;
+	--an-warning-bg: #2e2313;
+	--an-warning-border: #6b4c1c;
+
+	--an-danger: #ff8080;
+	--an-danger-bg: #331919;
+	--an-danger-border: #6d2b2b;
+}
+
+/* ── 헤더 ───────────────────────────────────────────── */
+.head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 16px;
+	background: var(--an-head-bg);
+	border-bottom: 1px solid var(--an-line);
+}
+
+.headTitle {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.headCount {
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--an-sub);
+	padding: 2px 8px;
+	border: 1px solid var(--an-border);
+	border-radius: 999px;
+}
+
+/* ── 알림 리스트 ────────────────────────────────────── */
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	padding: 14px 16px;
+}
+
+.empty {
+	margin: 0;
+	padding: 18px 0;
+	text-align: center;
+	font-size: 12px;
+	color: var(--an-sub);
+}
+
+/* Alert 루트 재스타일 — 톤별 색은 아래 [data-tone] 블록에서 주입 */
+.wrap .notice {
+	position: relative;
+	padding: 12px 88px 12px 12px;
+	border-radius: 12px;
+	border: 1px solid var(--an-tone-border);
+	background: var(--an-tone-bg);
+}
+
+.wrap .notice > svg {
+	color: var(--an-tone);
+}
+
+.wrap .notice [data-slot='alert-title'] {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--an-ink);
+	line-height: 1.45;
+}
+
+.wrap .notice [data-slot='alert-description'] {
+	font-size: 12px;
+	color: var(--an-sub);
+	line-height: 1.6;
+}
+
+/* ── 톤 4종 ─────────────────────────────────────────── */
+.wrap .notice[data-tone='info'] {
+	--an-tone: var(--an-info);
+	--an-tone-bg: var(--an-info-bg);
+	--an-tone-border: var(--an-info-border);
+}
+
+.wrap .notice[data-tone='success'] {
+	--an-tone: var(--an-success);
+	--an-tone-bg: var(--an-success-bg);
+	--an-tone-border: var(--an-success-border);
+}
+
+.wrap .notice[data-tone='warning'] {
+	--an-tone: var(--an-warning);
+	--an-tone-bg: var(--an-warning-bg);
+	--an-tone-border: var(--an-warning-border);
+}
+
+.wrap .notice[data-tone='danger'] {
+	--an-tone: var(--an-danger);
+	--an-tone-bg: var(--an-danger-bg);
+	--an-tone-border: var(--an-danger-border);
+}
+
+/* ── 우측 액션 영역 ─────────────────────────────────── */
+.wrap .action {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+	top: 8px;
+	right: 8px;
+}
+
+.wrap .action [data-slot='button'] {
+	color: var(--an-tone);
+	font-weight: 600;
+}
+
+.wrap .action [data-slot='button']:hover {
+	background: color-mix(in srgb, var(--an-tone) 14%, transparent);
+}
+
+/* ── 푸터 ───────────────────────────────────────────── */
+.foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 10px 16px;
+	border-top: 1px solid var(--an-line);
+	background: var(--an-head-bg);
+}
+
+.footLog {
+	font-size: 11px;
+	color: var(--an-sub);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

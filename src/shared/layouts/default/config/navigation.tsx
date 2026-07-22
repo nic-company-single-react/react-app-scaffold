@@ -5,6 +5,7 @@ import {
 	FishingHook,
 	Badge,
 	ListChevronsDownUp,
+	Megaphone,
 	GalleryHorizontal,
 	CheckSquare2,
 	ChevronsUpDown,
@@ -54,6 +55,7 @@ export const navItems: NavItem[] = [
 		name: 'UI Components',
 		subItems: [
 			{ name: 'Accordion', icon: <ListChevronsDownUp />, path: '/example/ui-components/accordion' },
+			{ name: 'Alert', icon: <Megaphone />, path: '/example/ui-components/alert' },
 			{ name: 'Badge', icon: <Badge />, path: '/example/ui-components/badge' },
 			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
 			{ name: 'Carousel', icon: <GalleryHorizontal />, path: '/example/ui-components/carousel' },
