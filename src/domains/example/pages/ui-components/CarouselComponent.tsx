@@ -276,13 +276,15 @@ export default function CarouselComponent(): React.ReactNode {
 					description="embla-carousel-autoplay 플러그인으로 자동 슬라이드 전환을 구현합니다. 클릭하면 자동재생이 정지됩니다."
 				/>
 				<CarouselDemoCard
-					label="2초 간격 자동재생 · stopOnInteraction: true"
+					label="2초 간격 자동재생 · loop: true · stopOnInteraction: true"
 					code={`import Autoplay from "embla-carousel-autoplay";
 
 // 렌더링 간 안정적인 인스턴스 유지를 위해 useRef 사용
 const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
-<Carousel plugins={[plugin.current]}>
+// loop: true가 없으면 마지막 슬라이드에서 처음으로 "되감기"되어
+// 역방향 애니메이션이 보인다. loop을 켜면 앞 방향으로 자연스럽게 순환한다.
+<Carousel opts={{ loop: true }} plugins={[plugin.current]}>
   <CarouselContent>
     <CarouselItem>...</CarouselItem>
   </CarouselContent>
@@ -290,7 +292,10 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   <CarouselNext />
 </Carousel>`}
 				>
-					<Carousel plugins={[autoplayPlugin.current]}>
+					<Carousel
+						opts={{ loop: true }}
+						plugins={[autoplayPlugin.current]}
+					>
 						<CarouselContent>
 							{SLIDE_COLORS.map((color, i) => (
 								<CarouselItem key={i}>
@@ -335,7 +340,7 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 									prop: 'opts',
 									type: 'EmblaOptionsType',
 									def: '—',
-									desc: 'Embla Carousel 옵션 (loop, align, direction 등)',
+									desc: 'Embla Carousel 옵션 (아래 “opts 세부 옵션” 표 참고)',
 								},
 								{
 									prop: 'plugins',
@@ -394,6 +399,166 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 							))}
 						</tbody>
 					</table>
+				</div>
+			</section>
+
+			{/* ── opts 세부 옵션 테이블 ─────────────────────────────── */}
+			<section className="space-y-3">
+				<SectionHeader
+					title="opts 세부 옵션 (EmblaOptionsType)"
+					description="opts에 넘길 수 있는 Embla 옵션 전체 목록입니다. axis · direction은 Carousel의 orientation prop이 대신 설정하므로 직접 넣지 않는 것을 권장합니다."
+				/>
+				<div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-sm">
+					<div className="overflow-x-auto">
+						<table className="w-full text-sm min-w-2xl">
+							<thead>
+								<tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+										옵션
+									</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+										타입
+									</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+										기본값
+									</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+										설명
+									</th>
+								</tr>
+							</thead>
+							<tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+								{[
+									{
+										prop: 'loop',
+										type: 'boolean',
+										def: 'false',
+										desc: '무한 순환. 마지막 → 첫 슬라이드로 되감기 없이 같은 방향으로 이어진다. Autoplay와 함께 쓸 때 특히 유용.',
+									},
+									{
+										prop: 'align',
+										type: '"start" | "center" | "end" | (vp, sz) => number',
+										def: '"center"',
+										desc: '뷰포트 안에서 슬라이드를 정렬할 기준 위치.',
+									},
+									{
+										prop: 'slidesToScroll',
+										type: 'number | "auto"',
+										def: '1',
+										desc: '한 번에 이동할 슬라이드 개수. "auto"는 뷰포트에 들어가는 만큼 그룹으로 이동.',
+									},
+									{
+										prop: 'startIndex',
+										type: 'number',
+										def: '0',
+										desc: '최초 렌더 시 시작 슬라이드 인덱스.',
+									},
+									{
+										prop: 'containScroll',
+										type: 'false | "trimSnaps" | "keepSnaps"',
+										def: '"trimSnaps"',
+										desc: '앞뒤 여백이 생기지 않도록 스크롤을 가둔다. trimSnaps는 여백을 만드는 스냅을 제거, keepSnaps는 스냅을 유지. loop: true면 무시됨.',
+									},
+									{
+										prop: 'duration',
+										type: 'number',
+										def: '25',
+										desc: '전환 애니메이션 속도(값이 클수록 느림). ms가 아닌 Embla 자체 단위.',
+									},
+									{
+										prop: 'dragFree',
+										type: 'boolean',
+										def: 'false',
+										desc: 'true면 스냅 없이 관성으로 자유롭게 스크롤된다.',
+									},
+									{
+										prop: 'dragThreshold',
+										type: 'number',
+										def: '10',
+										desc: '드래그로 인식하기까지 필요한 이동 거리(px).',
+									},
+									{
+										prop: 'watchDrag',
+										type: 'boolean | (api, evt) => boolean',
+										def: 'true',
+										desc: 'false면 드래그 조작을 비활성화(버튼·API로만 이동).',
+									},
+									{
+										prop: 'skipSnaps',
+										type: 'boolean',
+										def: 'false',
+										desc: '빠르게 드래그할 때 중간 스냅을 건너뛰도록 허용.',
+									},
+									{
+										prop: 'inViewThreshold',
+										type: 'number (0~1)',
+										def: '0',
+										desc: '슬라이드를 “보이는 상태”로 판단할 노출 비율. slidesInView 계산에 사용.',
+									},
+									{
+										prop: 'breakpoints',
+										type: '{ [mediaQuery]: EmblaOptionsType }',
+										def: '{}',
+										desc: '미디어쿼리별 옵션 오버라이드. 예: { "(min-width: 768px)": { align: "start" } }',
+									},
+									{
+										prop: 'active',
+										type: 'boolean',
+										def: 'true',
+										desc: 'false면 캐러셀을 비활성화(정적 목록처럼 동작). breakpoints와 조합해 특정 화면에서만 끌 때 사용.',
+									},
+									{
+										prop: 'watchResize',
+										type: 'boolean | (api, entries) => boolean',
+										def: 'true',
+										desc: '컨테이너·슬라이드 크기 변화를 감지해 자동 재초기화.',
+									},
+									{
+										prop: 'watchSlides',
+										type: 'boolean | (api, mutations) => boolean',
+										def: 'true',
+										desc: '슬라이드 DOM 추가/삭제를 감지해 자동 재초기화.',
+									},
+									{
+										prop: 'axis',
+										type: '"x" | "y"',
+										def: '"x"',
+										desc: '스크롤 축. shadcn Carousel에서는 orientation prop이 설정하므로 직접 지정하지 않는다.',
+									},
+									{
+										prop: 'direction',
+										type: '"ltr" | "rtl"',
+										def: '"ltr"',
+										desc: '콘텐츠 진행 방향. RTL 레이아웃 지원용.',
+									},
+								].map((row) => (
+									<tr
+										key={row.prop}
+										className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors align-top"
+									>
+										<td className="px-4 py-2.5 whitespace-nowrap">
+											<code className="text-xs font-mono text-blue-700 dark:text-blue-400">
+												{row.prop}
+											</code>
+										</td>
+										<td className="px-4 py-2.5">
+											<code className="text-xs font-mono text-gray-600 dark:text-gray-400">
+												{row.type}
+											</code>
+										</td>
+										<td className="px-4 py-2.5 whitespace-nowrap">
+											<code className="text-xs font-mono text-amber-700 dark:text-amber-400">
+												{row.def}
+											</code>
+										</td>
+										<td className="px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400">
+											{row.desc}
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</section>
 		</div>
