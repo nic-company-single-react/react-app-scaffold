@@ -13,6 +13,7 @@ const CardComponent = loadable(() => import('@/domains/example/pages/ui-componen
 const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-components/CarouselComponent'));
 const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
+const DrawerComponent = loadable(() => import('@/domains/example/pages/ui-components/DrawerComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 const SmartTableComponent = loadable(() => import('@/domains/example/pages/ui-components/SmartTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
@@ -81,6 +82,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/combobox',
 		element: <ComboboxComponent />,
 		name: '콤보박스 컴포넌트',
+	},
+	{
+		path: 'ui-components/drawer',
+		element: <DrawerComponent />,
+		name: '드로어 컴포넌트',
 	},
 	{
 		path: 'ui-components/data-table',

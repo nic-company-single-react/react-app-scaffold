@@ -1,0 +1,262 @@
+/* =========================================================================
+ * OrderFilterDrawer.module.css
+ * 예제 목적: scaffold가 제공하는 Drawer(@axiom/components/ui, vaul 기반)를
+ *            "그대로 사용"하면서, 앰버/차콜 톤의 모바일 필터 시트로 재스타일링한다.
+ *
+ * ⚠️ Drawer 는 Portal 로 document.body 밑에 렌더된다.
+ *    → 페이지 쪽 래퍼(.wrap) 하위 선택자로는 시트 내부에 절대 닿지 않는다.
+ *    → 그래서 시트 스타일은 반드시 DrawerContent 의 className(.sheet)을 기점으로 작성한다.
+ *      (.wrap 은 트리거/요약 영역 전용)
+ *
+ * 재스타일 대상 슬롯(컴포넌트가 DOM에 자동으로 붙여주는 data-slot):
+ *     - [data-slot="drawer-content"]     : 시트 본체        → .sheet 로 직접 지정
+ *     - [data-slot="drawer-header"]      : 헤더
+ *     - [data-slot="drawer-title"]       : 제목
+ *     - [data-slot="drawer-description"] : 부제
+ *     - [data-slot="drawer-footer"]      : 하단 버튼 영역
+ *     - [data-slot="drawer-overlay"]     : 딤 배경 (시트의 형제 노드 → .sheet 하위로 못 잡음.
+ *                                          전역에서 잡거나 drawer.tsx 를 직접 수정한다)
+ *
+ * 다크 모드는 앱 규칙대로 :global(.dark) 로 처리한다.
+ * ========================================================================= */
+
+.wrap,
+.sheet {
+	--fd-brand: #b45309;
+	--fd-brand-deep: #92400e;
+	--fd-brand-soft: #fef3c7;
+	--fd-brand-soft-border: #fcd34d;
+	--fd-ink: #1c1917;
+	--fd-sub: #57534e;
+	--fd-muted: #a8a29e;
+	--fd-card: #ffffff;
+	--fd-border: #e7e5e4;
+	--fd-line-soft: #f5f5f4;
+	--fd-chip-bg: #fafaf9;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--fd-ink);
+}
+
+:global(.dark) .wrap,
+:global(.dark) .sheet {
+	--fd-brand: #fbbf24;
+	--fd-brand-deep: #fcd34d;
+	--fd-brand-soft: #3a2a08;
+	--fd-brand-soft-border: #5c430c;
+	--fd-ink: #f5f5f4;
+	--fd-sub: #a8a29e;
+	--fd-muted: #78716c;
+	--fd-card: #1c1917;
+	--fd-border: #292524;
+	--fd-line-soft: #232020;
+	--fd-chip-bg: #221f1e;
+}
+
+/* =========================================================================
+ * 1) 페이지 쪽 — 트리거 / 현재 필터 요약 (포털 밖이라 .wrap 하위로 잡힌다)
+ * ========================================================================= */
+.wrap {
+	border: 1px solid var(--fd-border);
+	border-radius: 18px;
+	background: var(--fd-card);
+	padding: 18px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+.barTitle {
+	font-size: 15px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+.barSub {
+	margin-top: 2px;
+	font-size: 12px;
+	color: var(--fd-sub);
+}
+
+/* 트리거 버튼: scaffold Button 슬롯 오버라이드 */
+.wrap :global([data-slot='button']).triggerBtn {
+	height: auto;
+	padding: 10px 16px;
+	border-radius: 12px;
+	font-size: 13px;
+	font-weight: 700;
+	color: #fff;
+	background: var(--fd-brand);
+	border: none;
+}
+.wrap :global([data-slot='button']).triggerBtn:hover {
+	background: var(--fd-brand-deep);
+}
+:global(.dark) .wrap :global([data-slot='button']).triggerBtn {
+	color: #1c1917;
+}
+
+.summary {
+	margin-top: 14px;
+	padding-top: 14px;
+	border-top: 1px dashed var(--fd-border);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.summaryEmpty {
+	font-size: 12px;
+	color: var(--fd-muted);
+}
+.tag {
+	padding: 4px 10px;
+	border-radius: 999px;
+	font-size: 11.5px;
+	font-weight: 700;
+	color: var(--fd-brand);
+	background: var(--fd-brand-soft);
+	border: 1px solid var(--fd-brand-soft-border);
+}
+
+/* =========================================================================
+ * 2) 시트 쪽 — DrawerContent(.sheet) 기점으로만 작성한다
+ * ========================================================================= */
+.sheet {
+	background: var(--fd-card);
+	border: none;
+	border-top: 1px solid var(--fd-border);
+	border-radius: 22px 22px 0 0;
+	box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.18);
+	max-width: 520px;
+	margin: 0 auto;
+	max-height: 86vh;
+}
+
+/* 드래그 핸들(컴포넌트가 bottom 방향일 때 자동 렌더하는 첫 번째 div) */
+.sheet > div:first-child {
+	width: 44px;
+	height: 5px;
+	margin-top: 10px;
+	background: var(--fd-border);
+}
+
+.sheet :global([data-slot='drawer-header']) {
+	padding: 14px 20px 10px;
+	text-align: left;
+	border-bottom: 1px solid var(--fd-line-soft);
+}
+.sheet :global([data-slot='drawer-title']) {
+	font-size: 17px;
+	font-weight: 800;
+	color: var(--fd-ink);
+	letter-spacing: -0.01em;
+}
+.sheet :global([data-slot='drawer-description']) {
+	font-size: 12.5px;
+	color: var(--fd-sub);
+}
+
+/* ── 시트 본문 ─────────────────────────────────────────── */
+.body {
+	padding: 6px 20px 4px;
+	overflow-y: auto;
+}
+.group {
+	padding: 14px 0;
+	border-bottom: 1px solid var(--fd-line-soft);
+}
+.group:last-child {
+	border-bottom: none;
+}
+.groupTitle {
+	font-size: 12px;
+	font-weight: 800;
+	color: var(--fd-muted);
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	margin-bottom: 10px;
+}
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+/* 칩: scaffold Button 슬롯 오버라이드 (.chip 으로 스코프를 좁혀 CTA와 분리) */
+.sheet :global([data-slot='button']).chip {
+	height: auto;
+	padding: 9px 14px;
+	border-radius: 11px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--fd-sub);
+	background: var(--fd-chip-bg);
+	border: 1.5px solid var(--fd-border);
+}
+.sheet :global([data-slot='button']).chip:hover {
+	border-color: var(--fd-brand-soft-border);
+}
+.sheet :global([data-slot='button']).chipOn {
+	color: var(--fd-brand);
+	background: var(--fd-brand-soft);
+	border-color: var(--fd-brand);
+}
+
+/* ── 하단 CTA ──────────────────────────────────────────── */
+.sheet :global([data-slot='drawer-footer']) {
+	flex-direction: row;
+	gap: 10px;
+	padding: 14px 20px calc(18px + env(safe-area-inset-bottom));
+	border-top: 1px solid var(--fd-line-soft);
+	background: var(--fd-card);
+}
+.sheet :global([data-slot='button']).cta {
+	flex: 1;
+	height: auto;
+	padding: 14px;
+	border-radius: 14px;
+	font-size: 14.5px;
+	font-weight: 800;
+	color: #fff;
+	background: var(--fd-brand);
+	border: none;
+}
+.sheet :global([data-slot='button']).cta:hover {
+	background: var(--fd-brand-deep);
+}
+:global(.dark) .sheet :global([data-slot='button']).cta {
+	color: #1c1917;
+}
+.sheet :global([data-slot='button']).ctaGhost {
+	flex: 0 0 auto;
+	color: var(--fd-sub);
+	background: transparent;
+	border: 1.5px solid var(--fd-border);
+}
+.sheet :global([data-slot='button']).ctaGhost:hover {
+	background: var(--fd-line-soft);
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.wrap {
+		padding: 14px;
+	}
+	.body {
+		padding: 6px 16px 4px;
+	}
+	.sheet :global([data-slot='drawer-header']) {
+		padding: 14px 16px 10px;
+	}
+	.sheet :global([data-slot='drawer-footer']) {
+		padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+	}
+}
