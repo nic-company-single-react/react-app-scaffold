@@ -503,6 +503,10 @@ const handlePreset = (days: number) => {
 					</div>
 					<div className="border-t border-gray-100 dark:border-gray-800">
 						<div className="p-4">
+							<div
+							className="p-4"
+							style={{ height: '300px' }}
+						></div>
 							<CodeBlock
 								code={`const [date, setDate] = useState<Date | undefined>(undefined);
 const [open, setOpen] = useState(false);
