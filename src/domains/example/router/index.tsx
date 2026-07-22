@@ -5,6 +5,7 @@ import loadable from '@loadable/component';
 const BlankPage = loadable(() => import('@/domains/example/pages/BlankPage'));
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
+const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
 const AlertComponent = loadable(() => import('@/domains/example/pages/ui-components/AlertComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
@@ -39,6 +40,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/button',
 		element: <ButtonComponent />,
 		name: '버튼 컴포넌트',
+	},
+	{
+		path: 'ui-components/button-group',
+		element: <ButtonGroupComponent />,
+		name: '버튼 그룹 컴포넌트',
 	},
 	{
 		path: 'ui-components/alert',
