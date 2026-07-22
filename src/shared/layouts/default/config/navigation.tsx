@@ -16,6 +16,7 @@ import {
 	PanelBottom,
 	CircleDot,
 	ListFilter,
+	ToggleRight,
 	Wrench,
 	Calculator,
 	Type,
@@ -74,6 +75,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Radio Group', icon: <CircleDot />, path: '/example/ui-components/radio-group', new: true },
 			{ name: 'Select', icon: <ListFilter />, path: '/example/ui-components/select', new: true },
 			{ name: 'SmartTable', icon: <Table2 />, path: '/example/ui-components/smart-table', new: true },
+			{ name: 'Switch', icon: <ToggleRight />, path: '/example/ui-components/switch', new: true },
 		],
 	},
 	{

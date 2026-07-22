@@ -1,0 +1,264 @@
+/* =========================================================================
+ * SecuritySettingSwitch.module.css
+ * 예제 목적: 앞선 NotificationSettingsSwitch 와 "완전히 동일한" scaffold Switch
+ *            (@axiom/components/ui)를 쓰면서, 트랙 안에 ON / OFF 글자가 들어가는
+ *            전혀 다른 디자인으로 재스타일링한다.
+ *
+ * 같은 컴포넌트 + 다른 .module.css = 다른 디자인.
+ * 퍼블리셔는 이 파일만 만지면 되고 .tsx 는 건드릴 필요가 없다.
+ *
+ * 사용한 기법
+ *   1) [data-slot="switch"] 트랙 크기·색 교체
+ *   2) [data-slot="switch-thumb"] 크기 교체 + translateX 직접 지정
+ *      (트랙 크기를 바꾸면 기본 컴포넌트의 translate-x-[calc(100%-2px)] 로는
+ *       위치가 맞지 않으므로 반드시 직접 지정해야 한다)
+ *   3) 트랙의 ::before 가상 요소로 ON / OFF 텍스트 삽입
+ *      ⚠ ::after 는 기본 컴포넌트가 터치 영역 확장(after:-inset-x-3)에 이미
+ *        쓰고 있으므로 건드리지 말고 ::before 를 쓴다.
+ *
+ * 상태 감지: radix Switch 는 data-state="checked" | "unchecked" 를 노출한다.
+ *            (상위 버전은 data-checked / data-unchecked → 둘 다 걸어둔다)
+ *
+ * 톤앤매너: 인디고/네이비 보안 UI. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--sc-brand: #4f46e5;
+	--sc-brand-deep: #4338ca;
+	--sc-brand-soft: #eef2ff;
+	--sc-ink: #14183a;
+	--sc-sub: #5b628b;
+	--sc-off: #9aa1c0;
+	--sc-off-track: #cbd0e4;
+	--sc-card: #ffffff;
+	--sc-border: #e3e6f2;
+	--sc-line: #eef0f8;
+	--sc-body-bg: #f7f8fd;
+	--sc-warn: #b45309;
+	--sc-warn-bg: #fffbeb;
+	--sc-warn-border: #fde68a;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--sc-ink);
+}
+
+:global(.dark) .wrap {
+	--sc-brand: #818cf8;
+	--sc-brand-deep: #a5b4fc;
+	--sc-brand-soft: #1b1f3d;
+	--sc-ink: #e8eaf8;
+	--sc-sub: #9aa2cc;
+	--sc-off: #5d6488;
+	--sc-off-track: #343a5c;
+	--sc-card: #12142a;
+	--sc-border: #242848;
+	--sc-line: #1d2140;
+	--sc-body-bg: #0e1024;
+	--sc-warn: #fbbf24;
+	--sc-warn-bg: #2a2210;
+	--sc-warn-border: #4a3a12;
+}
+
+/* ── 시트 컨테이너 ─────────────────────────────────────── */
+.sheet {
+	background: var(--sc-card);
+	border: 1px solid var(--sc-border);
+	border-radius: 18px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.head {
+	margin-bottom: 8px;
+}
+.title {
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	color: var(--sc-ink);
+}
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--sc-sub);
+}
+
+/* =========================================================================
+ * scaffold Switch 슬롯 오버라이드 — 여기가 핵심
+ * ========================================================================= */
+
+/* 트랙: 기본 32x18.4px → 64x28px, 안쪽에 글자가 들어갈 공간을 확보 */
+.wrap :global([data-slot='switch']) {
+	position: relative;
+	width: 64px;
+	height: 28px;
+	flex: none;
+	border: none;
+	border-radius: 999px;
+	background: var(--sc-off-track);
+	cursor: pointer;
+	transition: background 0.2s ease;
+}
+.wrap :global([data-slot='switch'])[data-state='checked'],
+.wrap :global([data-slot='switch'])[data-checked] {
+	background: var(--sc-brand);
+}
+.wrap :global([data-slot='switch']):focus-visible {
+	outline: 2px solid var(--sc-brand-deep);
+	outline-offset: 3px;
+}
+
+/* 트랙 안 ON / OFF 글자 — ::after 는 컴포넌트가 쓰고 있으므로 ::before 사용 */
+.wrap :global([data-slot='switch'])::before {
+	content: 'OFF';
+	position: absolute;
+	right: 9px;
+	font-size: 10px;
+	font-weight: 800;
+	letter-spacing: 0.06em;
+	color: #ffffff;
+	pointer-events: none;
+}
+.wrap :global([data-slot='switch'])[data-state='checked']::before,
+.wrap :global([data-slot='switch'])[data-checked]::before {
+	content: 'ON';
+	right: auto;
+	left: 11px;
+}
+
+/* 손잡이: 기본 16px → 22px, 좌우 3px 여백 */
+.wrap :global([data-slot='switch-thumb']) {
+	width: 22px;
+	height: 22px;
+	background: #ffffff;
+	box-shadow: 0 1px 2px rgba(20, 24, 58, 0.3);
+	transition: translate 0.2s ease;
+}
+/* ⚠ transform 이 아니라 translate 프로퍼티로 지정한다.
+   Tailwind v4의 translate-x-* 는 transform 이 아닌 translate 프로퍼티를 쓰기 때문에,
+   여기서 transform 을 쓰면 덮어쓰기가 아니라 두 이동이 "합산"되어 손잡이가 트랙 밖으로 나간다.
+   트랙까지 함께 선택해 Tailwind 유틸리티보다 명시도(0,4,0 > 0,3,0)를 확보한다. */
+.wrap :global([data-slot='switch'])[data-state='unchecked'] :global([data-slot='switch-thumb']),
+.wrap :global([data-slot='switch'])[data-unchecked] :global([data-slot='switch-thumb']) {
+	translate: 3px 0;
+}
+.wrap :global([data-slot='switch'])[data-state='checked'] :global([data-slot='switch-thumb']),
+.wrap :global([data-slot='switch'])[data-checked] :global([data-slot='switch-thumb']) {
+	translate: 39px 0;
+}
+
+/* ── 항목 리스트 ───────────────────────────────────────── */
+.list {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+.row {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	align-items: center;
+	gap: 14px;
+	padding: 15px 4px;
+	border-bottom: 1px solid var(--sc-line);
+}
+.row:last-child {
+	border-bottom: none;
+}
+.rowIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: 11px;
+	background: var(--sc-body-bg);
+	color: var(--sc-off);
+	transition:
+		background 0.18s ease,
+		color 0.18s ease;
+}
+.rowOn .rowIcon {
+	background: var(--sc-brand-soft);
+	color: var(--sc-brand);
+}
+.rowBody {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+}
+.rowTitleLine {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+.wrap .rowTitle {
+	display: block;
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--sc-ink);
+	letter-spacing: -0.01em;
+	cursor: pointer;
+}
+.rowDesc {
+	font-size: 12px;
+	color: var(--sc-sub);
+}
+.badge {
+	flex: none;
+	padding: 1px 7px;
+	border-radius: 999px;
+	background: var(--sc-brand-soft);
+	color: var(--sc-brand);
+	font-size: 10px;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+}
+
+/* ── 경고 배너 ─────────────────────────────────────────── */
+.warning {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin-top: 14px;
+	padding: 12px 14px;
+	border: 1px solid var(--sc-warn-border);
+	border-radius: 12px;
+	background: var(--sc-warn-bg);
+	color: var(--sc-warn);
+	font-size: 12.5px;
+	line-height: 1.5;
+}
+.warning svg {
+	flex: none;
+	margin-top: 1px;
+}
+
+/* ── 액션 버튼 ─────────────────────────────────────────── */
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 18px;
+	padding-top: 16px;
+	border-top: 1px solid var(--sc-line);
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.sheet {
+		padding: 18px;
+	}
+	.row {
+		gap: 10px;
+	}
+	.rowIcon {
+		width: 30px;
+		height: 30px;
+	}
+}
