@@ -3,13 +3,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
 import CarouselDemoCard from '@/domains/example/components/ui-components/CarouselDemoCard';
 import ApiCarouselDemo from '@/domains/example/components/ui-components/ApiCarouselDemo';
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from '@axiom/components/ui';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@axiom/components/ui';
 import { GalleryHorizontal } from 'lucide-react';
 
 const SLIDE_COLORS = [
@@ -34,7 +28,7 @@ export default function CarouselComponent(): React.ReactNode {
 					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Carousel 컴포넌트</h1>
 					<p className="text-sm text-gray-500 dark:text-gray-400">
 						<code className="text-xs font-mono font-semibold px-1.5 py-0.5 rounded border border-blue-300/50 bg-blue-100/60 text-blue-800 dark:border-blue-600/40 dark:bg-blue-900/30 dark:text-blue-300">
-							@/shared/lib/shadcn/ui/carousel
+							@axiom/components/ui
 						</code>
 						에서 제공하는 Embla 기반 Carousel 컴포넌트 사용 예제입니다.
 					</p>
@@ -52,7 +46,7 @@ export default function CarouselComponent(): React.ReactNode {
 					code={`import {
   Carousel, CarouselContent, CarouselItem,
   CarouselPrevious, CarouselNext,
-} from "@/shared/lib/shadcn/ui/carousel";
+} from "@axiom/components/ui";
 
 <Carousel>
   <CarouselContent>
@@ -68,9 +62,7 @@ export default function CarouselComponent(): React.ReactNode {
 						<CarouselContent>
 							{SLIDE_COLORS.map((color, i) => (
 								<CarouselItem key={i}>
-									<div
-										className={`flex items-center justify-center h-32 rounded-xl text-4xl font-bold ${color}`}
-									>
+									<div className={`flex items-center justify-center h-32 rounded-xl text-4xl font-bold ${color}`}>
 										{i + 1}
 									</div>
 								</CarouselItem>
@@ -104,9 +96,7 @@ export default function CarouselComponent(): React.ReactNode {
 									key={i}
 									className="basis-1/3"
 								>
-									<div
-										className={`flex items-center justify-center h-24 rounded-xl text-2xl font-bold ${color}`}
-									>
+									<div className={`flex items-center justify-center h-24 rounded-xl text-2xl font-bold ${color}`}>
 										{i + 1}
 									</div>
 								</CarouselItem>
@@ -127,9 +117,7 @@ export default function CarouselComponent(): React.ReactNode {
 									key={i}
 									className="md:basis-1/2 lg:basis-1/3"
 								>
-									<div
-										className={`flex items-center justify-center h-24 rounded-xl text-2xl font-bold ${color}`}
-									>
+									<div className={`flex items-center justify-center h-24 rounded-xl text-2xl font-bold ${color}`}>
 										{i + 1}
 									</div>
 								</CarouselItem>
@@ -163,9 +151,7 @@ export default function CarouselComponent(): React.ReactNode {
 									key={i}
 									className="pl-4 basis-1/2"
 								>
-									<div
-										className={`flex items-center justify-center h-28 rounded-xl text-3xl font-bold ${color}`}
-									>
+									<div className={`flex items-center justify-center h-28 rounded-xl text-3xl font-bold ${color}`}>
 										{i + 1}
 									</div>
 								</CarouselItem>
@@ -181,7 +167,9 @@ export default function CarouselComponent(): React.ReactNode {
 			<section className="space-y-4">
 				<SectionHeader
 					title="4. 방향 (Orientation)"
-					description={'orientation="vertical"로 세로 방향 캐러셀을 만듭니다. 상하 버튼 여백(-top-12 / -bottom-12)을 고려한 패딩이 필요합니다.'}
+					description={
+						'orientation="vertical"로 세로 방향 캐러셀을 만듭니다. 상하 버튼 여백(-top-12 / -bottom-12)을 고려한 패딩이 필요합니다.'
+					}
 				/>
 				<CarouselDemoCard
 					label='orientation="vertical"'
@@ -205,9 +193,7 @@ export default function CarouselComponent(): React.ReactNode {
 										key={i}
 										className="pt-4 basis-1/3"
 									>
-										<div
-											className={`flex items-center justify-center h-full rounded-xl text-2xl font-bold ${color}`}
-										>
+										<div className={`flex items-center justify-center h-full rounded-xl text-2xl font-bold ${color}`}>
 											{i + 1}
 										</div>
 									</CarouselItem>
@@ -246,9 +232,7 @@ export default function CarouselComponent(): React.ReactNode {
 									key={i}
 									className="basis-1/2"
 								>
-									<div
-										className={`flex items-center justify-center h-28 rounded-xl text-3xl font-bold ${color}`}
-									>
+									<div className={`flex items-center justify-center h-28 rounded-xl text-3xl font-bold ${color}`}>
 										{i + 1}
 									</div>
 								</CarouselItem>
@@ -299,9 +283,7 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 						<CarouselContent>
 							{SLIDE_COLORS.map((color, i) => (
 								<CarouselItem key={i}>
-									<div
-										className={`flex items-center justify-center h-32 rounded-xl text-4xl font-bold ${color}`}
-									>
+									<div className={`flex items-center justify-center h-32 rounded-xl text-4xl font-bold ${color}`}>
 										{i + 1}
 									</div>
 								</CarouselItem>
@@ -320,18 +302,10 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 					<table className="w-full text-sm">
 						<thead>
 							<tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-									Prop
-								</th>
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-									타입
-								</th>
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-									기본값
-								</th>
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-									설명
-								</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">Prop</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">타입</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">기본값</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">설명</th>
 							</tr>
 						</thead>
 						<tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -378,23 +352,15 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 									className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors"
 								>
 									<td className="px-4 py-2.5">
-										<code className="text-xs font-mono text-blue-700 dark:text-blue-400">
-											{row.prop}
-										</code>
+										<code className="text-xs font-mono text-blue-700 dark:text-blue-400">{row.prop}</code>
 									</td>
 									<td className="px-4 py-2.5">
-										<code className="text-xs font-mono text-gray-600 dark:text-gray-400">
-											{row.type}
-										</code>
+										<code className="text-xs font-mono text-gray-600 dark:text-gray-400">{row.type}</code>
 									</td>
 									<td className="px-4 py-2.5">
-										<code className="text-xs font-mono text-amber-700 dark:text-amber-400">
-											{row.def}
-										</code>
+										<code className="text-xs font-mono text-amber-700 dark:text-amber-400">{row.def}</code>
 									</td>
-									<td className="px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400">
-										{row.desc}
-									</td>
+									<td className="px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400">{row.desc}</td>
 								</tr>
 							))}
 						</tbody>
@@ -413,18 +379,10 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 						<table className="w-full text-sm min-w-2xl">
 							<thead>
 								<tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
-									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-										옵션
-									</th>
-									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-										타입
-									</th>
-									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-										기본값
-									</th>
-									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
-										설명
-									</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">옵션</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">타입</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">기본값</th>
+									<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">설명</th>
 								</tr>
 							</thead>
 							<tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -537,23 +495,15 @@ const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 										className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors align-top"
 									>
 										<td className="px-4 py-2.5 whitespace-nowrap">
-											<code className="text-xs font-mono text-blue-700 dark:text-blue-400">
-												{row.prop}
-											</code>
+											<code className="text-xs font-mono text-blue-700 dark:text-blue-400">{row.prop}</code>
 										</td>
 										<td className="px-4 py-2.5">
-											<code className="text-xs font-mono text-gray-600 dark:text-gray-400">
-												{row.type}
-											</code>
+											<code className="text-xs font-mono text-gray-600 dark:text-gray-400">{row.type}</code>
 										</td>
 										<td className="px-4 py-2.5 whitespace-nowrap">
-											<code className="text-xs font-mono text-amber-700 dark:text-amber-400">
-												{row.def}
-											</code>
+											<code className="text-xs font-mono text-amber-700 dark:text-amber-400">{row.def}</code>
 										</td>
-										<td className="px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400">
-											{row.desc}
-										</td>
+										<td className="px-4 py-2.5 text-xs text-gray-600 dark:text-gray-400">{row.desc}</td>
 									</tr>
 								))}
 							</tbody>
