@@ -9,6 +9,7 @@ const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-c
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
 const AlertComponent = loadable(() => import('@/domains/example/pages/ui-components/AlertComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
+const CardComponent = loadable(() => import('@/domains/example/pages/ui-components/CardComponent'));
 const CarouselComponent = loadable(() => import('@/domains/example/pages/ui-components/CarouselComponent'));
 const CheckboxComponent = loadable(() => import('@/domains/example/pages/ui-components/CheckboxComponent'));
 const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-components/ComboboxComponent'));
@@ -60,6 +61,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/accordion',
 		element: <AccordionComponent />,
 		name: '아코디언 컴포넌트',
+	},
+	{
+		path: 'ui-components/card',
+		element: <CardComponent />,
+		name: '카드 컴포넌트',
 	},
 	{
 		path: 'ui-components/carousel',

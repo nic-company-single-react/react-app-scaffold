@@ -1,0 +1,297 @@
+/* =========================================================================
+ * AccountSummaryCard.module.css
+ * 예제 목적: ProductCard와 동일하게 scaffold Card를 그대로 쓰되,
+ *            전혀 다른 톤(뱅킹 · 청록/네이비)으로 재스타일링한 두 번째 사례.
+ *
+ * ProductCard가 "카드 그리드형 재스타일"이라면 이 예제는
+ * "요약 배너형 재스타일" — 같은 컴포넌트로 완전히 다른 UI가 나온다는 점을 보여준다.
+ * 슬롯 선택자([data-slot="card-*"])는 ProductCard.module.css 주석 참고.
+ * ========================================================================= */
+
+.wrap {
+	--ac-teal: #008485;
+	--ac-teal-deep: #00625f;
+	--ac-navy: #10233a;
+	--ac-soft: #eaf6f5;
+	--ac-line: #d8e7e6;
+	--ac-ink: #12211f;
+	--ac-sub: #5c6b6a;
+	--ac-muted: #90a09f;
+	--ac-card: #ffffff;
+	--ac-in: #0f766e;
+	--ac-out: #cf4657;
+
+	display: grid;
+	gap: 14px;
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--ac-ink);
+}
+
+:global(.dark) .wrap {
+	--ac-teal: #38b2a7;
+	--ac-teal-deep: #5fd1c5;
+	--ac-navy: #0b1622;
+	--ac-soft: #123030;
+	--ac-line: #204a48;
+	--ac-ink: #e8f1f0;
+	--ac-sub: #a7b8b7;
+	--ac-muted: #7d908f;
+	--ac-card: #0f1a1a;
+	--ac-in: #4fc7b8;
+	--ac-out: #f0838f;
+}
+
+/* ── 대표 계좌 카드 (그라데이션 히어로) ────────────────────── */
+.wrap .hero[data-slot='card'] {
+	gap: 0;
+	padding: 0;
+	border-radius: 18px;
+	border: 0;
+	--tw-ring-shadow: 0 0 #0000;
+	color: #fff;
+	background:
+		radial-gradient(120% 140% at 100% 0%, rgb(255 255 255 / 16%), transparent 55%),
+		linear-gradient(135deg, var(--ac-teal-deep), var(--ac-navy));
+	box-shadow: 0 14px 32px -18px rgb(0 98 95 / 70%);
+}
+
+.wrap .hero [data-slot='card-header'] {
+	padding: 18px 20px 0;
+	gap: 2px;
+}
+
+.wrap .hero [data-slot='card-title'] {
+	font-size: 15px;
+	font-weight: 700;
+	color: #fff;
+}
+
+.wrap .hero [data-slot='card-description'] {
+	font-size: 12px;
+	color: rgb(255 255 255 / 62%);
+	font-variant-numeric: tabular-nums;
+}
+
+.wrap .hero [data-slot='card-action'] {
+	align-self: center;
+}
+
+.wrap .hero [data-slot='card-content'] {
+	padding: 14px 20px 18px;
+}
+
+.wrap .hero [data-slot='card-footer'] {
+	padding: 0;
+	background: rgb(255 255 255 / 8%);
+	border-top: 1px solid rgb(255 255 255 / 14%);
+	gap: 0;
+}
+
+.badge {
+	padding: 3px 9px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: #fff;
+	background: rgb(255 255 255 / 18%);
+	border: 1px solid rgb(255 255 255 / 22%);
+}
+
+.balance {
+	display: flex;
+	align-items: baseline;
+	gap: 4px;
+}
+
+.balanceNum {
+	font-size: 30px;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.1;
+}
+
+.balanceUnit {
+	font-size: 15px;
+	font-weight: 600;
+	opacity: 0.85;
+}
+
+.balanceHidden {
+	letter-spacing: 0.1em;
+}
+
+.subLine {
+	margin-top: 6px;
+	font-size: 12px;
+	color: rgb(255 255 255 / 60%);
+	font-variant-numeric: tabular-nums;
+}
+
+.eyeBtn {
+	height: 28px;
+	padding: 0 10px;
+	border-radius: 999px;
+	font-size: 11.5px;
+	font-weight: 600;
+	color: #fff;
+	background: rgb(255 255 255 / 14%);
+	border: 1px solid rgb(255 255 255 / 22%);
+	cursor: pointer;
+	transition: background 150ms ease;
+}
+
+.eyeBtn:hover {
+	background: rgb(255 255 255 / 26%);
+}
+
+/* 푸터에 붙는 액션 3분할 */
+.heroActions {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	width: 100%;
+}
+
+.heroAction {
+	padding: 12px 0;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: #fff;
+	background: transparent;
+	border: 0;
+	border-left: 1px solid rgb(255 255 255 / 14%);
+	cursor: pointer;
+	transition: background 150ms ease;
+}
+
+.heroAction:first-child {
+	border-left: 0;
+}
+
+.heroAction:hover {
+	background: rgb(255 255 255 / 10%);
+}
+
+/* ── 하위 계좌 리스트 카드 (기본 톤) ───────────────────────── */
+.wrap .list[data-slot='card'] {
+	gap: 0;
+	padding: 0;
+	border-radius: 16px;
+	border: 1px solid var(--ac-line);
+	--tw-ring-shadow: 0 0 #0000;
+	background: var(--ac-card);
+	box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+}
+
+.wrap .list [data-slot='card-header'] {
+	padding: 14px 16px 10px;
+	border-bottom: 1px solid var(--ac-line);
+}
+
+.wrap .list [data-slot='card-title'] {
+	font-size: 13.5px;
+	font-weight: 700;
+	color: var(--ac-ink);
+}
+
+.wrap .list [data-slot='card-action'] {
+	align-self: center;
+}
+
+.wrap .list [data-slot='card-content'] {
+	padding: 0;
+}
+
+.wrap .list [data-slot='card-footer'] {
+	padding: 10px 16px;
+	background: var(--ac-soft);
+	border-top: 1px solid var(--ac-line);
+	font-size: 11.5px;
+	color: var(--ac-sub);
+	justify-content: space-between;
+}
+
+.moreBtn {
+	font-size: 11.5px;
+	font-weight: 600;
+	color: var(--ac-teal);
+	background: transparent;
+	border: 0;
+	cursor: pointer;
+}
+
+.moreBtn:hover {
+	text-decoration: underline;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px;
+	border-bottom: 1px solid color-mix(in srgb, var(--ac-line) 60%, transparent);
+	transition: background 140ms ease;
+}
+
+.row:last-child {
+	border-bottom: 0;
+}
+
+.row:hover {
+	background: color-mix(in srgb, var(--ac-soft) 60%, transparent);
+}
+
+.rowIcon {
+	width: 34px;
+	height: 34px;
+	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+	background: var(--ac-soft);
+	font-size: 16px;
+}
+
+.rowMain {
+	flex: 1;
+	min-width: 0;
+}
+
+.rowName {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ac-ink);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.rowNo {
+	margin-top: 2px;
+	font-size: 11px;
+	color: var(--ac-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+.rowAmount {
+	font-size: 14px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--ac-ink);
+	white-space: nowrap;
+}
+
+.amountIn {
+	color: var(--ac-in);
+}
+
+.amountOut {
+	color: var(--ac-out);
+}
