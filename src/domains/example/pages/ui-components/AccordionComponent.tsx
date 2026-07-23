@@ -36,6 +36,40 @@ export default function AccordionComponent(): React.ReactNode {
 				</div>
 			</div>
 
+			{/* ── 0. import & 기본 구조 ────────────────────────────── */}
+			<section className="space-y-4">
+				<SectionHeader
+					title="0. import & 기본 구조"
+					description="Accordion(래퍼) · AccordionItem(항목) · AccordionTrigger(헤더 버튼) · AccordionContent(펼침 내용) 네 가지를 조합합니다. 각 AccordionItem 은 고유한 value 로 식별됩니다."
+				/>
+				<CodeBlock
+					code={`import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@axiom/components/ui';
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>질문 1</AccordionTrigger>
+    <AccordionContent>답변 1 내용</AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>질문 2</AccordionTrigger>
+    <AccordionContent>답변 2 내용</AccordionContent>
+  </AccordionItem>
+</Accordion>`}
+					lang="tsx"
+					theme="github-dark"
+				/>
+				<p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+					<b>type</b> 으로 동시에 열리는 항목 수를 정합니다 — <b>"single"</b>(하나씩, collapsible 로 다시 닫기 허용) 또는{' '}
+					<b>"multiple"</b>(여러 개). 초기 열림 항목은 <b>defaultValue</b>(비제어) 또는{' '}
+					<b>value + onValueChange</b>(제어)로 지정합니다.
+				</p>
+			</section>
+
 			{/* ── 1. Basic (Single) ────────────────────────────── */}
 			<section className="space-y-4">
 				<SectionHeader
