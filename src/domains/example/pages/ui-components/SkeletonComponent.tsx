@@ -7,7 +7,7 @@ import SourceTabs from '@/domains/example/components/ui-components/common/Source
 import TransactionListSkeleton from '@/domains/example/components/ui-components/skeleton/TransactionListSkeleton';
 import listSource from '@/domains/example/components/ui-components/skeleton/TransactionListSkeleton.tsx?raw';
 import listCss from '@/domains/example/components/ui-components/skeleton/TransactionListSkeleton.module.css?raw';
-import { SquareStack } from 'lucide-react';
+import { LayoutTemplate } from 'lucide-react';
 
 export default function SkeletonComponent(): React.ReactNode {
 	// 6. 인터랙티브 — 로딩 상태 토글용
@@ -27,7 +27,7 @@ export default function SkeletonComponent(): React.ReactNode {
 			{/* ── 페이지 헤더 ─────────────────────────────────────── */}
 			<div className="flex items-center gap-3">
 				<div className="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800/50">
-					<SquareStack className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+					<LayoutTemplate className="w-5 h-5 text-slate-600 dark:text-slate-300" />
 				</div>
 				<div>
 					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Skeleton 컴포넌트</h1>
