@@ -1,0 +1,179 @@
+/* =========================================================================
+ * FormHelpTooltip.module.css
+ * 예제 목적: scaffold Tooltip(@axiom/components/ui, shadcn/radix 기반)을 "그대로
+ *            사용"하면서, 기본 검정(bg-foreground) 말풍선을 "밝은 카드형 도움말"로
+ *            완전히 재스타일링한다. 실제 SI 프로젝트에서 퍼블리셔가 손대는 파일이 바로 이것.
+ *
+ * ⚠⚠ 가장 중요한 주의점 — TooltipContent 는 Portal 로 document.body 에 렌더된다.
+ *    따라서 소비 컴포넌트의 `.card :global([data-slot='tooltip-content'])` 같은
+ *    "조상 스코프" 선택자로는 절대 닿지 않는다(포털된 요소는 .card 의 자식이 아님).
+ *    → 해결: module.css 클래스(.tip)를 TooltipContent 의 className 으로 직접 넘긴다.
+ *      CSS Module 은 클래스명을 해시로 바꿀 뿐이라, 그 요소가 DOM 어디에 있든 규칙이 적용된다.
+ *
+ * 명시도(specificity) 주의:
+ *    TooltipContent 기본값은 Tailwind 유틸리티(bg-foreground, text-background,
+ *    px-3 py-1.5, rounded-md, inline-flex ... 각 0,1,0)로 들어온다.
+ *    단일 클래스(.tip, 0,1,0)로는 소스 순서에 따라 질 수 있으므로,
+ *    data-slot 속성을 함께 걸어 0,2,0 으로 확실히 이긴다:
+ *        .tip:global([data-slot='tooltip-content']) { ... }
+ *
+ * 화살표(Arrow):
+ *    Arrow 는 data-slot 이 없고, radix 가 위치지정용 <span> 으로 감싼 안쪽 svg 로 렌더된다.
+ *    → 직계(>)가 아니라 자손( ) 선택자로 잡아야 한다.
+ *    기본색이 bg-foreground/fill-foreground(검정)이므로, 카드 배경색과 맞춰 다시 칠한다.
+ *
+ * 다크 모드: .dark 는 최상위(html)에 붙으므로, body 로 포털된 말풍선도 그 자손이다.
+ *           그래서 :global(.dark) .tip... 이 정상 동작한다.
+ * ========================================================================= */
+
+/* ── 카드(소비 영역) ─────────────────────────────────────── */
+.card {
+	--fh-brand: #0284c7;
+	--fh-ink: #0f172a;
+	--fh-sub: #64748b;
+	--fh-card: #ffffff;
+	--fh-border: #e2e8f0;
+	--fh-line: #f1f5f9;
+	--fh-tip-bg: #ffffff;
+	--fh-tip-border: #e2e8f0;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--fh-ink);
+	background: var(--fh-card);
+	border: 1px solid var(--fh-border);
+	border-radius: 18px;
+	padding: 24px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+:global(.dark) .card {
+	--fh-brand: #38bdf8;
+	--fh-ink: #e2e8f0;
+	--fh-sub: #94a3b8;
+	--fh-card: #0f1729;
+	--fh-border: #1e293b;
+	--fh-line: #1a2436;
+}
+
+.head {
+	margin-bottom: 18px;
+}
+.title {
+	font-size: 18px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--fh-sub);
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+.labelRow {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+.card .label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--fh-ink);
+	cursor: default;
+}
+
+/* 물음표 트리거 버튼 */
+.help {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 20px;
+	height: 20px;
+	border-radius: 999px;
+	color: var(--fh-sub);
+	cursor: help;
+	transition:
+		color 0.15s ease,
+		background 0.15s ease;
+}
+.help:hover,
+.help[data-state='delayed-open'] {
+	color: var(--fh-brand);
+	background: color-mix(in srgb, var(--fh-brand) 12%, transparent);
+}
+.help:focus-visible {
+	outline: 2px solid var(--fh-brand);
+	outline-offset: 2px;
+}
+
+.footnote {
+	margin-top: 18px;
+	padding-top: 14px;
+	border-top: 1px dashed var(--fh-border);
+	font-size: 12px;
+	color: var(--fh-sub);
+}
+
+/* =========================================================================
+ * 말풍선 오버라이드 — 여기가 핵심 (className 으로 TooltipContent 에 직접 주입)
+ * ========================================================================= */
+/* ⚠ 포털 주의 2 — CSS 변수도 포털 경계를 못 넘는다.
+   TooltipContent 는 body 로 포털되어 .card 밖으로 나가므로, .card 에 정의한
+   --fh-* 변수는 여기서 undefined 가 된다(→ background/fill 이 무효가 되어 화살표가 검게 남았던 원인).
+   그래서 말풍선이 쓰는 변수는 반드시 포털되는 요소인 .tip 자체에 정의한다. */
+.tip:global([data-slot='tooltip-content']) {
+	--tip-bg: #ffffff;
+	--tip-border: #e2e8f0;
+	--tip-ink: #0f172a;
+	--tip-sub: #64748b;
+
+	display: block; /* 기본 inline-flex 를 덮어 제목/본문을 세로로 */
+	max-width: 260px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: var(--tip-bg);
+	color: var(--tip-ink);
+	border: 1px solid var(--tip-border);
+	box-shadow: 0 12px 32px -12px rgba(15, 23, 42, 0.4);
+}
+:global(.dark) .tip:global([data-slot='tooltip-content']) {
+	--tip-bg: #0f1729;
+	--tip-border: #24324a;
+	--tip-ink: #e2e8f0;
+	--tip-sub: #94a3b8;
+	box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* 화살표: radix 가 svg 를 <span> 으로 감싸므로 직계(>)가 아니라 자손( ) 으로 잡는다.
+   카드 배경색과 맞춰 background(박스)·fill(폴리곤) 둘 다 칠한다. */
+.tip:global([data-slot='tooltip-content']) svg {
+	background: var(--tip-bg) !important;
+	fill: var(--tip-bg) !important;
+}
+
+.tipTitle {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	margin-bottom: 4px;
+}
+.tipDesc {
+	font-size: 12px;
+	line-height: 1.55;
+	color: var(--tip-sub);
+	margin: 0;
+}

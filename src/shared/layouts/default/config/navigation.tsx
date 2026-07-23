@@ -20,6 +20,7 @@ import {
 	TextCursorInput,
 	LoaderCircle,
 	Bell,
+	MessageSquareText,
 	Wrench,
 	Calculator,
 	Type,
@@ -82,6 +83,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Spinner', icon: <LoaderCircle />, path: '/example/ui-components/spinner' },
 			{ name: 'Switch', icon: <ToggleRight />, path: '/example/ui-components/switch' },
 			{ name: 'Toast', icon: <Bell />, path: '/example/ui-components/toast' },
+			{ name: 'Tooltip', icon: <MessageSquareText />, path: '/example/ui-components/tooltip' },
 		],
 	},
 	{

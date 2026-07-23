@@ -20,6 +20,7 @@ const SelectComponent = loadable(() => import('@/domains/example/pages/ui-compon
 const SpinnerComponent = loadable(() => import('@/domains/example/pages/ui-components/SpinnerComponent'));
 const SwitchComponent = loadable(() => import('@/domains/example/pages/ui-components/SwitchComponent'));
 const ToastComponent = loadable(() => import('@/domains/example/pages/ui-components/ToastComponent'));
+const TooltipComponent = loadable(() => import('@/domains/example/pages/ui-components/TooltipComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 const SmartTableComponent = loadable(() => import('@/domains/example/pages/ui-components/SmartTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
@@ -123,6 +124,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/toast',
 		element: <ToastComponent />,
 		name: '토스트 컴포넌트',
+	},
+	{
+		path: 'ui-components/tooltip',
+		element: <TooltipComponent />,
+		name: '툴팁 컴포넌트',
 	},
 	{
 		path: 'ui-components/data-table',

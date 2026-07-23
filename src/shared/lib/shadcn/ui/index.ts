@@ -19,6 +19,7 @@ export * from './carousel';
 export * from './drawer';
 export * from './radio-group';
 export * from './switch';
+export * from './tooltip';
 export * from './sonner';
 export * from './spinner';
 

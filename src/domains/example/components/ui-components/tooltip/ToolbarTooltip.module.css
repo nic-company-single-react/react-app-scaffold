@@ -1,0 +1,135 @@
+/* =========================================================================
+ * ToolbarTooltip.module.css
+ * 예제 목적: FormHelpTooltip 과 "동일한" scaffold Tooltip 을 쓰되, 말풍선을 전혀 다른
+ *            톤(다크 글래스 + 단축키 kbd 칩)으로 재스타일링한다.
+ *            → 말풍선 디자인은 소비처마다 .module.css 만 갈아끼우면 된다는 것을 보여준다.
+ *
+ * ⚠ TooltipContent 는 Portal 로 body 에 렌더된다. .wrap 스코프로는 닿지 않으므로
+ *   styles.tip 를 TooltipContent 의 className 으로 직접 넘긴다(컴포넌트 .tsx 참고).
+ *   기본 Tailwind 유틸리티를 이기려고 data-slot 을 함께 걸어 명시도를 0,2,0 으로 올린다.
+ * ========================================================================= */
+
+.wrap {
+	--tb-bg: #0b1120;
+	--tb-panel: #f8fafc;
+	--tb-panel-border: #e2e8f0;
+	--tb-ink: #334155;
+	--tb-brand: #6366f1;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+}
+:global(.dark) .wrap {
+	--tb-panel: #0f1729;
+	--tb-panel-border: #1e293b;
+	--tb-ink: #cbd5e1;
+	--tb-brand: #818cf8;
+}
+
+/* ── 툴바(소비 영역) ─────────────────────────────────────── */
+.toolbar {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 6px;
+	background: var(--tb-panel);
+	border: 1px solid var(--tb-panel-border);
+	border-radius: 14px;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+.toolBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 9px;
+	color: var(--tb-ink);
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		color 0.15s ease;
+}
+.toolBtn:hover {
+	background: color-mix(in srgb, var(--tb-brand) 12%, transparent);
+	color: var(--tb-brand);
+}
+.toolBtn:focus-visible {
+	outline: 2px solid var(--tb-brand);
+	outline-offset: 2px;
+}
+.toolBtnOn {
+	background: var(--tb-brand);
+	color: #fff;
+}
+.toolBtnOn:hover {
+	background: var(--tb-brand);
+	color: #fff;
+}
+
+.caption {
+	margin-top: 12px;
+	font-size: 12px;
+	color: var(--tb-ink);
+}
+
+/* =========================================================================
+ * 말풍선 오버라이드 — className 으로 TooltipContent 에 직접 주입
+ * ========================================================================= */
+/* ⚠ 포털 주의 2 — CSS 변수도 포털 경계를 못 넘는다.
+   TooltipContent 는 body 로 포털되어 .wrap 밖으로 나가므로, .wrap 에 정의한 --tb-bg 는
+   여기서 undefined 가 된다. 그래서 말풍선이 쓰는 색은 포털되는 요소인 .tip 자체에 정의한다. */
+.tip:global([data-slot='tooltip-content']) {
+	--tip-bg: #0b1120;
+
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 7px 9px 7px 11px;
+	border-radius: 10px;
+	background: var(--tip-bg);
+	color: #f1f5f9;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	box-shadow: 0 10px 28px -10px rgba(0, 0, 0, 0.6);
+	font-size: 12px;
+}
+
+/* 화살표: radix 가 svg 를 <span> 으로 감싸므로 직계(>)가 아니라 자손( ) 으로 잡는다.
+   어두운 배경색과 맞춰 background·fill 둘 다 칠한다. */
+.tip:global([data-slot='tooltip-content']) svg {
+	background: var(--tip-bg) !important;
+	fill: var(--tip-bg) !important;
+}
+
+.tipLabel {
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+
+/* 단축키 칩 그룹 */
+.kbdGroup {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+}
+.kbd {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 18px;
+	height: 18px;
+	padding: 0 5px;
+	border-radius: 5px;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+	font-size: 10.5px;
+	font-weight: 600;
+	line-height: 1;
+	color: #e2e8f0;
+	font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}

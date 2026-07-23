@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { TooltipProvider } from '@axiom/components/ui';
 import { QueryProvider } from './query-client/QueryProvider';
 import ThemeProvider from './theme/ThemeProvider';
 import { UIDialogHost } from '@/core/ui/UIDialogHost';
@@ -18,11 +19,15 @@ export function AppProviders({ children }: AppProvidersProps) {
 	return (
 		<ThemeProvider>
 			<QueryProvider>
-				{children}
-				{/* 전역 $ui.alert / $ui.confirm 다이얼로그 호스트 */}
-				<UIDialogHost />
-				{/* 전역 토스트 호스트 — 어디서든 toast(...) 호출 시 여기로 렌더된다 */}
-				<AppToaster />
+				{/* 전역 Tooltip 지연 타이밍(delay/skipDelay)을 앱 전체가 공유하도록 최상위에 한 번만 둔다.
+				    각 페이지에서는 Tooltip / TooltipTrigger / TooltipContent 만 쓰면 된다. */}
+				<TooltipProvider delayDuration={200}>
+					{children}
+					{/* 전역 $ui.alert / $ui.confirm 다이얼로그 호스트 */}
+					<UIDialogHost />
+					{/* 전역 토스트 호스트 — 어디서든 toast(...) 호출 시 여기로 렌더된다 */}
+					<AppToaster />
+				</TooltipProvider>
 			</QueryProvider>
 		</ThemeProvider>
 	);

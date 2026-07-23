@@ -8,7 +8,11 @@
       "Bash(npx --no-install playwright --version)",
       "Bash(ffmpeg -version)",
       "Bash(node -e \"const {chromium}=require\\('playwright'\\);chromium.launch\\(\\).then\\(b=>{console.log\\('chromium OK'\\);return b.close\\(\\)}\\).catch\\(e=>{console.log\\('chromium FAIL:',e.message\\)}\\)\")",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173/)",
+      "Bash(cd c:/redsky/work/react/single_react_new_nicfirst/react-app-scaffold && sed -n '5205,5212p' /tmp/tw-out.css)",
+      "Read(//tmp/**)",
+      "Bash(grep -oE 'span[^;]{0,80}' node_modules/@radix-ui/react-popper/dist/index.js)",
+      "Bash(grep -iA0 -B0 'span\\\\|Arrow')"
     ]
   }
 }
