@@ -1,0 +1,162 @@
+/* =========================================================================
+ * PriceRangeFilter.module.css
+ * 예제 목적: scaffold Slider(@axiom/components/ui)를 range(thumb 2개)로 쓰되,
+ *            쇼핑몰 가격 필터처럼 트랙·레인지·thumb 를 전부 다시 칠한다.
+ *
+ * 재스타일링 방식:
+ *   Slider 가 노출하는 data-slot 선택자만 오버라이드한다.
+ *     [data-slot='slider-track']  → 트랙(배경 레일)
+ *     [data-slot='slider-range']  → 선택 구간(채움)
+ *     [data-slot='slider-thumb']  → 손잡이(원형 핸들)
+ *   → Slider 컴포넌트 본체(slider.tsx)는 전혀 건드리지 않는다.
+ * ========================================================================= */
+
+.card {
+	--pr-accent: #6366f1;
+	--pr-accent-strong: #4f46e5;
+	--pr-track: #eef2f7;
+	--pr-bar: #dbe2ea;
+	--pr-bar-active: #c7cdfa;
+	--pr-ink: #0f172a;
+	--pr-sub: #64748b;
+	--pr-card: #ffffff;
+	--pr-border: #e2e8f0;
+
+	width: 100%;
+	padding: 20px;
+	border-radius: 16px;
+	background: var(--pr-card);
+	border: 1px solid var(--pr-border);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+}
+
+:global(.dark) .card {
+	--pr-accent: #818cf8;
+	--pr-accent-strong: #a5b4fc;
+	--pr-track: #1e293b;
+	--pr-bar: #263449;
+	--pr-bar-active: #3730a3;
+	--pr-ink: #e2e8f0;
+	--pr-sub: #94a3b8;
+	--pr-card: #0f172a;
+	--pr-border: #263449;
+}
+
+.head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: 14px;
+}
+
+.title {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--pr-ink);
+}
+
+.value {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--pr-accent-strong);
+	font-variant-numeric: tabular-nums;
+}
+
+.tilde {
+	color: var(--pr-sub);
+	font-weight: 400;
+}
+
+/* ── 히스토그램 (슬라이더 위 재고 분포) ───────────────────── */
+.histogram {
+	display: flex;
+	align-items: flex-end;
+	gap: 3px;
+	height: 48px;
+	margin-bottom: 6px;
+	padding: 0 6px;
+}
+
+.bar {
+	flex: 1;
+	min-height: 3px;
+	border-radius: 3px 3px 0 0;
+	background: var(--pr-bar);
+	transition:
+		background-color 0.2s ease,
+		opacity 0.2s ease;
+	opacity: 0.7;
+}
+
+.bar[data-active='true'] {
+	background: var(--pr-bar-active);
+	opacity: 1;
+}
+
+/* ── Slider data-slot 오버라이드 ──────────────────────────── */
+.slider {
+	margin: 0 6px;
+	width: auto;
+}
+
+.slider :global([data-slot='slider-track']) {
+	height: 6px;
+	background: var(--pr-track);
+	border-radius: 999px;
+}
+
+.slider :global([data-slot='slider-range']) {
+	background: linear-gradient(90deg, var(--pr-accent), var(--pr-accent-strong));
+}
+
+.slider :global([data-slot='slider-thumb']) {
+	width: 20px;
+	height: 20px;
+	background: #ffffff;
+	border: 3px solid var(--pr-accent);
+	box-shadow: 0 2px 6px rgba(79, 70, 229, 0.35);
+	transition:
+		transform 0.12s ease,
+		box-shadow 0.12s ease;
+}
+
+.slider :global([data-slot='slider-thumb']):hover {
+	transform: scale(1.12);
+}
+
+.slider :global([data-slot='slider-thumb']):focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--pr-accent) 30%, transparent);
+}
+
+/* ── 눈금 & 초기화 ────────────────────────────────────────── */
+.scale {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 10px;
+	font-size: 11px;
+	color: var(--pr-sub);
+	font-variant-numeric: tabular-nums;
+}
+
+.reset {
+	margin-top: 16px;
+	width: 100%;
+	padding: 9px 0;
+	border: 1px solid var(--pr-border);
+	border-radius: 10px;
+	background: transparent;
+	color: var(--pr-sub);
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		color 0.15s ease;
+}
+
+.reset:hover {
+	border-color: var(--pr-accent);
+	color: var(--pr-accent-strong);
+}

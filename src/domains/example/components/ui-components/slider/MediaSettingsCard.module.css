@@ -1,0 +1,142 @@
+/* =========================================================================
+ * MediaSettingsCard.module.css
+ * 예제 목적: scaffold Slider(@axiom/components/ui)를 설정 패널처럼 여러 줄 쌓고,
+ *            행마다 다른 톤(파랑/앰버/보라/로즈)으로 다시 칠한다.
+ *
+ * 재스타일링 방식:
+ *   각 행(.row)에 data-tone 을 부여하고, 그 값에 따라
+ *     [data-slot='slider-range'] 채움색과
+ *     [data-slot='slider-thumb'] 테두리색을 바꾼다.
+ *   → Slider 컴포넌트 본체(slider.tsx)는 전혀 수정하지 않는다.
+ * ========================================================================= */
+
+.card {
+	--ms-track: #eef2f7;
+	--ms-ink: #0f172a;
+	--ms-sub: #64748b;
+	--ms-card: #ffffff;
+	--ms-border: #e2e8f0;
+
+	width: 100%;
+	padding: 20px;
+	border-radius: 16px;
+	background: var(--ms-card);
+	border: 1px solid var(--ms-border);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+}
+
+:global(.dark) .card {
+	--ms-track: #1e293b;
+	--ms-ink: #e2e8f0;
+	--ms-sub: #94a3b8;
+	--ms-card: #0f172a;
+	--ms-border: #263449;
+}
+
+.title {
+	margin: 0 0 18px;
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--ms-ink);
+}
+
+.rows {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+/* ── 톤 팔레트 (행별) ─────────────────────────────────────── */
+.row[data-tone='blue'] {
+	--tone: #3b82f6;
+}
+.row[data-tone='amber'] {
+	--tone: #f59e0b;
+}
+.row[data-tone='violet'] {
+	--tone: #8b5cf6;
+}
+.row[data-tone='rose'] {
+	--tone: #f43f5e;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	flex-shrink: 0;
+	border-radius: 10px;
+	color: var(--tone);
+	background: color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+.icon :global(svg) {
+	width: 18px;
+	height: 18px;
+}
+
+.body {
+	flex: 1;
+	min-width: 0;
+}
+
+.rowHead {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: 9px;
+}
+
+.label {
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ms-ink);
+}
+
+.badge {
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--tone);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ── Slider data-slot 오버라이드 ──────────────────────────── */
+.slider :global([data-slot='slider-track']) {
+	height: 6px;
+	background: var(--ms-track);
+	border-radius: 999px;
+}
+
+.slider :global([data-slot='slider-range']) {
+	background: var(--tone);
+	border-radius: 999px;
+}
+
+.slider :global([data-slot='slider-thumb']) {
+	width: 18px;
+	height: 18px;
+	background: #ffffff;
+	border: 3px solid var(--tone);
+	box-shadow: 0 1px 4px color-mix(in srgb, var(--tone) 45%, transparent);
+	transition:
+		transform 0.12s ease,
+		box-shadow 0.12s ease;
+}
+
+.slider :global([data-slot='slider-thumb']):hover {
+	transform: scale(1.14);
+}
+
+.slider :global([data-slot='slider-thumb']):focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--tone) 30%, transparent);
+}

@@ -23,6 +23,7 @@ const ToastComponent = loadable(() => import('@/domains/example/pages/ui-compone
 const TooltipComponent = loadable(() => import('@/domains/example/pages/ui-components/TooltipComponent'));
 const TabsComponent = loadable(() => import('@/domains/example/pages/ui-components/TabsComponent'));
 const ProgressComponent = loadable(() => import('@/domains/example/pages/ui-components/ProgressComponent'));
+const SliderComponent = loadable(() => import('@/domains/example/pages/ui-components/SliderComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 const SmartTableComponent = loadable(() => import('@/domains/example/pages/ui-components/SmartTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
@@ -141,6 +142,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/progress',
 		element: <ProgressComponent />,
 		name: '프로그레스 컴포넌트',
+	},
+	{
+		path: 'ui-components/slider',
+		element: <SliderComponent />,
+		name: '슬라이더 컴포넌트',
 	},
 	{
 		path: 'ui-components/data-table',

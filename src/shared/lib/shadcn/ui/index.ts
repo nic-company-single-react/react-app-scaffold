@@ -19,6 +19,7 @@ export * from './carousel';
 export * from './drawer';
 export * from './radio-group';
 export * from './switch';
+export * from './slider';
 export * from './progress';
 export * from './tabs';
 export * from './tooltip';
