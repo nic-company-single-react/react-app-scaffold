@@ -1,0 +1,147 @@
+/* =========================================================================
+ * ResourceUsageCard.module.css
+ * 예제 목적: scaffold Progress(@axiom/components/ui)를 그대로 쓰되,
+ *            "값(임계치)에 따라 막대 색이 바뀌는" 대시보드형 게이지를 만든다.
+ *
+ * 재스타일링 방식:
+ *   각 행(.row)에 data-level(ok | warn | danger) 을 부여하고,
+ *   그 값에 따라 [data-slot='progress-indicator'] 색을 바꾼다.
+ *   → Progress 컴포넌트 본체는 전혀 수정하지 않는다.
+ * ========================================================================= */
+
+.card {
+	--ru-ok: #10b981;
+	--ru-warn: #f59e0b;
+	--ru-danger: #ef4444;
+	--ru-track: #f1f5f9;
+	--ru-ink: #0f172a;
+	--ru-sub: #64748b;
+	--ru-card: #ffffff;
+	--ru-border: #e2e8f0;
+
+	width: 100%;
+	padding: 20px;
+	border-radius: 16px;
+	background: var(--ru-card);
+	border: 1px solid var(--ru-border);
+	box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+	font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+}
+
+:global(.dark) .card {
+	--ru-track: #1e293b;
+	--ru-ink: #e2e8f0;
+	--ru-sub: #94a3b8;
+	--ru-card: #0f172a;
+	--ru-border: #263449;
+}
+
+.title {
+	margin: 0 0 16px;
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--ru-ink);
+}
+
+.rows {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.rowHead {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: 7px;
+}
+
+.label {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--ru-ink);
+}
+
+.amount {
+	font-size: 12px;
+	color: var(--ru-sub);
+	font-variant-numeric: tabular-nums;
+}
+
+.amount strong {
+	color: var(--ru-ink);
+	font-weight: 600;
+}
+
+/* ── 트랙 공통 오버라이드 ─────────────────────────────────── */
+.card :global([data-slot='progress']) {
+	height: 8px;
+	background: var(--ru-track);
+	border-radius: 999px;
+}
+
+.card :global([data-slot='progress-indicator']) {
+	border-radius: 999px;
+	transition:
+		transform 0.4s ease,
+		background-color 0.3s ease;
+}
+
+/* ── 임계치별 인디케이터 색 ───────────────────────────────── */
+.row[data-level='ok'] :global([data-slot='progress-indicator']) {
+	background: var(--ru-ok);
+}
+
+.row[data-level='warn'] :global([data-slot='progress-indicator']) {
+	background: var(--ru-warn);
+}
+
+.row[data-level='danger'] :global([data-slot='progress-indicator']) {
+	background: var(--ru-danger);
+}
+
+/* 값 뱃지 색도 레벨에 맞춘다 */
+.badge {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 1px 7px;
+	border-radius: 999px;
+	font-size: 11px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.row[data-level='ok'] .badge {
+	color: var(--ru-ok);
+	background: color-mix(in srgb, var(--ru-ok) 14%, transparent);
+}
+
+.row[data-level='warn'] .badge {
+	color: var(--ru-warn);
+	background: color-mix(in srgb, var(--ru-warn) 16%, transparent);
+}
+
+.row[data-level='danger'] .badge {
+	color: var(--ru-danger);
+	background: color-mix(in srgb, var(--ru-danger) 16%, transparent);
+}
+
+/* ── 하단 슬라이더(인터랙션) ──────────────────────────────── */
+.control {
+	margin-top: 18px;
+	padding-top: 16px;
+	border-top: 1px dashed var(--ru-border);
+}
+
+.controlLabel {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 12px;
+	color: var(--ru-sub);
+}
+
+.slider {
+	width: 100%;
+	accent-color: var(--ru-danger);
+	cursor: pointer;
+}
