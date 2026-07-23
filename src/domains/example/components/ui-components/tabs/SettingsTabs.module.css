@@ -1,0 +1,361 @@
+/* =========================================================================
+ * SettingsTabs.module.css
+ * 예제 목적: scaffold가 제공하는 Tabs(@axiom/components/ui, shadcn/radix 기반)를
+ *            "그대로 사용"하면서 CSS Module로 완전히 다른 스타일을 입힌다.
+ *
+ * 재스타일링 방식:
+ *   scaffold Tabs는 내부 요소마다 data-slot / data-state 속성을 노출한다.
+ *     - [data-slot="tabs"]         : 루트
+ *     - [data-slot="tabs-list"]    : 트리거 묶음(여기선 좌측 세로 레일)
+ *     - [data-slot="tabs-trigger"] : 각 탭 버튼 (활성 시 [data-state="active"])
+ *     - [data-slot="tabs-content"] : 각 탭 패널
+ *   래퍼(.wrap) 아래에서 이 슬롯들을 선택자로 오버라이드한다.
+ *   (래퍼 + 슬롯 2단계로 감싸 Tailwind 유틸리티보다 명시도를 높인다.)
+ *
+ * 톤앤매너: 인디고 카드 스타일. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--st-indigo: #4f46e5;
+	--st-indigo-soft: #eef2ff;
+	--st-indigo-line: #e0e7ff;
+	--st-ink: #1e2233;
+	--st-sub: #5b6178;
+	--st-muted: #8b90a5;
+	--st-card: #ffffff;
+	--st-bg: #f7f8fc;
+	--st-border: #e7e9f2;
+
+	/* Tabs 루트는 기본적으로 flex 레이아웃. 세로(orientation="vertical")이므로
+	 * 좌측 레일 + 우측 패널이 나란히 놓이도록 전체 폭/간격만 다잡는다. */
+	display: flex !important;
+	gap: 0 !important;
+	width: 100%;
+	border: 1px solid var(--st-border);
+	border-radius: 18px;
+	overflow: hidden;
+	background: var(--st-card);
+	box-shadow: 0 1px 2px rgb(30 34 51 / 6%);
+	font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
+	color: var(--st-ink);
+}
+
+:global(.dark) .wrap {
+	--st-indigo: #818cf8;
+	--st-indigo-soft: #1e1b3a;
+	--st-indigo-line: #2e2a52;
+	--st-ink: #e9eaf3;
+	--st-sub: #a6abc2;
+	--st-muted: #757a90;
+	--st-card: #12141f;
+	--st-bg: #0d0f17;
+	--st-border: #262a3a;
+
+	box-shadow: none;
+}
+
+/* ── 좌측 세로 레일 (data-slot="tabs-list") ─────────────────────── */
+.rail {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 208px;
+	flex-shrink: 0;
+	padding: 14px;
+	background: var(--st-bg);
+	border-right: 1px solid var(--st-border);
+	/* scaffold 기본값(높이 h-8, 배경 등)을 확실히 덮어쓴다. */
+	height: auto !important;
+}
+
+.railTitle {
+	padding: 6px 10px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+	color: var(--st-muted);
+}
+
+/* ── 각 탭 버튼 (data-slot="tabs-trigger") ──────────────────────── */
+.tab {
+	display: flex !important;
+	align-items: center;
+	justify-content: flex-start !important;
+	gap: 10px;
+	width: 100%;
+	height: auto !important;
+	flex: none !important;
+	padding: 10px 12px !important;
+	border: 1px solid transparent !important;
+	border-radius: 12px !important;
+	text-align: left;
+	color: var(--st-sub) !important;
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab:hover {
+	background: var(--st-indigo-soft);
+	color: var(--st-ink) !important;
+}
+
+/* 활성 탭: radix가 data-state="active" 를 부여한다. */
+.tab[data-state='active'] {
+	background: var(--st-card) !important;
+	border-color: var(--st-indigo-line) !important;
+	color: var(--st-indigo) !important;
+	box-shadow: 0 1px 2px rgb(79 70 229 / 10%) !important;
+}
+
+.tabIcon {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+}
+
+.tabLabel {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.25;
+	font-size: 13.5px;
+	font-weight: 600;
+}
+
+.tabDesc {
+	font-size: 11px;
+	font-weight: 400;
+	font-style: normal;
+	color: var(--st-muted);
+}
+
+.tab[data-state='active'] .tabDesc {
+	color: color-mix(in srgb, var(--st-indigo) 60%, var(--st-muted));
+}
+
+/* ── 우측 패널 ─────────────────────────────────────────────────── */
+.panel {
+	flex: 1;
+	min-width: 0;
+	padding: 24px 26px;
+}
+
+/* content: 기본은 숨김(radix가 처리), 활성만 노출 */
+.content {
+	outline: none;
+}
+
+.contentTitle {
+	font-size: 17px;
+	font-weight: 700;
+	color: var(--st-ink);
+}
+
+.contentDesc {
+	margin-top: 4px;
+	font-size: 13px;
+	color: var(--st-sub);
+}
+
+/* ── 계정 폼 ───────────────────────────────────────────────────── */
+.field {
+	display: block;
+	margin-top: 18px;
+}
+
+.fieldLabel {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--st-ink);
+}
+
+.input {
+	width: 100%;
+	max-width: 340px;
+	padding: 9px 12px;
+	font-size: 13.5px;
+	color: var(--st-ink);
+	background: var(--st-card);
+	border: 1px solid var(--st-border);
+	border-radius: 10px;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus {
+	outline: none;
+	border-color: var(--st-indigo);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--st-indigo) 22%, transparent);
+}
+
+.primaryBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 22px;
+	padding: 9px 16px;
+	font-size: 13px;
+	font-weight: 600;
+	color: #fff;
+	background: var(--st-indigo);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: filter 0.15s ease;
+}
+
+.primaryBtn:hover {
+	filter: brightness(1.08);
+}
+
+.btnIcon {
+	width: 15px;
+	height: 15px;
+}
+
+/* ── 알림 토글 목록 ────────────────────────────────────────────── */
+.toggleList {
+	margin-top: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.toggleRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 14px 4px;
+	border-bottom: 1px solid var(--st-border);
+}
+
+.toggleRow:last-child {
+	border-bottom: none;
+}
+
+.toggleLabel {
+	font-size: 13.5px;
+	font-weight: 600;
+	color: var(--st-ink);
+}
+
+.toggleDesc {
+	margin-top: 2px;
+	font-size: 12px;
+	color: var(--st-sub);
+}
+
+.toggle {
+	position: relative;
+	flex-shrink: 0;
+	width: 40px;
+	height: 22px;
+	border-radius: 999px;
+	background: var(--st-border);
+	transition: background 0.18s ease;
+}
+
+.toggle[data-on] {
+	background: var(--st-indigo);
+}
+
+.toggleDot {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+	transition: transform 0.18s ease;
+}
+
+.toggle[data-on] .toggleDot {
+	transform: translateX(18px);
+}
+
+/* ── 결제 플랜 카드 ────────────────────────────────────────────── */
+.planCard {
+	margin-top: 18px;
+	padding: 18px;
+	border: 1px solid var(--st-indigo-line);
+	border-radius: 14px;
+	background: linear-gradient(180deg, var(--st-indigo-soft), var(--st-card));
+}
+
+.planHead {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.planIcon {
+	width: 34px;
+	height: 34px;
+	padding: 6px;
+	color: #fff;
+	background: var(--st-indigo);
+	border-radius: 10px;
+}
+
+.planName {
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--st-ink);
+}
+
+.planPrice {
+	font-size: 12.5px;
+	color: var(--st-sub);
+}
+
+.planBadge {
+	margin-left: auto;
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--st-indigo);
+	background: var(--st-card);
+	border: 1px solid var(--st-indigo-line);
+	border-radius: 999px;
+}
+
+.planFeatures {
+	margin: 16px 0 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 9px;
+}
+
+.planFeatures li {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	color: var(--st-ink);
+}
+
+.featIcon {
+	width: 15px;
+	height: 15px;
+	color: var(--st-indigo);
+}
+
+.ghostBtn {
+	padding: 8px 16px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--st-indigo);
+	background: var(--st-card);
+	border: 1px solid var(--st-indigo-line);
+	border-radius: 10px;
+	cursor: pointer;
+	transition: background 0.15s ease;
+}
+
+.ghostBtn:hover {
+	background: var(--st-indigo-soft);
+}
