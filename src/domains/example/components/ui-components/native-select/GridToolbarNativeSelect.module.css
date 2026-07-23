@@ -1,0 +1,124 @@
+/* =========================================================================
+ * GridToolbarNativeSelect.module.css
+ * 예제 목적: 제공 NativeSelect 컴포넌트를 손대지 않고, CSS Module 만으로
+ *            "목록/그리드 하단 툴바" 톤으로 완전히 재스타일링한다.
+ *            → 실제 SI 프로젝트에서 퍼블리셔가 하게 될 작업의 표준 형태.
+ *
+ * 핵심 원리
+ *  - NativeSelect 에 넘긴 className 은 "래퍼 div"([data-slot="native-select-wrapper"])
+ *    에 붙는다. 실제 <select> 박스는 그 안의 [data-slot="native-select"] 다.
+ *    그래서 셀렉트 박스를 스타일하려면 자손 선택자로 파고든다.
+ *  - 화살표 아이콘은 [data-slot="native-select-icon"] 로 잡는다.
+ *  - Tailwind 기본 클래스(명시도 0,1,0)를 이기려고 (클래스 + 속성) 조합으로
+ *    명시도를 (0,2,0) 이상으로 올린다. !important 불필요.
+ *  - ⚠️ 펼쳐진 드롭다운 목록 자체는 OS/브라우저가 그리므로 CSS 로 못 바꾼다.
+ *    (여기서 바꾸는 건 "닫힌 셀렉트 박스"의 모양이다.)
+ * ========================================================================= */
+
+.bar {
+	--gt-brand: #4f46e5;
+	--gt-brand-soft: #eef2ff;
+	--gt-ink: #1f2937;
+	--gt-sub: #6b7280;
+	--gt-card: #ffffff;
+	--gt-line: #e5e7eb;
+	--gt-bg: #fafafa;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--gt-ink);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px;
+	border: 1px solid var(--gt-line);
+	border-radius: 14px;
+	background: var(--gt-bg);
+	padding: 12px 16px;
+}
+
+:global(.dark) .bar {
+	--gt-brand: #a5b4fc;
+	--gt-brand-soft: #1e1b3a;
+	--gt-ink: #f3f4f6;
+	--gt-sub: #9ca3af;
+	--gt-card: #17181c;
+	--gt-line: #2e3138;
+	--gt-bg: #121317;
+}
+
+.total {
+	font-size: 13px;
+	color: var(--gt-sub);
+	font-variant-numeric: tabular-nums;
+}
+.total b {
+	color: var(--gt-brand);
+	font-weight: 800;
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+/* 라벨 + 셀렉트 한 쌍 */
+.control {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+}
+.label {
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--gt-sub);
+	white-space: nowrap;
+}
+
+/* ── 셀렉트 박스 재스타일 ────────────────────────────────
+ * className 은 래퍼(.field)에 붙으므로, 실제 <select> 는 자손으로 파고든다. */
+.field [data-slot='native-select'] {
+	height: 34px;
+	min-width: 96px;
+	border-radius: 999px; /* 알약(pill) 형태 */
+	border: 1px solid var(--gt-line);
+	background: var(--gt-card);
+	color: var(--gt-ink);
+	font-size: 13px;
+	font-weight: 600;
+	padding-left: 14px;
+	padding-right: 30px;
+	transition:
+		border-color 0.16s ease,
+		box-shadow 0.16s ease,
+		background 0.16s ease;
+}
+.field [data-slot='native-select']:hover {
+	border-color: var(--gt-brand);
+}
+.field [data-slot='native-select']:focus-visible {
+	border-color: var(--gt-brand);
+	box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.16);
+	outline: none;
+}
+/* 에러 상태 — aria-invalid 를 그대로 활용 */
+.field [data-slot='native-select'][aria-invalid='true'] {
+	border-color: #dc2626;
+	box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.14);
+}
+
+/* 화살표 아이콘 위치/색 조정 */
+.field [data-slot='native-select-icon'] {
+	right: 10px;
+	color: var(--gt-sub);
+}
+
+/* 옵션 목록(펼침)은 OS 가 그려서 배경/글자색 정도만 힌트를 줄 수 있다. */
+.field [data-slot='native-select'] option {
+	background: var(--gt-card);
+	color: var(--gt-ink);
+	font-weight: 500;
+}
