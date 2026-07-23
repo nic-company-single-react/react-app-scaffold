@@ -1,0 +1,166 @@
+/* =========================================================================
+ * SecurityAlertToast.module.css
+ * 예제 목적: PaymentCompleteToast 와 같은 toast.custom 패턴이지만, "위험 경고(레드)"
+ *            톤으로 완전히 다르게 스타일링한 확인형 토스트. 같은 기법으로도 톤앤매너가
+ *            얼마나 달라질 수 있는지 보여준다.
+ *
+ * 퍼블리셔는 .tsx 를 건드리지 않고 이 .module.css 만 수정한다.
+ * 다크 모드는 :global(.dark).
+ * ========================================================================= */
+
+.card {
+	--sa-danger: #e11d48;
+	--sa-danger-deep: #be123c;
+	--sa-icon-bg: #fdecef;
+	--sa-bg: #ffffff;
+	--sa-border: #f3dfe3;
+	--sa-ink: #1f1215;
+	--sa-sub: #6b5257;
+	--sa-meta-bg: #faf5f6;
+	--sa-meta-key: #97727a;
+	--sa-block-bg: #e11d48;
+	--sa-approve-border: #e6d4d8;
+	--sa-approve-ink: #4a3b3e;
+
+	width: 372px;
+	max-width: calc(100vw - 32px);
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 16px;
+	background: var(--sa-bg);
+	border: 1px solid var(--sa-border);
+	border-radius: 16px;
+	box-shadow:
+		0 14px 34px -14px rgba(225, 29, 72, 0.3),
+		0 2px 6px rgba(0, 0, 0, 0.05);
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--sa-ink);
+}
+
+:global(.dark) .card {
+	--sa-danger: #fb7185;
+	--sa-danger-deep: #fda4af;
+	--sa-icon-bg: #2c1418;
+	--sa-bg: #1c1416;
+	--sa-border: #382427;
+	--sa-ink: #fbe9ec;
+	--sa-sub: #c0a1a7;
+	--sa-meta-bg: #241a1c;
+	--sa-meta-key: #b98d96;
+	--sa-block-bg: #e11d48;
+	--sa-approve-border: #3d2a2e;
+	--sa-approve-ink: #e7d3d7;
+	box-shadow:
+		0 16px 36px -16px rgba(0, 0, 0, 0.66),
+		0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.top {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 12px;
+}
+
+.icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 38px;
+	height: 38px;
+	border-radius: 12px;
+	background: var(--sa-icon-bg);
+	color: var(--sa-danger-deep);
+}
+
+.body {
+	min-width: 0;
+}
+.title {
+	font-size: 14.5px;
+	font-weight: 800;
+	letter-spacing: -0.01em;
+	color: var(--sa-ink);
+}
+.desc {
+	margin-top: 3px;
+	font-size: 12.5px;
+	line-height: 1.5;
+	color: var(--sa-sub);
+}
+
+/* 접속 정보 메타 */
+.meta {
+	margin: 11px 0 0;
+	padding: 10px 12px;
+	border-radius: 11px;
+	background: var(--sa-meta-bg);
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+.metaRow {
+	display: grid;
+	grid-template-columns: 40px 1fr;
+	align-items: baseline;
+	gap: 8px;
+}
+.metaRow dt {
+	font-size: 11.5px;
+	font-weight: 600;
+	color: var(--sa-meta-key);
+}
+.metaRow dd {
+	margin: 0;
+	font-size: 12.5px;
+	font-weight: 600;
+	color: var(--sa-ink);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* 하단 액션: 차단(강조) / 승인 */
+.actions {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px;
+}
+.block,
+.approve {
+	height: 40px;
+	border-radius: 11px;
+	font-size: 13.5px;
+	font-weight: 700;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		transform 0.05s ease;
+}
+.block {
+	border: none;
+	background: var(--sa-block-bg);
+	color: #ffffff;
+	box-shadow: 0 6px 16px -6px rgba(225, 29, 72, 0.5);
+}
+.block:hover {
+	background: var(--sa-danger-deep);
+}
+.approve {
+	border: 1.5px solid var(--sa-approve-border);
+	background: transparent;
+	color: var(--sa-approve-ink);
+}
+.approve:hover {
+	background: color-mix(in srgb, var(--sa-bg) 84%, var(--sa-sub) 16%);
+}
+.block:active,
+.approve:active {
+	transform: translateY(1px);
+}

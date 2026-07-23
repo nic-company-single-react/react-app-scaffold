@@ -17,6 +17,7 @@ import {
 	CircleDot,
 	ListFilter,
 	ToggleRight,
+	Bell,
 	Wrench,
 	Calculator,
 	Type,
@@ -76,6 +77,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Select', icon: <ListFilter />, path: '/example/ui-components/select' },
 			{ name: 'SmartTable', icon: <Table2 />, path: '/example/ui-components/smart-table' },
 			{ name: 'Switch', icon: <ToggleRight />, path: '/example/ui-components/switch' },
+			{ name: 'Toast', icon: <Bell />, path: '/example/ui-components/toast' },
 		],
 	},
 	{
