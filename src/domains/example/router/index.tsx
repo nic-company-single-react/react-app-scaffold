@@ -7,6 +7,7 @@ const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
+const SkeletonComponent = loadable(() => import('@/domains/example/pages/ui-components/SkeletonComponent'));
 const AlertComponent = loadable(() => import('@/domains/example/pages/ui-components/AlertComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
 const CardComponent = loadable(() => import('@/domains/example/pages/ui-components/CardComponent'));
@@ -73,6 +74,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/accordion',
 		element: <AccordionComponent />,
 		name: '아코디언 컴포넌트',
+	},
+	{
+		path: 'ui-components/skeleton',
+		element: <SkeletonComponent />,
+		name: '스켈레톤 컴포넌트',
 	},
 	{
 		path: 'ui-components/card',

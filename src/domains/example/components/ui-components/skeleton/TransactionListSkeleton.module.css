@@ -1,0 +1,269 @@
+/* =========================================================================
+ * TransactionListSkeleton.module.css
+ * 예제 목적: scaffold가 제공하는 Skeleton(@axiom/components/ui)을 "그대로 사용"하면서
+ *            CSS Module로 완전히 다른 스타일을 입힌다.
+ *
+ * 재스타일링 방식:
+ *   scaffold Skeleton은 렌더 결과 <div>에 data-slot="skeleton" 속성을 노출한다.
+ *     - [data-slot="skeleton"] : 스켈레톤 블록 그 자체
+ *   기본 스타일은 Tailwind 유틸리티(animate-pulse rounded-md bg-muted)라서,
+ *   래퍼(.wrap) + 슬롯 선택자로 감싸 명시도를 높이면 손쉽게 덮어쓸 수 있다.
+ *   여기서는 기본 "펄스(깜빡임)"를 "좌→우로 흐르는 shimmer"로 바꾸고
+ *   색/모서리를 NIC 뱅킹 톤(청록)으로 재정의한다.
+ *
+ * ▶ 퍼블리셔 메모: 실제 SI 투입 시 스켈레톤 톤앤매너는 이 파일 하나만 손대면 된다.
+ *   - 애니메이션 종류/속도 → 아래 [data-slot="skeleton"] 규칙과 @keyframes shimmer
+ *   - 블록 색(밝기)        → --sk-base / --sk-hi 변수
+ *   각 조각의 크기(폭/높이/모양)는 컴포넌트에서 className으로 지정한다.
+ * ========================================================================= */
+
+.wrap {
+	--sk-base: #e6eeee; /* 스켈레톤 바탕색 */
+	--sk-hi: #f5faf9; /* 흘러가는 하이라이트 */
+	--nic-teal: #008485;
+	--nic-teal-deep: #00625f;
+	--nic-ink: #1b2b2a;
+	--nic-sub: #8a9998;
+	--nic-card: #ffffff;
+	--nic-border: #e4ecec;
+	--nic-in: #007a6e;
+	--nic-out: #cf4657;
+	--nic-badge-in: #eaf6f5;
+	--nic-badge-out: #fdeef0;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--nic-ink);
+}
+
+:global(.dark) .wrap {
+	--sk-base: #1c2b2b;
+	--sk-hi: #2a4140;
+	--nic-teal: #38b2a7;
+	--nic-teal-deep: #5fd1c5;
+	--nic-ink: #e8f1f0;
+	--nic-sub: #7d908f;
+	--nic-card: #0f1a1a;
+	--nic-border: #223434;
+	--nic-in: #4fc7b8;
+	--nic-out: #f0838f;
+	--nic-badge-in: #123030;
+	--nic-badge-out: #2a1a1d;
+}
+
+/* ── 카드 컨테이너 ─────────────────────────────────────── */
+.card {
+	background: var(--nic-card);
+	border: 1px solid var(--nic-border);
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 18px;
+	border-bottom: 1px solid var(--nic-border);
+}
+.headTitle {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--nic-ink);
+}
+.mark {
+	display: grid;
+	place-items: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 9px;
+	background: var(--nic-teal);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+}
+.replay {
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--nic-teal-deep);
+	padding: 5px 12px;
+	border: 1px solid var(--nic-border);
+	border-radius: 999px;
+	background: transparent;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		opacity 0.15s ease;
+}
+.replay:hover:not(:disabled) {
+	background: var(--nic-badge-in);
+}
+.replay:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+/* =========================================================================
+ * scaffold Skeleton 슬롯 오버라이드
+ * 기본 animate-pulse(깜빡임) → 좌→우 shimmer(흐름)로 교체하고 색/모서리 재정의.
+ * (.wrap + [data-slot] 2단계 선택자로 Tailwind 유틸리티보다 명시도 확보)
+ * ========================================================================= */
+.wrap :global([data-slot='skeleton']) {
+	background: linear-gradient(90deg, var(--sk-base) 25%, var(--sk-hi) 50%, var(--sk-base) 75%);
+	background-size: 200% 100%;
+	border-radius: 8px;
+	/* Tailwind animate-pulse 를 shimmer 로 덮어씀 */
+	animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+/* 접근성: 모션 최소화 설정 시 흐름을 멈추고 은은한 페이드만 남긴다. */
+@media (prefers-reduced-motion: reduce) {
+	.wrap :global([data-slot='skeleton']) {
+		animation: skFade 1.6s ease-in-out infinite;
+		background: var(--sk-base);
+	}
+	@keyframes skFade {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.55;
+		}
+	}
+}
+
+/* ── 행(로딩/실제 공용 레이아웃) ─────────────────────────── */
+.list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.row {
+	display: grid;
+	grid-template-columns: 44px 1fr auto;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 18px;
+	border-bottom: 1px solid var(--nic-border);
+}
+.row:last-child {
+	border-bottom: none;
+}
+.rowMain {
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+.rowSide {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 6px;
+	white-space: nowrap;
+}
+
+/* ── 로딩 조각 크기(모양) — className 으로 각 Skeleton에 지정 ─── */
+.avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 12px !important; /* 원형에 가까운 뱃지 형태 */
+}
+.lineTitle {
+	width: 42%;
+	height: 13px;
+}
+.lineSub {
+	width: 64%;
+	height: 11px;
+}
+.lineAmount {
+	width: 84px;
+	height: 13px;
+}
+.lineDate {
+	width: 52px;
+	height: 11px;
+}
+
+/* ── 실제 데이터 표시 ───────────────────────────────────── */
+.badge {
+	display: grid;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 700;
+}
+.badgeIn {
+	background: var(--nic-badge-in);
+	color: var(--nic-in);
+}
+.badgeOut {
+	background: var(--nic-badge-out);
+	color: var(--nic-out);
+}
+.counterparty {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--nic-ink);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.memo {
+	font-size: 12px;
+	color: var(--nic-sub);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.amount {
+	font-size: 15px;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -0.02em;
+}
+.amountIn {
+	color: var(--nic-in);
+}
+.amountOut {
+	color: var(--nic-out);
+}
+.date {
+	font-size: 11px;
+	color: var(--nic-sub);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 520px) {
+	.row {
+		grid-template-columns: 40px 1fr auto;
+		padding: 12px 14px;
+	}
+	.head {
+		padding: 12px 14px;
+	}
+}
