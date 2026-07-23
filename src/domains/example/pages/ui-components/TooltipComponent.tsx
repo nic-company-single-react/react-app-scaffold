@@ -230,7 +230,7 @@ export default function TooltipComponent(): React.ReactNode {
 				/>
 				<ExCard
 					label="아이콘 + 제목 + 설명"
-					code={`<TooltipContent className="max-w-[220px]">
+					code={`<TooltipContent className="max-w-55">
   <div className="flex items-center gap-1.5 font-semibold">
     <Info className="w-3.5 h-3.5" />
     OTP 인증
@@ -244,7 +244,7 @@ export default function TooltipComponent(): React.ReactNode {
 						<TooltipTrigger asChild>
 							<Button variant="outline">인증 안내</Button>
 						</TooltipTrigger>
-						<TooltipContent className="max-w-[220px]">
+						<TooltipContent className="max-w-55">
 							<div className="flex flex-col gap-1">
 								<span className="flex items-center gap-1.5 font-semibold">
 									<Info className="w-3.5 h-3.5" />
@@ -275,7 +275,7 @@ export default function TooltipComponent(): React.ReactNode {
 </TooltipContent>
 
 {/* 좁게 묶어 여러 줄로 */}
-<TooltipContent className="max-w-[140px] text-center">
+<TooltipContent className="max-w-35 text-center">
   좁은 폭에서 자동 줄바꿈되는 긴 안내 문구입니다.
 </TooltipContent>`}
 				>
@@ -291,7 +291,7 @@ export default function TooltipComponent(): React.ReactNode {
 						<TooltipTrigger asChild>
 							<Button variant="outline">좁은 툴팁</Button>
 						</TooltipTrigger>
-						<TooltipContent className="max-w-[140px] text-center">
+						<TooltipContent className="max-w-35 text-center">
 							좁은 폭에서 자동 줄바꿈되는 긴 안내 문구입니다.
 						</TooltipContent>
 					</Tooltip>
