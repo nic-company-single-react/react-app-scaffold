@@ -24,6 +24,7 @@ const TooltipComponent = loadable(() => import('@/domains/example/pages/ui-compo
 const TabsComponent = loadable(() => import('@/domains/example/pages/ui-components/TabsComponent'));
 const ProgressComponent = loadable(() => import('@/domains/example/pages/ui-components/ProgressComponent'));
 const SliderComponent = loadable(() => import('@/domains/example/pages/ui-components/SliderComponent'));
+const TableComponent = loadable(() => import('@/domains/example/pages/ui-components/TableComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
 const SmartTableComponent = loadable(() => import('@/domains/example/pages/ui-components/SmartTableComponent'));
 const CalendarComponent = loadable(() => import('@/domains/example/pages/ui-components/CalendarComponent'));
@@ -147,6 +148,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/slider',
 		element: <SliderComponent />,
 		name: '슬라이더 컴포넌트',
+	},
+	{
+		path: 'ui-components/table',
+		element: <TableComponent />,
+		name: 'Table 컴포넌트',
 	},
 	{
 		path: 'ui-components/data-table',
