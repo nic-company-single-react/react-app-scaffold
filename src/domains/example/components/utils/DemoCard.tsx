@@ -1,4 +1,4 @@
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 
 export interface IDemoCardProps {
 	id: string;

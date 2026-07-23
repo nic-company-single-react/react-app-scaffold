@@ -3,7 +3,7 @@ import { MoreHorizontal, Table2 } from 'lucide-react';
 
 import { Button, CodeBlock, SmartTable, defineColumns } from '@axiom/components/ui';
 import type { ISmartTableHandle, SmartColumns } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 import {
 	DropdownMenu,

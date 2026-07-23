@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Alert, AlertAction, AlertDescription, AlertTitle, Button, CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import AccountNoticeAlert from '@/domains/example/components/ui-components/AccountNoticeAlert';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import noticeSource from '@/domains/example/components/ui-components/AccountNoticeAlert.tsx?raw';
-import noticeCss from '@/domains/example/components/ui-components/AccountNoticeAlert.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import AccountNoticeAlert from '@/domains/example/components/ui-components/alert/AccountNoticeAlert';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import noticeSource from '@/domains/example/components/ui-components/alert/AccountNoticeAlert.tsx?raw';
+import noticeCss from '@/domains/example/components/ui-components/alert/AccountNoticeAlert.module.css?raw';
 import { CircleAlert, CircleCheck, Info, Megaphone, RefreshCw, Terminal, TriangleAlert, X } from 'lucide-react';
 
 export default function AlertComponent(): React.ReactNode {

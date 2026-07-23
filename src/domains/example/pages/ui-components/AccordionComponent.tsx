@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import TransactionDetailAccordion from '@/domains/example/components/ui-components/TransactionDetailAccordion';
-import TermsAgreementAccordion from '@/domains/example/components/ui-components/TermsAgreementAccordion';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import txSource from '@/domains/example/components/ui-components/TransactionDetailAccordion.tsx?raw';
-import txCss from '@/domains/example/components/ui-components/TransactionDetailAccordion.module.css?raw';
-import termsSource from '@/domains/example/components/ui-components/TermsAgreementAccordion.tsx?raw';
-import termsCss from '@/domains/example/components/ui-components/TermsAgreementAccordion.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import TransactionDetailAccordion from '@/domains/example/components/ui-components/accordion/TransactionDetailAccordion';
+import TermsAgreementAccordion from '@/domains/example/components/ui-components/accordion/TermsAgreementAccordion';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import txSource from '@/domains/example/components/ui-components/accordion/TransactionDetailAccordion.tsx?raw';
+import txCss from '@/domains/example/components/ui-components/accordion/TransactionDetailAccordion.module.css?raw';
+import termsSource from '@/domains/example/components/ui-components/accordion/TermsAgreementAccordion.tsx?raw';
+import termsCss from '@/domains/example/components/ui-components/accordion/TermsAgreementAccordion.module.css?raw';
 import { LayoutList } from 'lucide-react';
 
 export default function AccordionComponent(): React.ReactNode {

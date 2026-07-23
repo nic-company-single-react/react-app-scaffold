@@ -3,14 +3,14 @@ import { MoreHorizontal, Table2 } from 'lucide-react';
 
 import { Button } from '@axiom/components/ui';
 import { CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 import {
 	DataTable,
 	DataTableSelectAllHeader,
 	DataTableSelectRowCell,
-} from '@/domains/example/components/ui-components/DataTable';
-import { DataTableColumnHeader } from '@/domains/example/components/ui-components/DataTableColumnHeader';
+} from '@/domains/example/components/ui-components/datatable/DataTable';
+import { DataTableColumnHeader } from '@/domains/example/components/ui-components/datatable/DataTableColumnHeader';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -499,21 +499,21 @@ const table = useReactTable({
 					{[
 						{
 							name: 'DataTable',
-							path: 'example/components/ui-components/DataTable',
+							path: 'example/components/ui-components/datatable/DataTable',
 							desc: '정렬·필터·선택·페이지네이션이 내장된 범용 테이블 컴포넌트',
 							badge: 'Generic',
 							badgeClass: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
 						},
 						{
 							name: 'DataTableColumnHeader',
-							path: 'example/components/ui-components/DataTableColumnHeader',
+							path: 'example/components/ui-components/datatable/DataTableColumnHeader',
 							desc: '정렬 방향 변경 및 컬럼 숨기기 드롭다운이 포함된 헤더 셀',
 							badge: 'Helper',
 							badgeClass: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
 						},
 						{
 							name: 'DataTablePagination',
-							path: 'example/components/ui-components/DataTablePagination',
+							path: 'example/components/ui-components/datatable/DataTablePagination',
 							desc: '페이지 크기 선택 및 이전/다음 이동 버튼이 포함된 페이지네이션',
 							badge: 'Helper',
 							badgeClass: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',

@@ -13,16 +13,16 @@ import {
 	Label,
 	CodeBlock,
 } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import ProductCard from '@/domains/example/components/ui-components/ProductCard';
-import AccountSummaryCard from '@/domains/example/components/ui-components/AccountSummaryCard';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import productSource from '@/domains/example/components/ui-components/ProductCard.tsx?raw';
-import productCss from '@/domains/example/components/ui-components/ProductCard.module.css?raw';
-import accountSource from '@/domains/example/components/ui-components/AccountSummaryCard.tsx?raw';
-import accountCss from '@/domains/example/components/ui-components/AccountSummaryCard.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import ProductCard from '@/domains/example/components/ui-components/card/ProductCard';
+import AccountSummaryCard from '@/domains/example/components/ui-components/card/AccountSummaryCard';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import productSource from '@/domains/example/components/ui-components/card/ProductCard.tsx?raw';
+import productCss from '@/domains/example/components/ui-components/card/ProductCard.module.css?raw';
+import accountSource from '@/domains/example/components/ui-components/card/AccountSummaryCard.tsx?raw';
+import accountCss from '@/domains/example/components/ui-components/card/AccountSummaryCard.module.css?raw';
 import { SquareStack } from 'lucide-react';
 
 /** 외부 네트워크 없이 이미지 슬롯을 시연하기 위한 인라인 SVG 그라데이션 */

@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import CarouselDemoCard from '@/domains/example/components/ui-components/CarouselDemoCard';
-import ApiCarouselDemo from '@/domains/example/components/ui-components/ApiCarouselDemo';
+import CarouselDemoCard from '@/domains/example/components/ui-components/carousel/CarouselDemoCard';
+import ApiCarouselDemo from '@/domains/example/components/ui-components/carousel/ApiCarouselDemo';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@axiom/components/ui';
 import { GalleryHorizontal } from 'lucide-react';
 

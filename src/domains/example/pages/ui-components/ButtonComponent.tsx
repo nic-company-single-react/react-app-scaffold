@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Button, CodeBlock } from '@axiom/components/ui';
 /** 섹션 헤더 컴포넌트 */
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 /** 예제 카드 컴포넌트 */
-import ExCard from '@/domains/example/components/ui-components/ExCard';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
 /** 좋아요 버튼 컴포넌트 */
-import LikeButton from '@/domains/example/components/ui-components/LikeButton';
+import LikeButton from '@/domains/example/components/ui-components/button/LikeButton';
 
 import {
 	AlertTriangle,

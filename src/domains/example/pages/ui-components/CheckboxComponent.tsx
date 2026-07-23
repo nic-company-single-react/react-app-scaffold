@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { CodeBlock } from '@axiom/components/ui';
 import { Checkbox } from '@/shared/lib/shadcn/ui/checkbox';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import CheckboxGroupDemo from '@/domains/example/components/ui-components/CheckboxGroupDemo';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import CheckboxGroupDemo from '@/domains/example/components/ui-components/checkbox/CheckboxGroupDemo';
 import { CheckSquare2 } from 'lucide-react';
 
 export default function CheckboxComponent(): React.ReactNode {

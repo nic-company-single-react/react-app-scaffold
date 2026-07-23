@@ -11,9 +11,9 @@ import {
 	DropdownMenuTrigger,
 	Input,
 } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
 import {
 	AlignCenter,
 	AlignLeft,

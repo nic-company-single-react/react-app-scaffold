@@ -3,9 +3,9 @@ import { Calendar, CodeBlock } from '@axiom/components/ui';
 import type { DateRange } from 'react-day-picker';
 
 import { CalendarDays, Layers, ChevronDown, X } from 'lucide-react';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import CalExCard from '@/domains/example/components/ui-components/CalExCard';
+import CalExCard from '@/domains/example/components/ui-components/calendar/CalExCard';
 
 /* ── 프리셋 버튼 컴포넌트 ──────────────────────────────────────── */
 interface IPresetButtonProps {

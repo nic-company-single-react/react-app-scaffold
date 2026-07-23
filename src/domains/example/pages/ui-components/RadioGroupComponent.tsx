@@ -1,15 +1,15 @@
 import { useId, useState } from 'react';
 import { RadioGroup, RadioGroupItem, Label, CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import PaymentMethodRadioGroup from '@/domains/example/components/ui-components/PaymentMethodRadioGroup';
-import SurveyRatingRadioGroup from '@/domains/example/components/ui-components/SurveyRatingRadioGroup';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import paySource from '@/domains/example/components/ui-components/PaymentMethodRadioGroup.tsx?raw';
-import payCss from '@/domains/example/components/ui-components/PaymentMethodRadioGroup.module.css?raw';
-import surveySource from '@/domains/example/components/ui-components/SurveyRatingRadioGroup.tsx?raw';
-import surveyCss from '@/domains/example/components/ui-components/SurveyRatingRadioGroup.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import PaymentMethodRadioGroup from '@/domains/example/components/ui-components/radiogroup/PaymentMethodRadioGroup';
+import SurveyRatingRadioGroup from '@/domains/example/components/ui-components/radiogroup/SurveyRatingRadioGroup';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import paySource from '@/domains/example/components/ui-components/radiogroup/PaymentMethodRadioGroup.tsx?raw';
+import payCss from '@/domains/example/components/ui-components/radiogroup/PaymentMethodRadioGroup.module.css?raw';
+import surveySource from '@/domains/example/components/ui-components/radiogroup/SurveyRatingRadioGroup.tsx?raw';
+import surveyCss from '@/domains/example/components/ui-components/radiogroup/SurveyRatingRadioGroup.module.css?raw';
 import { CircleDot } from 'lucide-react';
 
 export default function RadioGroupComponent(): React.ReactNode {

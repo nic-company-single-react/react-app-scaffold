@@ -12,16 +12,16 @@ import {
 	Button,
 	CodeBlock,
 } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import WithdrawAccountSelect from '@/domains/example/components/ui-components/WithdrawAccountSelect';
-import ProductFilterSelect from '@/domains/example/components/ui-components/ProductFilterSelect';
-import withdrawSource from '@/domains/example/components/ui-components/WithdrawAccountSelect.tsx?raw';
-import withdrawCss from '@/domains/example/components/ui-components/WithdrawAccountSelect.module.css?raw';
-import filterSource from '@/domains/example/components/ui-components/ProductFilterSelect.tsx?raw';
-import filterCss from '@/domains/example/components/ui-components/ProductFilterSelect.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import WithdrawAccountSelect from '@/domains/example/components/ui-components/select/WithdrawAccountSelect';
+import ProductFilterSelect from '@/domains/example/components/ui-components/select/ProductFilterSelect';
+import withdrawSource from '@/domains/example/components/ui-components/select/WithdrawAccountSelect.tsx?raw';
+import withdrawCss from '@/domains/example/components/ui-components/select/WithdrawAccountSelect.module.css?raw';
+import filterSource from '@/domains/example/components/ui-components/select/ProductFilterSelect.tsx?raw';
+import filterCss from '@/domains/example/components/ui-components/select/ProductFilterSelect.module.css?raw';
 import { ListFilter } from 'lucide-react';
 
 /* ── 공통 데이터 ──────────────────────────────────────── */

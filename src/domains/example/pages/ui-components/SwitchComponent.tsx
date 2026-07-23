@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Switch, Label, Button, CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import NotificationSettingsSwitch from '@/domains/example/components/ui-components/NotificationSettingsSwitch';
-import SecuritySettingSwitch from '@/domains/example/components/ui-components/SecuritySettingSwitch';
-import notiSource from '@/domains/example/components/ui-components/NotificationSettingsSwitch.tsx?raw';
-import notiCss from '@/domains/example/components/ui-components/NotificationSettingsSwitch.module.css?raw';
-import securitySource from '@/domains/example/components/ui-components/SecuritySettingSwitch.tsx?raw';
-import securityCss from '@/domains/example/components/ui-components/SecuritySettingSwitch.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import NotificationSettingsSwitch from '@/domains/example/components/ui-components/switch/NotificationSettingsSwitch';
+import SecuritySettingSwitch from '@/domains/example/components/ui-components/switch/SecuritySettingSwitch';
+import notiSource from '@/domains/example/components/ui-components/switch/NotificationSettingsSwitch.tsx?raw';
+import notiCss from '@/domains/example/components/ui-components/switch/NotificationSettingsSwitch.module.css?raw';
+import securitySource from '@/domains/example/components/ui-components/switch/SecuritySettingSwitch.tsx?raw';
+import securityCss from '@/domains/example/components/ui-components/switch/SecuritySettingSwitch.module.css?raw';
 import { ToggleRight } from 'lucide-react';
 
 export default function SwitchComponent(): React.ReactNode {

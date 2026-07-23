@@ -16,9 +16,9 @@ import {
 	ComboboxSeparator,
 	ComboboxValue,
 } from '@/shared/lib/shadcn/ui/combobox';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
 import { ChevronsUpDown } from 'lucide-react';
 
 /* ── 공통 데이터 ──────────────────────────────────────── */

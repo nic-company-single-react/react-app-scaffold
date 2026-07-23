@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Badge, CodeBlock } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import BadgeCustomColors from '@/domains/example/components/ui-components/BadgeCustomColors';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import BadgeCustomColors from '@/domains/example/components/ui-components/badge/BadgeCustomColors';
 
 import { BadgeCheck, Bookmark, Loader2, Tag, X } from 'lucide-react';
 

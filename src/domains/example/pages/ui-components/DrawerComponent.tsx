@@ -11,14 +11,14 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from '@axiom/components/ui';
-import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionHeader from '@/domains/example/components/ui-components/common/SectionHeader';
 import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
-import ExCard from '@/domains/example/components/ui-components/ExCard';
-import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
-import OrderFilterDrawer from '@/domains/example/components/ui-components/OrderFilterDrawer';
-import SnapPointsDrawerDemo from '@/domains/example/components/ui-components/SnapPointsDrawerDemo';
-import filterSource from '@/domains/example/components/ui-components/OrderFilterDrawer.tsx?raw';
-import filterCss from '@/domains/example/components/ui-components/OrderFilterDrawer.module.css?raw';
+import ExCard from '@/domains/example/components/ui-components/common/ExCard';
+import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
+import OrderFilterDrawer from '@/domains/example/components/ui-components/drawer/OrderFilterDrawer';
+import SnapPointsDrawerDemo from '@/domains/example/components/ui-components/drawer/SnapPointsDrawerDemo';
+import filterSource from '@/domains/example/components/ui-components/drawer/OrderFilterDrawer.tsx?raw';
+import filterCss from '@/domains/example/components/ui-components/drawer/OrderFilterDrawer.module.css?raw';
 import { PanelBottom } from 'lucide-react';
 
 type Direction = 'top' | 'right' | 'bottom' | 'left';
