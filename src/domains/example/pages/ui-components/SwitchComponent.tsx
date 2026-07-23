@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Switch, Label, Button, CodeBlock } from '@axiom/components/ui';
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 import ExCard from '@/domains/example/components/ui-components/ExCard';
 import SourceTabs from '@/domains/example/components/ui-components/SourceTabs';
 import NotificationSettingsSwitch from '@/domains/example/components/ui-components/NotificationSettingsSwitch';
@@ -19,6 +20,9 @@ export default function SwitchComponent(): React.ReactNode {
 
 	return (
 		<div className="p-6 space-y-8 max-w-3xl">
+			{/* ── 오른쪽 바로가기 메뉴 (xl 이상에서만 노출) ───────────── */}
+			<SectionNav />
+
 			{/* ── 페이지 헤더 ─────────────────────────────────────── */}
 			<div className="flex items-center gap-3">
 				<div className="flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-900/20">

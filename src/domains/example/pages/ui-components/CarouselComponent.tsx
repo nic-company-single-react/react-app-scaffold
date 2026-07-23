@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import Autoplay from 'embla-carousel-autoplay';
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 import CarouselDemoCard from '@/domains/example/components/ui-components/CarouselDemoCard';
 import ApiCarouselDemo from '@/domains/example/components/ui-components/ApiCarouselDemo';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@axiom/components/ui';
@@ -19,6 +20,9 @@ export default function CarouselComponent(): React.ReactNode {
 
 	return (
 		<div className="p-6 space-y-8 max-w-3xl">
+			{/* ── 오른쪽 바로가기 메뉴 (xl 이상에서만 노출) ───────────── */}
+			<SectionNav />
+
 			{/* ── 페이지 헤더 ─────────────────────────────────────── */}
 			<div className="flex items-center gap-3">
 				<div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20">

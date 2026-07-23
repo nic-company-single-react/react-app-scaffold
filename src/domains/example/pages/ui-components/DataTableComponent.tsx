@@ -4,6 +4,7 @@ import { MoreHorizontal, Table2 } from 'lucide-react';
 import { Button } from '@axiom/components/ui';
 import { CodeBlock } from '@axiom/components/ui';
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 import {
 	DataTable,
 	DataTableSelectAllHeader,
@@ -175,6 +176,9 @@ const columns: ColumnDef<Payment>[] = [
 export default function DataTableComponent(): React.ReactNode {
 	return (
 		<div className="p-6 space-y-8 max-w-5xl">
+			{/* ── 오른쪽 바로가기 메뉴 (xl 이상에서만 노출) ───────────── */}
+			<SectionNav />
+
 			{/* ── 페이지 헤더 ──────────────────────────────────────── */}
 			<div className="flex items-center gap-3">
 				<div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20">

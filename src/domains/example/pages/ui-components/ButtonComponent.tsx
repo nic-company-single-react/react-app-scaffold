@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, CodeBlock } from '@axiom/components/ui';
 /** 섹션 헤더 컴포넌트 */
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 /** 예제 카드 컴포넌트 */
 import ExCard from '@/domains/example/components/ui-components/ExCard';
 /** 좋아요 버튼 컴포넌트 */
@@ -36,6 +37,9 @@ export default function ButtonComponent(): React.ReactNode {
 
 	return (
 		<div className="p-6 space-y-8 max-w-3xl">
+			{/* ── 오른쪽 바로가기 메뉴 (xl 이상에서만 노출) ───────────── */}
+			<SectionNav />
+
 			{/* ── 페이지 헤더 ─────────────────────────────────────── */}
 			<div className="flex items-center gap-3">
 				<div className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/20">

@@ -4,6 +4,7 @@ import { MoreHorizontal, Table2 } from 'lucide-react';
 import { Button, CodeBlock, SmartTable, defineColumns } from '@axiom/components/ui';
 import type { ISmartTableHandle, SmartColumns } from '@axiom/components/ui';
 import SectionHeader from '@/domains/example/components/ui-components/SectionHeader';
+import SectionNav from '@/domains/example/components/ui-components/common/SectionNav';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -210,6 +211,9 @@ export default function SmartTableComponent(): React.ReactNode {
 
 	return (
 		<div className="max-w-5xl space-y-8 p-6">
+			{/* ── 오른쪽 바로가기 메뉴 (xl 이상에서만 노출) ───────────── */}
+			<SectionNav />
+
 			{/* 헤더 */}
 			<div className="flex items-center gap-3">
 				<div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">

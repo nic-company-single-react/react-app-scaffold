@@ -3,7 +3,8 @@
     "allow": [
       "Bash(cd \"C:/redsky/work/react/single_react_new_nicfirst/react-app-scaffold-guide\" 2>/dev/null && echo \"=== docs/components 존재? ===\"; ls -la docs/components/ui/ 2>&1 | head -40; echo; echo \"=== accordion-component.mdx 존재/크기 ===\"; ls -la docs/components/ui/accordion-component.mdx 2>&1; echo; echo \"=== 기존 컴포넌트 mdx 목록 ===\"; find docs/components -name \"*.mdx\" 2>&1 | head -30)",
       "Read(//c/redsky/work/react/single_react_new_nicfirst/react-app-scaffold-guide/**)",
-      "Read(//c/redsky/work/react/single_react_new_nicfirst/react-app-scaffold-guide/docs/components/ui/**)"
+      "Read(//c/redsky/work/react/single_react_new_nicfirst/react-app-scaffold-guide/docs/components/ui/**)",
+      "Bash(node \"C:/Users/PC_NIC/AppData/Local/Temp/claude/c--redsky-work-react-single-react-new-nicfirst-react-app-scaffold/712fe687-e69c-4ded-b33a-96e496e9c92c/scratchpad/apply-sectionnav.mjs\")"
     ]
   }
 }
