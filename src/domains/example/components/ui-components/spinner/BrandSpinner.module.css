@@ -1,0 +1,98 @@
+/* BrandSpinner 전용 스타일 (co-location)
+   핵심 인디케이터는 scaffold 공용 <Spinner/> 를 그대로 쓰고,
+   여기서는 그 위에 "그라데이션 헤일로 링 + 글로우" 브랜드 연출만 얹는다.
+   퍼블리셔가 바꿀 값(색·속도·두께)은 모두 이 파일에서 조정한다. */
+
+.halo {
+	/* .tsx 에서 --size / --thickness 를 주입한다. */
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+
+	width: var(--size, 44px);
+	height: var(--size, 44px);
+	border-radius: 9999px;
+
+	/* mask 안쪽 경계를 부드럽게 만드는 feather 폭(계단현상=자글거림 방지) */
+	--edge: 1.5px;
+
+	/* ① 코멧형 그라데이션 — 양 끝을 투명으로 페이드해 시작/끝 이음새(seam)를 없앤다 */
+	background: conic-gradient(
+		from 90deg,
+		rgba(99, 102, 241, 0) 0deg,
+		rgba(14, 165, 233, 0.1) 45deg,
+		#0ea5e9 210deg,
+		#6366f1 348deg,
+		rgba(99, 102, 241, 0) 360deg
+	);
+
+	/* ② radial-gradient mask 로 가운데를 뚫어 '링'만 남긴다.
+	   안쪽 경계를 --edge 만큼 feather 해 계단처럼 지지 않게 한다. */
+	-webkit-mask: radial-gradient(
+		farthest-side,
+		#0000 calc(100% - var(--thickness, 4px) - var(--edge)),
+		#000 calc(100% - var(--thickness, 4px) + var(--edge))
+	);
+	mask: radial-gradient(
+		farthest-side,
+		#0000 calc(100% - var(--thickness, 4px) - var(--edge)),
+		#000 calc(100% - var(--thickness, 4px) + var(--edge))
+	);
+
+	/* ③ GPU 합성 힌트 — 회전 중 서브픽셀 떨림/자글거림을 줄인다 */
+	will-change: transform;
+	backface-visibility: hidden;
+
+	/* ④ 링 회전 속도 — 이 숫자만 바꾸면 빠르기가 바뀐다(코어 Spinner 와 다른 속도라 입체감이 생긴다) */
+	animation: brand-halo 1.6s linear infinite;
+}
+
+@keyframes brand-halo {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* 코어 = scaffold 공용 <Spinner/>. 색·크기·글로우만 커스텀한다.
+   `.halo .core` 로 지정해 Tailwind 의 단일 클래스(size-4 등)보다 우선순위를 확실히 높인다. */
+.halo .core {
+	width: 52%;
+	height: 52%;
+	color: #0369a1; /* sky-700 — 링과 대비되는 진한 톤 */
+	filter: drop-shadow(0 0 5px rgba(14, 165, 233, 0.5));
+}
+
+/* 다크 모드 — 앱 규칙(.dark)에 맞춰 처리한다. */
+:global(.dark) .halo {
+	background: conic-gradient(
+		from 90deg,
+		rgba(129, 140, 248, 0) 0deg,
+		rgba(56, 189, 248, 0.1) 45deg,
+		#38bdf8 210deg,
+		#818cf8 348deg,
+		rgba(129, 140, 248, 0) 360deg
+	);
+}
+
+:global(.dark) .halo .core {
+	color: #bae6fd; /* sky-200 */
+	filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+}
+
+/* 모션 최소화 사용자 배려 — 헤일로 회전 대신 은은한 깜빡임으로 대체한다.
+   (코어 Spinner 의 회전은 scaffold 쪽에서 동일 규칙을 이미 처리한다) */
+@media (prefers-reduced-motion: reduce) {
+	.halo {
+		animation: brand-pulse 1.2s ease-in-out infinite;
+	}
+
+	@keyframes brand-pulse {
+		0%,
+		100% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.45;
+		}
+	}
+}

@@ -16,6 +16,7 @@ const ComboboxComponent = loadable(() => import('@/domains/example/pages/ui-comp
 const DrawerComponent = loadable(() => import('@/domains/example/pages/ui-components/DrawerComponent'));
 const RadioGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/RadioGroupComponent'));
 const SelectComponent = loadable(() => import('@/domains/example/pages/ui-components/SelectComponent'));
+const SpinnerComponent = loadable(() => import('@/domains/example/pages/ui-components/SpinnerComponent'));
 const SwitchComponent = loadable(() => import('@/domains/example/pages/ui-components/SwitchComponent'));
 const ToastComponent = loadable(() => import('@/domains/example/pages/ui-components/ToastComponent'));
 const DataTableComponent = loadable(() => import('@/domains/example/pages/ui-components/DataTableComponent'));
@@ -101,6 +102,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/select',
 		element: <SelectComponent />,
 		name: '셀렉트 컴포넌트',
+	},
+	{
+		path: 'ui-components/spinner',
+		element: <SpinnerComponent />,
+		name: '스피너 컴포넌트',
 	},
 	{
 		path: 'ui-components/switch',
