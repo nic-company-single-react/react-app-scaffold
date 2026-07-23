@@ -1,0 +1,200 @@
+/**
+ * ProfileFormInput 전용 스타일.
+ *
+ * 실제 SI 프로젝트에서는 퍼블리셔가 Input 의 기본 shadcn 스타일을 거의 그대로 쓰지 않고,
+ * 프로젝트 디자인 가이드에 맞춰 완전히 다른 톤으로 갈아엎는 경우가 많다.
+ * 이 파일은 "제공 Input 컴포넌트는 그대로 두고, className 만 CSS Module 로 덮어써서
+ * 전혀 다른 룩앤필을 입히는" 방식을 보여주기 위한 예제다.
+ *
+ * 다크 모드는 앱 규칙(.dark 클래스)에 맞춰 :global(.dark) 선택자로 처리한다.
+ */
+
+.card {
+	width: 100%;
+	max-width: 420px;
+	padding: 28px;
+	border-radius: 20px;
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.15);
+}
+
+:global(.dark) .card {
+	background: #0f172a;
+	border-color: #1e293b;
+	box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+	font-size: 18px;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+:global(.dark) .title {
+	color: #f1f5f9;
+}
+
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: #64748b;
+}
+
+.fields {
+	margin-top: 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+
+.label {
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	color: #475569;
+}
+
+:global(.dark) .label {
+	color: #94a3b8;
+}
+
+/* 아이콘을 겹쳐 놓기 위한 래퍼 */
+.inputWrap {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.icon {
+	position: absolute;
+	left: 14px;
+	width: 18px;
+	height: 18px;
+	color: #94a3b8;
+	pointer-events: none;
+	transition: color 0.15s ease;
+}
+
+/*
+ * 핵심: 제공 Input(h-8, rounded-lg, border-input …) 의 기본 룩을 걷어내고
+ * 이 프로젝트 전용 톤(높이 48px, 아이콘 여백, 굵은 포커스 글로우)으로 완전히 교체한다.
+ * cn() 이 뒤에 오는 className 을 우선 적용하므로 아래 값들이 기본값을 덮어쓴다.
+ */
+.input {
+	height: 48px;
+	width: 100%;
+	padding-left: 42px;
+	padding-right: 14px;
+	border-radius: 12px;
+	border: 1.5px solid #e2e8f0;
+	background: #f8fafc;
+	font-size: 14px;
+	color: #0f172a;
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease,
+		background 0.15s ease;
+}
+
+.input::placeholder {
+	color: #94a3b8;
+}
+
+.input:focus-visible {
+	outline: none;
+	background: #ffffff;
+	border-color: #10b981;
+	box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+/* 포커스 시 앞 아이콘도 강조색으로 */
+.inputWrap:focus-within .icon {
+	color: #10b981;
+}
+
+:global(.dark) .input {
+	background: #1e293b;
+	border-color: #334155;
+	color: #e2e8f0;
+}
+
+:global(.dark) .input:focus-visible {
+	background: #0f172a;
+	border-color: #34d399;
+	box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.18);
+}
+
+/* 에러 상태 — aria-invalid 속성으로 스타일링 */
+.input[aria-invalid='true'] {
+	border-color: #ef4444;
+	background: #fef2f2;
+}
+
+.input[aria-invalid='true']:focus-visible {
+	border-color: #ef4444;
+	box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.inputWrap:focus-within .input[aria-invalid='true'] ~ .icon,
+.input[aria-invalid='true'] ~ .icon {
+	color: #ef4444;
+}
+
+:global(.dark) .input[aria-invalid='true'] {
+	background: rgba(239, 68, 68, 0.08);
+	border-color: #f87171;
+}
+
+.errorText {
+	font-size: 12px;
+	color: #ef4444;
+}
+
+.submit {
+	margin-top: 8px;
+	height: 46px;
+	border-radius: 12px;
+	border: none;
+	background: #10b981;
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		opacity 0.15s ease;
+}
+
+.submit:hover:not(:disabled) {
+	background: #059669;
+}
+
+.submit:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.doneBanner {
+	margin-top: 18px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: #ecfdf5;
+	color: #047857;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+:global(.dark) .doneBanner {
+	background: rgba(16, 185, 129, 0.12);
+	color: #6ee7b7;
+}
