@@ -4,6 +4,8 @@ import loadable from '@loadable/component';
 
 const BlankPage = loadable(() => import('@/domains/example/pages/BlankPage'));
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
+const UiAlert = loadable(() => import('@/domains/example/pages/ui/UiAlert'));
+const UiConfirm = loadable(() => import('@/domains/example/pages/ui/UiConfirm'));
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
@@ -50,6 +52,16 @@ const routes: TAppRoute[] = [
 		path: 'use-api',
 		element: <ExUseApi />,
 		name: 'ExUseApi',
+	},
+	{
+		path: 'ui/alert',
+		element: <UiAlert />,
+		name: '$ui.alert 예제',
+	},
+	{
+		path: 'ui/confirm',
+		element: <UiConfirm />,
+		name: '$ui.confirm 예제',
 	},
 	{
 		path: 'ui-components/button',

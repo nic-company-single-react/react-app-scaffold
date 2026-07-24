@@ -104,6 +104,13 @@ export const navItems: NavItem[] = [
 		subItems: [
 			{ name: 'useApi', icon: <FishingHook />, path: '/example/use-api' },
 			{
+				name: '$ui',
+				subItems: [
+					{ name: 'alert', icon: <Bell />, path: '/example/ui/alert' },
+					{ name: 'confirm', icon: <MessageSquareText />, path: '/example/ui/confirm' },
+				],
+			},
+			{
 				name: 'useClientState예제',
 				subItems: [
 					{ name: 'useClientState1', path: '/example/use-client-state-1' },
