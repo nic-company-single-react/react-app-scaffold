@@ -1,0 +1,132 @@
+/*
+ * SearchBarInputGroup 전용 스타일.
+ * 소비 주체(SearchBarInputGroup.tsx) 바로 옆에 co-location 한다.
+ *
+ * 핵심: 제공 InputGroup 의 기본 룩(높이 32px · 각진 사각 · 얇은 회색 테두리)을
+ * className 병합으로 통째로 덮어써서 "알약형 소프트 검색 바"로 바꾼다.
+ * 컴포넌트 원본(input-group.tsx)은 전혀 건드리지 않는다.
+ */
+
+.wrap {
+	width: 100%;
+	max-width: 34rem;
+}
+
+/* ── InputGroup 래퍼 자체를 리스타일 ─────────────────────────── */
+.group {
+	height: 52px;
+	border-radius: 9999px;
+	border-color: #e2e8f0;
+	background: #fff;
+	padding-inline: 6px;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+	transition:
+		border-color 0.18s ease,
+		box-shadow 0.18s ease;
+}
+
+/* 포커스 시 소프트 글로우 (teal). :focus-within 로 그룹 전체에 반응 */
+.group:focus-within {
+	border-color: #14b8a6;
+	box-shadow:
+		0 0 0 4px rgba(20, 184, 166, 0.15),
+		0 4px 14px rgba(20, 184, 166, 0.12);
+}
+
+.leadIcon {
+	padding-left: 14px;
+	color: #94a3b8;
+}
+
+.group:focus-within .leadIcon {
+	color: #14b8a6;
+}
+
+.input {
+	font-size: 0.95rem;
+	padding-inline: 6px;
+}
+
+.tail {
+	padding-right: 8px;
+}
+
+/* 키보드 힌트(kbd) */
+.kbd kbd {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	height: 24px;
+	padding-inline: 8px;
+	border-radius: 8px;
+	border: 1px solid #e2e8f0;
+	background: #f8fafc;
+	color: #64748b;
+	font-size: 11px;
+	font-weight: 600;
+}
+
+.kbd kbd svg {
+	width: 12px;
+	height: 12px;
+}
+
+/* 지우기 버튼 */
+.clearBtn {
+	color: #94a3b8;
+	border-radius: 9999px;
+}
+
+.clearBtn:hover {
+	color: #0f172a;
+	background: #f1f5f9;
+}
+
+.hint {
+	margin-top: 10px;
+	padding-left: 18px;
+	font-size: 12px;
+	color: #94a3b8;
+}
+
+.hint b {
+	color: #0f766e;
+	font-weight: 600;
+}
+
+/* ── 다크 모드 (앱 규칙: :global(.dark)) ─────────────────────── */
+:global(.dark) .group {
+	border-color: #334155;
+	background: #0f172a;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark) .group:focus-within {
+	border-color: #2dd4bf;
+	box-shadow:
+		0 0 0 4px rgba(45, 212, 191, 0.18),
+		0 4px 14px rgba(45, 212, 191, 0.1);
+}
+
+:global(.dark) .leadIcon {
+	color: #64748b;
+}
+
+:global(.dark) .group:focus-within .leadIcon {
+	color: #2dd4bf;
+}
+
+:global(.dark) .kbd kbd {
+	border-color: #334155;
+	background: #1e293b;
+	color: #94a3b8;
+}
+
+:global(.dark) .clearBtn:hover {
+	color: #f1f5f9;
+	background: #1e293b;
+}
+
+:global(.dark) .hint b {
+	color: #5eead4;
+}

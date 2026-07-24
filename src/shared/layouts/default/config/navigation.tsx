@@ -39,6 +39,7 @@ import {
 	Heart,
 	Milestone,
 	SquareMenu,
+	Combine,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -89,6 +90,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Drawer', icon: <PanelBottom />, path: '/example/ui-components/drawer' },
 			{ name: 'Dropdown Menu', icon: <SquareMenu />, path: '/example/ui-components/dropdown-menu' },
 			{ name: 'Input', icon: <TextCursorInput />, path: '/example/ui-components/input' },
+			{ name: 'Input Group', icon: <Combine />, path: '/example/ui-components/input-group' },
 			{ name: 'Native Select', icon: <SquareChevronDown />, path: '/example/ui-components/native-select' },
 			{ name: 'Progress', icon: <Gauge />, path: '/example/ui-components/progress' },
 			{ name: 'Radio Group', icon: <CircleDot />, path: '/example/ui-components/radio-group' },

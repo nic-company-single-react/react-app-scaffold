@@ -12,6 +12,7 @@ export * from './checkbox';
 export * from './combobox';
 export * from './dropdown-menu';
 export * from './input';
+export * from './input-group';
 export * from './select';
 export * from './native-select';
 export * from './card';
