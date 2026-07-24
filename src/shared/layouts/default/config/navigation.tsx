@@ -43,6 +43,7 @@ import {
 	SquareMenu,
 	Combine,
 	NotepadText,
+	CircleUserRound,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -79,6 +80,7 @@ export const navItems: NavItem[] = [
 		subItems: [
 			{ name: 'Accordion', icon: <ListChevronsDownUp />, path: '/example/ui-components/accordion' },
 			{ name: 'Alert', icon: <Megaphone />, path: '/example/ui-components/alert' },
+			{ name: 'Avatar', icon: <CircleUserRound />, path: '/example/ui-components/avatar' },
 			{ name: 'Badge', icon: <Badge />, path: '/example/ui-components/badge' },
 			{ name: 'Breadcrumb', icon: <Milestone />, path: '/example/ui-components/breadcrumb' },
 			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },

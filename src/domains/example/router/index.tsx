@@ -9,6 +9,7 @@ const UiConfirm = loadable(() => import('@/domains/example/pages/ui/UiConfirm'))
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
+const AvatarComponent = loadable(() => import('@/domains/example/pages/ui-components/AvatarComponent'));
 const BreadcrumbComponent = loadable(() => import('@/domains/example/pages/ui-components/BreadcrumbComponent'));
 const PaginationComponent = loadable(() => import('@/domains/example/pages/ui-components/PaginationComponent'));
 const SkeletonComponent = loadable(() => import('@/domains/example/pages/ui-components/SkeletonComponent'));
@@ -84,6 +85,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/alert',
 		element: <AlertComponent />,
 		name: '얼럿 컴포넌트',
+	},
+	{
+		path: 'ui-components/avatar',
+		element: <AvatarComponent />,
+		name: '아바타 컴포넌트',
 	},
 	{
 		path: 'ui-components/badge',

@@ -1,0 +1,272 @@
+/* =========================================================================
+ * ApprovalLineAvatars.module.css
+ * 예제 목적: scaffold가 제공하는 Avatar(@axiom/components/ui, shadcn/radix 기반)를
+ *            "그대로 사용"하면서 CSS Module로 퍼블리셔가 완전히 다른 스타일을 입힌다.
+ *
+ * 재스타일링 방식:
+ *   scaffold Avatar는 내부 요소마다 data-slot 속성을 노출한다.
+ *     - [data-slot="avatar"]             : 루트(원형 프레임)
+ *     - [data-slot="avatar-image"]       : 이미지
+ *     - [data-slot="avatar-fallback"]    : 이미지 로드 실패 시 대체(이니셜/아이콘)
+ *     - [data-slot="avatar-badge"]       : 우하단 상태 뱃지
+ *     - [data-slot="avatar-group"]       : 겹쳐 쌓는 그룹
+ *     - [data-slot="avatar-group-count"] : "+N" 카운트 칩
+ *   래퍼(.board) 아래에서 이 슬롯들을 선택자로 오버라이드한다.
+ *   (래퍼 + 슬롯 2단계로 감싸 Tailwind 유틸리티보다 명시도를 높인다.)
+ *
+ *   ⚠️ 실제 SI 프로젝트에서 퍼블리셔가 avatar 스타일을 바꿀 때 이 파일만 손보면 된다.
+ *      컴포넌트(.tsx)의 마크업/로직은 건드리지 않는다.
+ *
+ * 톤앤매너: NIC 전자결재 라인(원형 → 라운드 사각 타일로 형태까지 변경).
+ *          다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.board {
+	--nic-line: #e4ecec;
+	--nic-card: #ffffff;
+	--nic-ink: #1b2b2a;
+	--nic-sub: #5c6b6a;
+	--nic-muted: #93a3a2;
+	--nic-track: #eef3f3;
+
+	/* 결재 상태 색 */
+	--st-approved: #0f9d84; /* 승인 */
+	--st-approved-soft: #e7f6f2;
+	--st-pending: #d98a1f; /* 대기 */
+	--st-pending-soft: #fbf1de;
+	--st-rejected: #d0455a; /* 반려 */
+	--st-rejected-soft: #fbe9ec;
+	--st-current: #2b6ef2; /* 진행중 */
+	--st-current-soft: #e7effe;
+
+	font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system, sans-serif;
+	color: var(--nic-ink);
+	border: 1px solid var(--nic-line);
+	border-radius: 1rem;
+	background: var(--nic-card);
+	box-shadow: 0 1px 2px rgb(16 24 40 / 0.04);
+	overflow: hidden;
+}
+
+:global(.dark) .board {
+	--nic-line: #223434;
+	--nic-card: #0f1a1a;
+	--nic-ink: #e8f1f0;
+	--nic-sub: #a7b8b7;
+	--nic-muted: #6f817f;
+	--nic-track: #16302f;
+
+	--st-approved: #34c9ab;
+	--st-approved-soft: #123330;
+	--st-pending: #e0a54a;
+	--st-pending-soft: #35290f;
+	--st-rejected: #ee7080;
+	--st-rejected-soft: #35171d;
+	--st-current: #6ea0ff;
+	--st-current-soft: #10233f;
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.875rem 1.125rem;
+	border-bottom: 1px solid var(--nic-line);
+	background: linear-gradient(180deg, var(--nic-track), transparent);
+}
+
+.title {
+	font-size: 0.9rem;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.docNo {
+	font-size: 0.7rem;
+	font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+	color: var(--nic-muted);
+}
+
+/* ── 결재 라인(가로 흐름) ─────────────────────────────── */
+.flow {
+	display: flex;
+	align-items: flex-start;
+	gap: 0;
+	padding: 1.25rem 1.125rem 1.375rem;
+	overflow-x: auto;
+}
+
+.step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	min-width: 5.25rem;
+	flex: 0 0 auto;
+}
+
+/* 단계 사이 연결선 */
+.connector {
+	flex: 1 1 auto;
+	height: 2px;
+	min-width: 1.25rem;
+	margin-top: 1.6rem;
+	border-radius: 2px;
+	background: repeating-linear-gradient(90deg, var(--nic-muted) 0 5px, transparent 5px 10px);
+	opacity: 0.5;
+}
+
+.roleTag {
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.02em;
+	color: var(--nic-muted);
+	text-transform: uppercase;
+}
+
+/* =========================================================================
+ * 핵심: Avatar 슬롯 오버라이드 — 원형을 라운드 사각 타일로 바꾸고,
+ *       상태별 링/뱃지 색을 CSS 변수로 주입한다.
+ * ========================================================================= */
+
+/* 상태 색을 담는 컨테이너 — data-status 로 팔레트를 스위칭한다 */
+.avatarWrap {
+	--ring: var(--nic-muted);
+	--ring-soft: var(--nic-track);
+	position: relative;
+}
+.avatarWrap[data-status='approved'] {
+	--ring: var(--st-approved);
+	--ring-soft: var(--st-approved-soft);
+}
+.avatarWrap[data-status='pending'] {
+	--ring: var(--st-pending);
+	--ring-soft: var(--st-pending-soft);
+}
+.avatarWrap[data-status='rejected'] {
+	--ring: var(--st-rejected);
+	--ring-soft: var(--st-rejected-soft);
+}
+.avatarWrap[data-status='current'] {
+	--ring: var(--st-current);
+	--ring-soft: var(--st-current-soft);
+}
+
+/* 루트: 원형 → 라운드 사각, 상태 링 적용. scaffold의 after 보더는 무력화 */
+.avatarWrap [data-slot='avatar'] {
+	width: 3rem;
+	height: 3rem;
+	border-radius: 0.85rem;
+	background: var(--ring-soft);
+	box-shadow: 0 0 0 2px var(--ring);
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+.avatarWrap [data-slot='avatar']::after {
+	display: none; /* scaffold 기본 mix-blend 보더 제거 */
+}
+.avatarWrap:hover [data-slot='avatar'] {
+	transform: translateY(-2px);
+	box-shadow: 0 0 0 2px var(--ring), 0 6px 14px rgb(16 24 40 / 0.12);
+}
+
+/* 이미지도 사각 라운드로 클립 */
+.avatarWrap [data-slot='avatar-image'] {
+	border-radius: 0.85rem;
+}
+
+/* 이니셜 대체: 브랜드 톤 그라디언트 + 굵은 이니셜 */
+.avatarWrap [data-slot='avatar-fallback'] {
+	border-radius: 0.85rem;
+	background: linear-gradient(135deg, var(--ring), color-mix(in srgb, var(--ring) 55%, #000 0%));
+	color: #fff;
+	font-weight: 800;
+	font-size: 0.95rem;
+	letter-spacing: 0.02em;
+}
+
+/* 상태 뱃지: 우하단, 상태색으로 채우고 살짝 키운다 */
+.avatarWrap [data-slot='avatar-badge'] {
+	width: 1.05rem;
+	height: 1.05rem;
+	right: -3px;
+	bottom: -3px;
+	background: var(--ring);
+	color: #fff;
+	box-shadow: 0 0 0 2px var(--nic-card);
+}
+.avatarWrap [data-slot='avatar-badge'] svg {
+	width: 0.7rem;
+	height: 0.7rem;
+}
+
+.name {
+	font-size: 0.8rem;
+	font-weight: 700;
+	line-height: 1.2;
+	text-align: center;
+}
+.dept {
+	font-size: 0.68rem;
+	color: var(--nic-sub);
+	text-align: center;
+}
+
+/* 상태 라벨 칩 */
+.statusChip {
+	margin-top: 0.15rem;
+	padding: 0.075rem 0.5rem;
+	border-radius: 999px;
+	font-size: 0.64rem;
+	font-weight: 700;
+	background: var(--ring-soft);
+	color: var(--ring);
+}
+
+/* ── 하단: 참조자(겹치는 아바타 그룹) 재스타일 ───────────── */
+.foot {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.75rem 1.125rem;
+	border-top: 1px dashed var(--nic-line);
+	background: linear-gradient(0deg, var(--nic-track), transparent);
+}
+.footLabel {
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: var(--nic-sub);
+}
+
+/* 그룹: 겹침 간격을 넓히고 라운드 사각 타일로 통일 */
+.refGroup [data-slot='avatar'] {
+	width: 2.1rem;
+	height: 2.1rem;
+	border-radius: 0.6rem;
+}
+.refGroup [data-slot='avatar']::after {
+	display: none;
+}
+.refGroup [data-slot='avatar-image'],
+.refGroup [data-slot='avatar-fallback'] {
+	border-radius: 0.6rem;
+}
+.refGroup [data-slot='avatar-fallback'] {
+	background: linear-gradient(135deg, #4b5f7a, #2b3a4f);
+	color: #fff;
+	font-weight: 700;
+	font-size: 0.72rem;
+}
+/* scaffold가 그룹 자식에 넣는 ring-background 대신 카드색 링을 확실히 */
+.refGroup [data-slot='avatar'],
+.refGroup [data-slot='avatar-group-count'] {
+	box-shadow: 0 0 0 2px var(--nic-card);
+}
+.refGroup [data-slot='avatar-group-count'] {
+	width: 2.1rem;
+	height: 2.1rem;
+	border-radius: 0.6rem;
+	background: var(--nic-track);
+	color: var(--nic-sub);
+	font-size: 0.72rem;
+	font-weight: 700;
+}
