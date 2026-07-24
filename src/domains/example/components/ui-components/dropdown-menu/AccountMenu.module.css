@@ -1,0 +1,200 @@
+/*
+ * 계정(프로필) 드롭다운 메뉴 전용 스타일.
+ *
+ * 목적: shadcn 기본 dropdown-menu 컴포넌트에 "박혀 있는" 유틸리티 클래스
+ * (bg-popover · p-1 · rounded-md · focus:bg-accent …)를 !important 없이 덮어써서,
+ * 퍼블리셔가 실제 SI 프로젝트에서 하게 될 "전면 재스킨"을 그대로 재현한 예제입니다.
+ *
+ * 핵심 트릭 — `.root.root` 처럼 같은 클래스를 두 번 적어 명시도(specificity)를
+ * 0-2-0 으로 올린다. 요소에는 클래스가 한 번만 붙어도 이 선택자는 매칭되며,
+ * 컴포넌트에 박힌 단일 유틸리티 클래스(0-1-0)를 안정적으로 이긴다.
+ * hover/focus 는 `.item.item:hover` (0-3-0)로 shadcn 의 `focus:bg-accent`(0-2-0)를 이긴다.
+ *
+ * 다크 모드는 앱 규칙(.dark 클래스)에 맞춰 `:global(.dark)` 로 처리한다.
+ */
+
+/* ── 팝오버(Content) 컨테이너 ─────────────────────────── */
+.root.root {
+	width: 17rem;
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid rgb(226 232 240);
+	border-radius: 1rem;
+	background: #fff;
+	box-shadow: 0 20px 45px -18px rgba(15, 23, 42, 0.35);
+}
+:global(.dark) .root.root {
+	border-color: rgb(51 65 85);
+	background: rgb(15 23 42);
+	box-shadow: 0 20px 45px -18px rgba(0, 0, 0, 0.6);
+}
+
+/* ── 상단 프로필 헤더(순수 커스텀 마크업) ─────────────── */
+.header {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 1rem;
+	background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+	color: #fff;
+}
+.avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: 9999px;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	background: rgba(255, 255, 255, 0.18);
+	font-size: 1rem;
+	font-weight: 700;
+}
+.userMeta {
+	min-width: 0;
+}
+.userName {
+	font-size: 0.875rem;
+	font-weight: 600;
+	line-height: 1.2;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.userMail {
+	font-size: 0.75rem;
+	opacity: 0.85;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.plan {
+	margin-left: auto;
+	padding: 0.15rem 0.5rem;
+	border-radius: 9999px;
+	background: rgba(255, 255, 255, 0.2);
+	font-size: 0.625rem;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+}
+
+/* ── 항목 영역 ────────────────────────────────────────── */
+.body {
+	padding: 0.4rem;
+}
+
+.item.item {
+	gap: 0.65rem;
+	padding: 0.5rem 0.65rem;
+	border-radius: 0.6rem;
+	font-size: 0.8125rem;
+	color: rgb(51 65 85);
+}
+.item.item svg {
+	color: rgb(100 116 139);
+}
+.item.item:hover,
+.item.item:focus {
+	background: rgb(238 242 255);
+	color: rgb(67 56 202);
+}
+.item.item:hover svg,
+.item.item:focus svg {
+	color: rgb(79 70 229);
+}
+:global(.dark) .item.item {
+	color: rgb(203 213 225);
+}
+:global(.dark) .item.item:hover,
+:global(.dark) .item.item:focus {
+	background: rgba(79, 70, 229, 0.18);
+	color: rgb(165 180 252);
+}
+
+.shortcut {
+	margin-left: auto;
+	font-size: 0.6875rem;
+	letter-spacing: 0.1em;
+	color: rgb(148 163 184);
+}
+
+.separator.separator {
+	height: 1px;
+	margin: 0.35rem 0.5rem;
+	background: rgb(241 245 249);
+}
+:global(.dark) .separator.separator {
+	background: rgb(30 41 59);
+}
+
+/* ── 위험(로그아웃) 항목 ─────────────────────────────── */
+.danger.danger {
+	color: rgb(220 38 38);
+}
+.danger.danger svg {
+	color: rgb(220 38 38);
+}
+.danger.danger:hover,
+.danger.danger:focus {
+	background: rgb(254 242 242);
+	color: rgb(185 28 28);
+}
+:global(.dark) .danger.danger {
+	color: rgb(248 113 113);
+}
+:global(.dark) .danger.danger:hover,
+:global(.dark) .danger.danger:focus {
+	background: rgba(220, 38, 38, 0.15);
+	color: rgb(252 165 165);
+}
+
+/* ── 트리거 버튼(아바타 칩) ───────────────────────────── */
+.trigger {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.3rem 0.65rem 0.3rem 0.35rem;
+	border-radius: 9999px;
+	border: 1px solid rgb(226 232 240);
+	background: #fff;
+	cursor: pointer;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+.trigger:hover {
+	border-color: rgb(165 180 252);
+	box-shadow: 0 4px 12px -6px rgba(79, 70, 229, 0.5);
+}
+.trigger[data-state='open'] {
+	border-color: rgb(129 140 248);
+	box-shadow: 0 4px 12px -6px rgba(79, 70, 229, 0.6);
+}
+:global(.dark) .trigger {
+	border-color: rgb(51 65 85);
+	background: rgb(15 23 42);
+}
+.triggerAvatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.9rem;
+	height: 1.9rem;
+	border-radius: 9999px;
+	background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+	color: #fff;
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+.triggerName {
+	font-size: 0.8125rem;
+	font-weight: 600;
+	color: rgb(51 65 85);
+}
+:global(.dark) .triggerName {
+	color: rgb(226 232 240);
+}
+.triggerChevron {
+	width: 1rem;
+	height: 1rem;
+	color: rgb(148 163 184);
+}
