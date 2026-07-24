@@ -9,6 +9,7 @@ const UiConfirm = loadable(() => import('@/domains/example/pages/ui/UiConfirm'))
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
+const BreadcrumbComponent = loadable(() => import('@/domains/example/pages/ui-components/BreadcrumbComponent'));
 const SkeletonComponent = loadable(() => import('@/domains/example/pages/ui-components/SkeletonComponent'));
 const AlertComponent = loadable(() => import('@/domains/example/pages/ui-components/AlertComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
@@ -88,6 +89,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/accordion',
 		element: <AccordionComponent />,
 		name: '아코디언 컴포넌트',
+	},
+	{
+		path: 'ui-components/breadcrumb',
+		element: <BreadcrumbComponent />,
+		name: '브레드크럼 컴포넌트',
 	},
 	{
 		path: 'ui-components/skeleton',

@@ -37,6 +37,7 @@ import {
 	Boxes,
 	Store,
 	Heart,
+	Milestone,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -74,6 +75,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Accordion', icon: <ListChevronsDownUp />, path: '/example/ui-components/accordion' },
 			{ name: 'Alert', icon: <Megaphone />, path: '/example/ui-components/alert' },
 			{ name: 'Badge', icon: <Badge />, path: '/example/ui-components/badge' },
+			{ name: 'Breadcrumb', icon: <Milestone />, path: '/example/ui-components/breadcrumb' },
 			{ name: 'Button', icon: <Square />, path: '/example/ui-components/button' },
 			{ name: 'Button Group', icon: <Group />, path: '/example/ui-components/button-group' },
 			{ name: 'Card', icon: <SquareStack />, path: '/example/ui-components/card' },

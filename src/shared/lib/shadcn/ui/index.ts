@@ -3,6 +3,7 @@ export * from './button';
 export * from './button-group';
 export * from './separator';
 export * from './accordion';
+export * from './breadcrumb';
 export * from './alert';
 export * from './badge';
 export * from './calendar';
