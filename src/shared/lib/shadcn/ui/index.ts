@@ -17,6 +17,7 @@ export * from './card';
 export * from './label';
 export * from './skeleton';
 export * from './carousel';
+export * from './dialog';
 export * from './drawer';
 export * from './radio-group';
 export * from './switch';
