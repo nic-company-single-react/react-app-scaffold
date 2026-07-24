@@ -10,6 +10,7 @@ const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-compon
 const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
 const BreadcrumbComponent = loadable(() => import('@/domains/example/pages/ui-components/BreadcrumbComponent'));
+const PaginationComponent = loadable(() => import('@/domains/example/pages/ui-components/PaginationComponent'));
 const SkeletonComponent = loadable(() => import('@/domains/example/pages/ui-components/SkeletonComponent'));
 const AlertComponent = loadable(() => import('@/domains/example/pages/ui-components/AlertComponent'));
 const BadgeComponent = loadable(() => import('@/domains/example/pages/ui-components/BadgeComponent'));
@@ -96,6 +97,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/breadcrumb',
 		element: <BreadcrumbComponent />,
 		name: '브레드크럼 컴포넌트',
+	},
+	{
+		path: 'ui-components/pagination',
+		element: <PaginationComponent />,
+		name: '페이지네이션 컴포넌트',
 	},
 	{
 		path: 'ui-components/skeleton',

@@ -25,6 +25,7 @@ export * from './radio-group';
 export * from './switch';
 export * from './slider';
 export * from './progress';
+export * from './pagination';
 export * from './tabs';
 export * from './tooltip';
 export * from './sonner';

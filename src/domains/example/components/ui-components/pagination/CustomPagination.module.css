@@ -1,0 +1,142 @@
+/* ────────────────────────────────────────────────────────────
+ * 퍼블리셔 커스터마이징 예시 스타일
+ *
+ * pagination 컴포넌트(@axiom/components/ui)는 shadcn 기본 룩앤필만 가진
+ * 프리미티브다. 실제 SI 프로젝트에서는 퍼블리셔가 이런 식으로
+ * *.module.css 를 입혀 완전히 다른 디자인(각진 카드형 + 브랜드 액티브)으로 만든다.
+ *
+ * 각 조각은 pagination.tsx 가 붙여주는 data-slot 속성(예 [data-slot="pagination-link"])
+ * 으로도 타겟팅할 수 있으나, 여기서는 className 을 직접 넘겨 스코프가 확실한
+ * module.css 로 입혔다. 다크 모드는 앱 규칙(.dark)에 맞춰 `:global(.dark) .클래스` 로 처리한다.
+ * ──────────────────────────────────────────────────────────── */
+
+.wrap {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+/* 목록 컨테이너 — 조각 사이 간격을 넓히고 정렬 */
+.list {
+	gap: 6px;
+}
+
+/* 숫자 링크 버튼 — 각진 카드형 */
+.link {
+	min-width: 38px;
+	height: 38px;
+	padding: 0 6px;
+	border-radius: 8px;
+	border: 1px solid #e2e8f0;
+	background: #fff;
+	color: #334155;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	transition:
+		border-color 0.15s ease,
+		background-color 0.15s ease,
+		color 0.15s ease;
+}
+
+.link:hover {
+	border-color: #6366f1;
+	background: #eef2ff;
+	color: #4338ca;
+}
+
+/* 현재 페이지 — 브랜드 컬러로 채움 */
+.active,
+.active:hover {
+	border-color: #4f46e5;
+	background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+	color: #fff;
+	box-shadow: 0 2px 6px rgb(79 70 229 / 35%);
+}
+
+/* 이전 / 다음 화살표 버튼 */
+.arrow {
+	height: 38px;
+	border-radius: 8px;
+	border: 1px solid #e2e8f0;
+	background: #fff;
+	color: #475569;
+	font-weight: 600;
+	transition:
+		border-color 0.15s ease,
+		background-color 0.15s ease,
+		color 0.15s ease;
+}
+
+.arrow:hover {
+	border-color: #6366f1;
+	background: #eef2ff;
+	color: #4338ca;
+}
+
+/* 비활성(첫/끝 페이지) 화살표 */
+.disabled {
+	opacity: 0.4;
+	pointer-events: none;
+}
+
+/* 생략 표시(…) */
+.ellipsis {
+	color: #94a3b8;
+}
+
+/* 상태 표시 텍스트 */
+.status {
+	font-size: 12px;
+	color: #64748b;
+}
+
+.status b {
+	color: #4f46e5;
+	font-weight: 700;
+}
+
+/* ── 다크 모드 ─────────────────────────────────────────────── */
+:global(.dark) .link {
+	border-color: #334155;
+	background: #0f172a;
+	color: #cbd5e1;
+}
+
+:global(.dark) .link:hover {
+	border-color: #6366f1;
+	background: rgb(99 102 241 / 15%);
+	color: #c7d2fe;
+}
+
+:global(.dark) .active,
+:global(.dark) .active:hover {
+	border-color: #6366f1;
+	background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+	color: #fff;
+	box-shadow: none;
+}
+
+:global(.dark) .arrow {
+	border-color: #334155;
+	background: #0f172a;
+	color: #94a3b8;
+}
+
+:global(.dark) .arrow:hover {
+	border-color: #6366f1;
+	background: rgb(99 102 241 / 15%);
+	color: #c7d2fe;
+}
+
+:global(.dark) .ellipsis {
+	color: #64748b;
+}
+
+:global(.dark) .status {
+	color: #94a3b8;
+}
+
+:global(.dark) .status b {
+	color: #a5b4fc;
+}
