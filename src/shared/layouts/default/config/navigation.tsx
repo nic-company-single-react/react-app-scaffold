@@ -41,6 +41,7 @@ import {
 	Milestone,
 	SquareMenu,
 	Combine,
+	NotepadText,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -104,6 +105,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Switch', icon: <ToggleRight />, path: '/example/ui-components/switch' },
 			{ name: 'Table', icon: <TableProperties />, path: '/example/ui-components/table' },
 			{ name: 'Tabs', icon: <AppWindow />, path: '/example/ui-components/tabs' },
+			{ name: 'Textarea', icon: <NotepadText />, path: '/example/ui-components/textarea' },
 			{ name: 'Toast', icon: <Bell />, path: '/example/ui-components/toast' },
 			{ name: 'Tooltip', icon: <MessageSquareText />, path: '/example/ui-components/tooltip' },
 		],

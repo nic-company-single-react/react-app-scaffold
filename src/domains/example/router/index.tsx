@@ -23,6 +23,7 @@ const DropdownMenuComponent = loadable(() => import('@/domains/example/pages/ui-
 const DialogComponent = loadable(() => import('@/domains/example/pages/ui-components/DialogComponent'));
 const InputComponent = loadable(() => import('@/domains/example/pages/ui-components/InputComponent'));
 const InputGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/InputGroupComponent'));
+const TextareaComponent = loadable(() => import('@/domains/example/pages/ui-components/TextareaComponent'));
 const RadioGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/RadioGroupComponent'));
 const SelectComponent = loadable(() => import('@/domains/example/pages/ui-components/SelectComponent'));
 const NativeSelectComponent = loadable(() => import('@/domains/example/pages/ui-components/NativeSelectComponent'));
@@ -152,6 +153,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/input-group',
 		element: <InputGroupComponent />,
 		name: '인풋 그룹 컴포넌트',
+	},
+	{
+		path: 'ui-components/textarea',
+		element: <TextareaComponent />,
+		name: '텍스트영역 컴포넌트',
 	},
 	{
 		path: 'ui-components/radio-group',

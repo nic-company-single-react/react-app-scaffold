@@ -1,0 +1,238 @@
+/**
+ * FeedbackForm 전용 스타일.
+ *
+ * 실제 SI 프로젝트에서 퍼블리셔는 Textarea 의 기본 shadcn 스타일을 거의 그대로 쓰지 않고,
+ * 프로젝트 디자인 가이드에 맞춰 완전히 다른 톤으로 갈아엎는 경우가 많다.
+ * 이 파일은 "제공 Textarea 컴포넌트는 그대로 두고, className 만 CSS Module 로 덮어써서
+ * 전혀 다른 룩앤필을 입히는" 방식을 보여주기 위한 예제다.
+ *
+ * 다크 모드는 앱 규칙(.dark 클래스)에 맞춰 :global(.dark) 선택자로 처리한다.
+ */
+
+.card {
+	width: 100%;
+	max-width: 460px;
+	padding: 28px;
+	border-radius: 20px;
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 10px 30px -12px rgba(15, 23, 42, 0.15);
+}
+
+:global(.dark) .card {
+	background: #0f172a;
+	border-color: #1e293b;
+	box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+	font-size: 18px;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+:global(.dark) .title {
+	color: #f1f5f9;
+}
+
+.subtitle {
+	margin-top: 4px;
+	font-size: 13px;
+	color: #64748b;
+}
+
+.fields {
+	margin-top: 22px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	gap: 7px;
+}
+
+.label {
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	color: #475569;
+}
+
+:global(.dark) .label {
+	color: #94a3b8;
+}
+
+/* 카테고리 선택 칩 */
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.chip {
+	padding: 6px 14px;
+	border-radius: 999px;
+	border: 1.5px solid #e2e8f0;
+	background: #f8fafc;
+	font-size: 13px;
+	color: #475569;
+	cursor: pointer;
+	transition:
+		border-color 0.15s ease,
+		background 0.15s ease,
+		color 0.15s ease;
+}
+
+.chip:hover {
+	border-color: #14b8a6;
+}
+
+.chipActive {
+	border-color: #14b8a6;
+	background: #14b8a6;
+	color: #ffffff;
+}
+
+:global(.dark) .chip {
+	background: #1e293b;
+	border-color: #334155;
+	color: #cbd5e1;
+}
+
+:global(.dark) .chipActive {
+	background: #14b8a6;
+	border-color: #14b8a6;
+	color: #ffffff;
+}
+
+/*
+ * 핵심: 제공 Textarea(min-h-16, rounded-lg, border-input, field-sizing-content …) 의
+ * 기본 룩을 걷어내고 이 프로젝트 전용 톤(높이 140px 고정, 굵은 포커스 글로우, 우하단 리사이즈)
+ * 으로 완전히 교체한다. cn() 이 뒤에 오는 className 을 우선 적용하므로 아래 값들이 기본값을 덮어쓴다.
+ */
+.textarea {
+	min-height: 140px;
+	width: 100%;
+	padding: 14px 16px;
+	border-radius: 14px;
+	border: 1.5px solid #e2e8f0;
+	background: #f8fafc;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #0f172a;
+	resize: vertical;
+	/* 제공 컴포넌트의 field-sizing-content 자동 확장을 끄고 고정 높이 + 수동 리사이즈로 되돌린다. */
+	field-sizing: fixed;
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease,
+		background 0.15s ease;
+}
+
+.textarea::placeholder {
+	color: #94a3b8;
+}
+
+.textarea:focus-visible {
+	outline: none;
+	background: #ffffff;
+	border-color: #14b8a6;
+	box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.15);
+}
+
+:global(.dark) .textarea {
+	background: #1e293b;
+	border-color: #334155;
+	color: #e2e8f0;
+}
+
+:global(.dark) .textarea:focus-visible {
+	background: #0f172a;
+	border-color: #2dd4bf;
+	box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.18);
+}
+
+/* 에러 상태 — aria-invalid 속성으로 스타일링 */
+.textarea[aria-invalid='true'] {
+	border-color: #ef4444;
+	background: #fef2f2;
+}
+
+.textarea[aria-invalid='true']:focus-visible {
+	border-color: #ef4444;
+	box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+:global(.dark) .textarea[aria-invalid='true'] {
+	background: rgba(239, 68, 68, 0.08);
+	border-color: #f87171;
+}
+
+/* 글자 수 카운터 + 에러 문구를 한 줄에 */
+.meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.errorText {
+	font-size: 12px;
+	color: #ef4444;
+}
+
+.counter {
+	margin-left: auto;
+	font-size: 12px;
+	color: #94a3b8;
+}
+
+.counterOver {
+	color: #ef4444;
+	font-weight: 600;
+}
+
+.submit {
+	margin-top: 8px;
+	height: 46px;
+	border-radius: 12px;
+	border: none;
+	background: #14b8a6;
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background 0.15s ease,
+		opacity 0.15s ease;
+}
+
+.submit:hover:not(:disabled) {
+	background: #0d9488;
+}
+
+.submit:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.doneBanner {
+	margin-top: 18px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px;
+	border-radius: 12px;
+	background: #f0fdfa;
+	color: #0f766e;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+:global(.dark) .doneBanner {
+	background: rgba(20, 184, 166, 0.12);
+	color: #5eead4;
+}
