@@ -28,6 +28,8 @@ export * from './slider';
 export * from './progress';
 export * from './pagination';
 export * from './tabs';
+export * from './toggle';
+export * from './toggle-group';
 export * from './tooltip';
 export * from './sonner';
 export * from './spinner';

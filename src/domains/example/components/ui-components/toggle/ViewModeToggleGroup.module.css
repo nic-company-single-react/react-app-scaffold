@@ -1,0 +1,187 @@
+/* =========================================================================
+ * ViewModeToggleGroup.module.css
+ * 예제 목적: scaffold가 제공하는 ToggleGroup(@axiom/components/ui, shadcn/radix 기반)을
+ *            "그대로 사용"하면서 CSS Module로 완전히 다른 pill 세그먼트 컨트롤을 입힌다.
+ *
+ * 재스타일링 방식:
+ *   ToggleGroup 은 내부 요소마다 data-slot 속성을 노출한다.
+ *     - [data-slot="toggle-group"]       : 트랙(래퍼)
+ *     - [data-slot="toggle-group-item"]  : 각 세그먼트 버튼
+ *     - [data-state="on"]                : 선택된 세그먼트(radix가 자동 부여)
+ *   래퍼(.wrap) 아래에서 이 슬롯들을 선택자로 오버라이드해 명시도를 확보한다.
+ *
+ * 톤앤매너: 인디고 브랜드. 다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--seg-brand: #4f46e5;
+	--seg-brand-deep: #4338ca;
+	--seg-track: #eef2ff;
+	--seg-track-border: #e0e7ff;
+	--seg-ink: #312e81;
+	--seg-sub: #6366f1;
+	--seg-card: #ffffff;
+	--seg-card-border: #e5e7eb;
+	--seg-card-ink: #1f2937;
+	--seg-card-sub: #6b7280;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+}
+
+:global(.dark) .wrap {
+	--seg-brand: #818cf8;
+	--seg-brand-deep: #a5b4fc;
+	--seg-track: #1e1b4b;
+	--seg-track-border: #312e81;
+	--seg-ink: #c7d2fe;
+	--seg-sub: #a5b4fc;
+	--seg-card: #0f1424;
+	--seg-card-border: #232a44;
+	--seg-card-ink: #e5e9f5;
+	--seg-card-sub: #8a93b0;
+}
+
+/* ── 상단 바 ─────────────────────────────────────────────── */
+.bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	flex-wrap: wrap;
+	padding: 14px 16px;
+	border: 1px solid var(--seg-card-border);
+	border-radius: 16px;
+	background: var(--seg-card);
+}
+.barLabel {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--seg-ink);
+}
+
+/* =========================================================================
+ * scaffold ToggleGroup 슬롯 오버라이드
+ * (래퍼 + 슬롯 다단계 선택자로 Tailwind 유틸리티보다 명시도를 확보)
+ * ========================================================================= */
+
+/* 트랙: 기본 flex/rounded-lg 를 pill 트랙으로 재정의 */
+.wrap :global([data-slot='toggle-group']).group {
+	gap: 4px;
+	padding: 4px;
+	border-radius: 999px;
+	background: var(--seg-track);
+	border: 1px solid var(--seg-track-border);
+}
+
+/* 세그먼트: 기본 rounded-none/first·last radius/hover 를 완전히 덮어씀 */
+.wrap :global([data-slot='toggle-group']) :global([data-slot='toggle-group-item']).item {
+	height: 34px;
+	padding: 0 16px;
+	gap: 6px;
+	border: none;
+	border-radius: 999px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--seg-sub);
+	background: transparent;
+	transition:
+		background-color 160ms ease,
+		color 160ms ease,
+		box-shadow 160ms ease;
+}
+.wrap :global([data-slot='toggle-group']) :global([data-slot='toggle-group-item']).item:hover {
+	color: var(--seg-brand-deep);
+	background: transparent;
+}
+.wrap :global([data-slot='toggle-group']) :global([data-slot='toggle-group-item']).item :global(svg) {
+	width: 15px;
+	height: 15px;
+}
+
+/* 선택된 세그먼트(radix data-state="on"): 흰 pill + 브랜드 텍스트 + 부드러운 그림자 */
+.wrap :global([data-slot='toggle-group']) :global([data-slot='toggle-group-item'][data-state='on']).item {
+	color: var(--seg-brand-deep);
+	background: var(--seg-card);
+	box-shadow: 0 1px 3px rgba(79, 70, 229, 0.22);
+}
+:global(.dark) .wrap :global([data-slot='toggle-group']) :global([data-slot='toggle-group-item'][data-state='on']).item {
+	background: #2a2f52;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* 키보드 포커스 링 */
+.wrap :global([data-slot='toggle-group-item']).item:focus-visible {
+	outline: 2px solid var(--seg-brand);
+	outline-offset: 2px;
+}
+
+/* ── 미리보기 영역: 선택된 보기 방식에 따라 레이아웃 전환 ─────── */
+.preview {
+	margin-top: 14px;
+	display: grid;
+	gap: 10px;
+}
+.list {
+	grid-template-columns: 1fr;
+}
+.grid {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.kanban {
+	grid-auto-flow: column;
+	grid-auto-columns: minmax(160px, 1fr);
+	overflow-x: auto;
+	padding-bottom: 4px;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	padding: 12px 14px;
+	border: 1px solid var(--seg-card-border);
+	border-radius: 12px;
+	background: var(--seg-card);
+	min-width: 0;
+}
+.list .card {
+	flex-direction: row;
+	align-items: baseline;
+	gap: 10px;
+}
+.cardId {
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--seg-brand);
+	font-variant-numeric: tabular-nums;
+	flex-shrink: 0;
+}
+.cardTitle {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--seg-card-ink);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.list .cardTitle {
+	flex: 1;
+}
+.cardSub {
+	font-size: 11px;
+	color: var(--seg-card-sub);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+@media (max-width: 520px) {
+	.grid {
+		grid-template-columns: 1fr;
+	}
+}

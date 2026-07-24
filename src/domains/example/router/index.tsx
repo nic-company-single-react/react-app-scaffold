@@ -32,6 +32,7 @@ const SwitchComponent = loadable(() => import('@/domains/example/pages/ui-compon
 const ToastComponent = loadable(() => import('@/domains/example/pages/ui-components/ToastComponent'));
 const TooltipComponent = loadable(() => import('@/domains/example/pages/ui-components/TooltipComponent'));
 const TabsComponent = loadable(() => import('@/domains/example/pages/ui-components/TabsComponent'));
+const ToggleComponent = loadable(() => import('@/domains/example/pages/ui-components/ToggleComponent'));
 const ProgressComponent = loadable(() => import('@/domains/example/pages/ui-components/ProgressComponent'));
 const SliderComponent = loadable(() => import('@/domains/example/pages/ui-components/SliderComponent'));
 const TableComponent = loadable(() => import('@/domains/example/pages/ui-components/TableComponent'));
@@ -198,6 +199,11 @@ const routes: TAppRoute[] = [
 		path: 'ui-components/tabs',
 		element: <TabsComponent />,
 		name: '탭 컴포넌트',
+	},
+	{
+		path: 'ui-components/toggle',
+		element: <ToggleComponent />,
+		name: '토글 컴포넌트',
 	},
 	{
 		path: 'ui-components/progress',
