@@ -132,7 +132,7 @@ const AppHeader: React.FC = () => {
 				<div className="flex shrink-0 items-center gap-2 ml-auto lg:ml-0">
 					<ThemeToggleButton />
 					<GithubLinkButton
-						onClick={() => window.open('https://github.com/nickhealthy/multirepo-mf-boilerplate', '_blank')}
+						onClick={() => window.open('https://github.com/nic-company-single-react/react-app-scaffold', '_blank')}
 					/>
 				</div>
 			</div>
