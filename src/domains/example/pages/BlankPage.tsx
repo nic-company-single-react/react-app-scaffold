@@ -43,7 +43,7 @@ export default function BlankPage({}: IBlankPageProps): React.ReactNode {
 				<div>
 					<h1 className="text-2xl font-bold text-gray-900 dark:text-white">Blank Page</h1>
 					<p className="text-sm text-gray-500 dark:text-gray-400">
-						새 페이지를 만들 때 시작점이 되는 기본 페이지입니다. 아래는 현재 화면 컴포넌트의 소스 코드입니다.
+						새 페이지를 만들 때 시작점이 되는 기본 비어있는 페이지입니다. 아래는 현재 화면 컴포넌트의 소스 코드입니다.
 					</p>
 				</div>
 			</div>
