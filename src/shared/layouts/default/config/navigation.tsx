@@ -90,7 +90,7 @@ export const navItems: NavItem[] = [
 			{ name: 'Carousel', icon: <GalleryHorizontal />, path: '/example/ui-components/carousel' },
 			{ name: 'Checkbox', icon: <CheckSquare2 />, path: '/example/ui-components/checkbox' },
 			{ name: 'Combobox', icon: <ChevronsUpDown />, path: '/example/ui-components/combobox' },
-			{ name: 'Data Table', icon: <Table2 />, path: '/example/ui-components/data-table' },
+			//{ name: 'Data Table', icon: <Table2 />, path: '/example/ui-components/data-table' },
 			{ name: 'Dialog', icon: <MessageSquare />, path: '/example/ui-components/dialog' },
 			{ name: 'Drawer', icon: <PanelBottom />, path: '/example/ui-components/drawer' },
 			{ name: 'Dropdown Menu', icon: <SquareMenu />, path: '/example/ui-components/dropdown-menu' },
