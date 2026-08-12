@@ -1,0 +1,476 @@
+/* =========================================================================
+ * PeriodSearchCalendar.module.css
+ * 예제 목적: scaffold가 제공하는 Calendar(@axiom/components/ui,
+ *            shadcn + react-day-picker 기반)를 "그대로 사용"하면서
+ *            CSS Module로 퍼블리셔가 완전히 다른 스타일을 입힌다.
+ *
+ * ── 재스타일링 훅(react-day-picker가 DOM에 노출하는 것) ──────────────
+ *   [data-slot="calendar"] · .rdp-root      : 달력 루트 (두 클래스 모두 붙는다)
+ *   .rdp-months / .rdp-month                : 달 컨테이너 (여러 달 표시 시 반복)
+ *   .rdp-nav                                : 이전/다음 버튼 바 (루트 상단에 absolute)
+ *   .rdp-button_previous / .rdp-button_next : 이전 / 다음 달 버튼
+ *   .rdp-month_caption / .rdp-caption_label : "2026년 8월" 캡션
+ *   .rdp-weekdays (tr) / .rdp-weekday (th)  : 요일 헤더 줄 / 각 요일 칸
+ *   .rdp-week (tr) / .rdp-day (td)          : 한 주 / 날짜 칸
+ *   .rdp-day > button                       : 실제 클릭되는 날짜 버튼
+ *   .rdp-today / .rdp-outside / .rdp-disabled          : td 상태 클래스
+ *   .rdp-range_start / .rdp-range_middle / .rdp-range_end : td 기간 상태 클래스
+ *   button[data-selected-single] / [data-range-start]
+ *          / [data-range-middle] / [data-range-end]   : 버튼 상태 (값이 문자열 "true")
+ *
+ * ── 명시도 사다리 (중요) ────────────────────────────────────────────
+ *   scaffold Calendar의 기본 스타일은 Tailwind 유틸리티다.
+ *   래퍼(.wrap) + 훅을 2~4단계로 겹쳐 유틸리티보다 명시도를 높인다.
+ *   같은 단계끼리는 "나중에 선언한 규칙"이 이기므로 아래 순서를 지킨다.
+ *     1) 레이아웃/기본형  → .wrap .rdp-day button            (0,2,1)
+ *     2) 요일별 색        → .wrap .rdp-week .rdp-day:first-child button (0,4,1)
+ *     3) 상태(오늘·범위·비활성) → 같은 (0,4,1) 이지만 2) 보다 아래에 선언
+ *   ⚠️ 순서를 바꾸면 일요일 빨강이 선택 상태의 흰 글씨를 덮어써 버린다.
+ *
+ *   ⚠️ 실제 SI 프로젝트에서 퍼블리셔가 calendar 스타일을 바꿀 때
+ *      이 파일만 손보면 된다. 컴포넌트(.tsx)의 마크업/로직은 건드리지 않는다.
+ *
+ * 톤앤매너: NIC 뱅킹 조회기간 선택(청록 브랜드, 각진 셀 + 밴드형 기간 하이라이트).
+ *          다크 모드는 :global(.dark) 처리.
+ * ========================================================================= */
+
+.wrap {
+	--nic-teal: #008485;
+	--nic-teal-deep: #00625f;
+	--nic-teal-soft: #eaf6f5;
+	--nic-teal-line: #cfe7e5;
+	--nic-band: #ddf0ee;
+	--nic-ink: #1b2b2a;
+	--nic-sub: #5c6b6a;
+	--nic-muted: #8a9998;
+	--nic-faint: #b8c5c4;
+	--nic-card: #ffffff;
+	--nic-border: #e4ecec;
+	--nic-sun: #d0455a;
+	--nic-sat: #2b6ef2;
+	--nic-danger: #c0392b;
+
+	font-family:
+		'Pretendard',
+		'Apple SD Gothic Neo',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: var(--nic-ink);
+}
+
+:global(.dark) .wrap {
+	--nic-teal: #38b2a7;
+	--nic-teal-deep: #5fd1c5;
+	--nic-teal-soft: #123030;
+	--nic-teal-line: #204a48;
+	--nic-band: #16403d;
+	--nic-ink: #e8f1f0;
+	--nic-sub: #a7b8b7;
+	--nic-muted: #7d908f;
+	--nic-faint: #566c6b;
+	--nic-card: #0f1a1a;
+	--nic-border: #223434;
+	--nic-sun: #f0838f;
+	--nic-sat: #7fb0ff;
+	--nic-danger: #f0838f;
+}
+
+/* ── 카드 컨테이너 ─────────────────────────────────────── */
+.card {
+	background: var(--nic-card);
+	border: 1px solid var(--nic-border);
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.brandBar {
+	height: 4px;
+	background: linear-gradient(90deg, var(--nic-teal), var(--nic-teal-deep));
+}
+
+.head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 16px 20px 12px;
+	border-bottom: 1px solid var(--nic-border);
+}
+.title {
+	font-size: 15px;
+	font-weight: 800;
+	color: var(--nic-ink);
+	letter-spacing: -0.01em;
+}
+.subtitle {
+	margin-top: 2px;
+	font-size: 12px;
+	color: var(--nic-muted);
+}
+.accountChip {
+	flex-shrink: 0;
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: var(--nic-teal-soft);
+	border: 1px solid var(--nic-teal-line);
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--nic-teal-deep);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ── 프리셋 칩 ─────────────────────────────────────────── */
+.presetRow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 14px 20px 0;
+}
+.preset {
+	padding: 6px 12px;
+	border-radius: 8px;
+	border: 1px solid var(--nic-border);
+	background: var(--nic-card);
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--nic-sub);
+	cursor: pointer;
+	transition:
+		background-color 0.12s ease,
+		border-color 0.12s ease,
+		color 0.12s ease;
+}
+.preset:hover {
+	background: var(--nic-teal-soft);
+	border-color: var(--nic-teal-line);
+	color: var(--nic-teal-deep);
+}
+.presetOn {
+	background: var(--nic-teal);
+	border-color: var(--nic-teal);
+	color: #fff;
+}
+.presetOn:hover {
+	background: var(--nic-teal-deep);
+	border-color: var(--nic-teal-deep);
+	color: #fff;
+}
+
+/* ── 선택 요약 ─────────────────────────────────────────── */
+.summary {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 14px 20px 0;
+	padding: 12px 16px;
+	border-radius: 12px;
+	background: linear-gradient(180deg, var(--nic-teal-soft), transparent);
+	border: 1px solid var(--nic-teal-line);
+}
+.summaryDate {
+	font-size: 14px;
+	font-weight: 800;
+	color: var(--nic-teal-deep);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -0.01em;
+}
+.summaryTilde {
+	color: var(--nic-muted);
+	font-weight: 700;
+}
+.summaryDays {
+	margin-left: auto;
+	padding: 3px 9px;
+	border-radius: 999px;
+	background: var(--nic-teal);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+}
+
+.calendarBox {
+	display: flex;
+	justify-content: center;
+	padding: 8px 12px 4px;
+}
+
+.error {
+	margin: 0 20px;
+	padding: 9px 12px;
+	border-radius: 10px;
+	background: color-mix(in srgb, var(--nic-danger) 10%, transparent);
+	border: 1px solid color-mix(in srgb, var(--nic-danger) 35%, transparent);
+	color: var(--nic-danger);
+	font-size: 12px;
+	font-weight: 600;
+}
+
+/* ── 액션 버튼 ─────────────────────────────────────────── */
+.actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	padding: 14px 20px 18px;
+}
+.btnGhost,
+.btnPrimary {
+	height: 36px;
+	padding: 0 18px;
+	border-radius: 10px;
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+	transition:
+		background-color 0.12s ease,
+		border-color 0.12s ease,
+		opacity 0.12s ease;
+}
+.btnGhost {
+	border: 1px solid var(--nic-border);
+	background: var(--nic-card);
+	color: var(--nic-sub);
+}
+.btnGhost:hover {
+	background: var(--nic-teal-soft);
+	border-color: var(--nic-teal-line);
+	color: var(--nic-teal-deep);
+}
+.btnPrimary {
+	border: 1px solid var(--nic-teal);
+	background: var(--nic-teal);
+	color: #fff;
+}
+.btnPrimary:hover:not(:disabled) {
+	background: var(--nic-teal-deep);
+	border-color: var(--nic-teal-deep);
+}
+.btnPrimary:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+/* ── 조회 결과 배너 ────────────────────────────────────── */
+.result {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 20px;
+	border-top: 1px solid var(--nic-border);
+	background: var(--nic-teal-soft);
+	font-size: 12px;
+	color: var(--nic-teal-deep);
+}
+.result b {
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+}
+.resultDot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--nic-teal);
+	flex-shrink: 0;
+}
+
+/* =========================================================================
+ * 여기서부터 scaffold Calendar 오버라이드
+ * ========================================================================= */
+
+/* 1) 루트 — 셀 크기/모서리는 공개 CSS 변수로 조정한다.
+ *    scaffold가 [--cell-size:--spacing(7)] 유틸리티로 심어둔 값을 여기서 덮어쓴다. */
+.wrap :global([data-slot='calendar']) {
+	--cell-size: 2.375rem;
+	--cell-radius: 8px;
+	background: transparent;
+	padding: 8px 4px 4px;
+}
+
+/* 2) 달 컨테이너 — 두 달 사이 간격을 넓히고 구분선을 넣는다. */
+.wrap :global(.rdp-months) {
+	gap: 28px;
+}
+
+/* 3) 이전 / 다음 버튼 */
+.wrap :global(.rdp-button_previous),
+.wrap :global(.rdp-button_next) {
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	border: 1px solid var(--nic-border);
+	background: var(--nic-card);
+	color: var(--nic-teal-deep);
+}
+.wrap :global(.rdp-button_previous):hover,
+.wrap :global(.rdp-button_next):hover {
+	background: var(--nic-teal-soft);
+	border-color: var(--nic-teal-line);
+}
+
+/* 4) 월 캡션 */
+.wrap :global(.rdp-caption_label) {
+	font-size: 14px;
+	font-weight: 800;
+	color: var(--nic-teal-deep);
+	letter-spacing: -0.01em;
+}
+
+/* 5) 요일 헤더 */
+.wrap :global(.rdp-weekdays) {
+	border-bottom: 1px solid var(--nic-border);
+	padding-bottom: 8px;
+}
+.wrap :global(.rdp-weekday) {
+	font-size: 11px;
+	font-weight: 700;
+	color: var(--nic-sub);
+}
+.wrap :global(.rdp-weekdays) :global(.rdp-weekday):first-child {
+	color: var(--nic-sun);
+}
+.wrap :global(.rdp-weekdays) :global(.rdp-weekday):last-child {
+	color: var(--nic-sat);
+}
+
+/* 6) 날짜 칸(td) — 기본은 배경 없음. 기간 밴드만 배경을 갖는다. */
+.wrap :global(.rdp-day) {
+	background: transparent;
+}
+/* scaffold는 기간 양끝 td에 ::after로 밴드를 1rem 연장해 둔다.
+ * 이 예제는 셀 사이 간격이 없어 연장이 필요 없고, 오히려 한쪽만 선택했을 때
+ * 꼬리처럼 삐져나오므로 끈다. */
+.wrap :global(.rdp-range_start)::after,
+.wrap :global(.rdp-range_end)::after {
+	display: none;
+}
+
+/* 7) 날짜 버튼 기본형 — (0,2,1) */
+.wrap :global(.rdp-day) button {
+	width: 100%;
+	height: var(--cell-size);
+	border-radius: var(--cell-radius);
+	background: transparent;
+	color: var(--nic-ink);
+	font-size: 13px;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+	transition:
+		background-color 0.12s ease,
+		color 0.12s ease;
+}
+
+/* 8) 요일별 글자색 — (0,4,1). 반드시 아래 상태 규칙보다 먼저 선언한다. */
+.wrap :global(.rdp-week) :global(.rdp-day):first-child button {
+	color: var(--nic-sun);
+}
+.wrap :global(.rdp-week) :global(.rdp-day):last-child button {
+	color: var(--nic-sat);
+}
+
+/* ── 이하 상태 규칙: 모두 (0,4,1) 이상 & 8) 보다 아래에 선언 ───────── */
+
+/* 9) 오늘 — 밑에 점을 찍어 표시 */
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-today) {
+	background: transparent;
+}
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-today) button {
+	position: relative;
+	color: var(--nic-teal-deep);
+	font-weight: 800;
+}
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-today) button::after {
+	content: '';
+	position: absolute;
+	bottom: 4px;
+	left: 50%;
+	width: 4px;
+	height: 4px;
+	margin-left: -2px;
+	border-radius: 50%;
+	background: currentColor;
+}
+
+/* 10) 이전/다음 달 날짜 */
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-outside) button {
+	color: var(--nic-faint);
+	font-weight: 500;
+}
+
+/* 11) 선택 불가 날짜 */
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-disabled) button {
+	color: var(--nic-faint);
+	opacity: 0.5;
+	text-decoration: line-through;
+	text-decoration-thickness: 1px;
+}
+
+/* 12) 기간 밴드 — td 배경으로 연속된 띠를 만든다 */
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-range_middle),
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-range_start),
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-range_end) {
+	background: var(--nic-band);
+}
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-range_start) {
+	border-radius: var(--cell-radius) 0 0 var(--cell-radius);
+}
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-range_end) {
+	border-radius: 0 var(--cell-radius) var(--cell-radius) 0;
+}
+/* 시작일 == 종료일(하루만 선택)이면 양쪽 다 둥글게 */
+.wrap :global(.rdp-week) :global(.rdp-day):global(.rdp-range_start):global(.rdp-range_end) {
+	border-radius: var(--cell-radius);
+}
+
+.wrap :global(.rdp-week) :global(.rdp-day) button[data-range-middle='true'] {
+	background: transparent;
+	border-radius: 0;
+	color: var(--nic-teal-deep);
+	font-weight: 700;
+}
+
+/* 13) 기간 양끝 · 단일 선택 — 진한 청록 채움 */
+.wrap :global(.rdp-week) :global(.rdp-day) button[data-range-start='true'],
+.wrap :global(.rdp-week) :global(.rdp-day) button[data-range-end='true'],
+.wrap :global(.rdp-week) :global(.rdp-day) button[data-selected-single='true'] {
+	background: var(--nic-teal);
+	color: #fff;
+	font-weight: 800;
+	border-radius: var(--cell-radius);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+}
+
+/* 14) hover — 선택된 셀에는 걸리지 않도록 :not() 으로 제외 */
+.wrap
+	:global(.rdp-day)
+	button:not([data-range-start='true']):not([data-range-end='true']):not([data-selected-single='true']):not(
+		:disabled
+	):hover {
+	background: var(--nic-teal-soft);
+	color: var(--nic-teal-deep);
+}
+
+/* 15) 키보드 포커스 링 */
+.wrap :global(.rdp-day) button:focus-visible {
+	outline: 2px solid var(--nic-teal);
+	outline-offset: -2px;
+}
+
+/* ── 반응형 ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+	.head {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+	.summary {
+		flex-wrap: wrap;
+	}
+	.wrap :global(.rdp-months) {
+		gap: 16px;
+	}
+	.wrap :global([data-slot='calendar']) {
+		--cell-size: 2.125rem;
+	}
+}
