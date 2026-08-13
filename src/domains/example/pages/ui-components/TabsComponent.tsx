@@ -38,9 +38,10 @@ export default function TabsComponent(): React.ReactNode {
 				<p className="text-xs leading-relaxed text-amber-800 dark:text-amber-300">
 					💡 <b>퍼블리셔 참고</b> — Tabs는 실제 SI 프로젝트에서 디자인에 맞춰 스타일이 크게 바뀌는 컴포넌트입니다.
 					<code className="mx-1 font-mono">className</code>으로 간단히 덮어쓰거나(아래 6번), 컴포넌트 로직은 그대로 두고{' '}
-					<code className="mx-1 font-mono">*.module.css</code>로 완전히 다른 디자인을 입힐 수 있습니다(아래 8번 실전 예제).
-					내부 요소는 <code className="mx-1 font-mono">data-slot</code>(tabs / tabs-list / tabs-trigger / tabs-content),
-					활성 탭은 <code className="mx-1 font-mono">data-state="active"</code> 속성을 노출하므로 이를 선택자로 오버라이드합니다.
+					<code className="mx-1 font-mono">*.module.css</code>로 완전히 다른 디자인을 입힐 수 있습니다(아래 8번 실전
+					예제). 내부 요소는 <code className="mx-1 font-mono">data-slot</code>(tabs / tabs-list / tabs-trigger /
+					tabs-content), 활성 탭은 <code className="mx-1 font-mono">data-state="active"</code> 속성을 노출하므로 이를
+					선택자로 오버라이드합니다.
 				</p>
 			</div>
 
@@ -206,8 +207,8 @@ export default function TabsComponent(): React.ReactNode {
 								value="tab-2"
 								className="pt-3 text-gray-600 dark:text-gray-400"
 							>
-								<b className="text-gray-800 dark:text-gray-200">반품/교환</b> 탭이 기본으로 선택되어 있습니다. 수령
-								후 7일 이내 신청 가능합니다.
+								<b className="text-gray-800 dark:text-gray-200">반품/교환</b> 탭이 기본으로 선택되어 있습니다. 수령 후
+								7일 이내 신청 가능합니다.
 							</TabsContent>
 							<TabsContent
 								value="tab-3"
