@@ -39,8 +39,9 @@ export default function NativeSelectComponent(): React.ReactNode {
 						<code className="text-xs font-mono font-semibold px-1.5 py-0.5 rounded border border-teal-300/50 bg-teal-100/60 text-teal-800 dark:border-teal-600/40 dark:bg-teal-900/30 dark:text-teal-300">
 							@axiom/components/ui
 						</code>
-						에서 제공하는 NativeSelect 컴포넌트 사용 예제입니다. 브라우저 기본 <code className="font-mono">&lt;select&gt;</code>{' '}
-						요소를 얇게 감싼 컴포넌트로, OS 네이티브 드롭다운을 그대로 사용합니다.
+						에서 제공하는 NativeSelect 컴포넌트 사용 예제입니다. 브라우저 기본{' '}
+						<code className="font-mono">&lt;select&gt;</code> 요소를 얇게 감싼 컴포넌트로, OS 네이티브 드롭다운을 그대로
+						사용합니다.
 					</p>
 				</div>
 			</div>
@@ -55,9 +56,15 @@ export default function NativeSelectComponent(): React.ReactNode {
 					<table className="w-full text-sm">
 						<thead>
 							<tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">비교 항목</th>
-								<th className="text-left px-4 py-2.5 font-medium text-teal-700 dark:text-teal-400 text-xs">NativeSelect</th>
-								<th className="text-left px-4 py-2.5 font-medium text-sky-700 dark:text-sky-400 text-xs">Select (radix)</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+									비교 항목
+								</th>
+								<th className="text-left px-4 py-2.5 font-medium text-teal-700 dark:text-teal-400 text-xs">
+									NativeSelect
+								</th>
+								<th className="text-left px-4 py-2.5 font-medium text-sky-700 dark:text-sky-400 text-xs">
+									Select (radix)
+								</th>
 							</tr>
 						</thead>
 						<tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -86,9 +93,9 @@ export default function NativeSelectComponent(): React.ReactNode {
 						</tbody>
 					</table>
 					<div className="px-4 py-3 border-t border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50 text-xs text-gray-600 dark:text-gray-400">
-						한 줄 요약 — 드롭다운 <b>안</b>을 커스텀할 필요가 없고 특히 <b>모바일 네이티브 피커</b>가 좋으면 NativeSelect,
-						옵션에 아이콘/2줄/그룹 스타일 등 <b>드롭다운 자체를 꾸며야</b> 하면 Select. Select 예제는 좌측 메뉴{' '}
-						<code className="font-mono">UI Components &gt; Select</code> 에 있습니다.
+						한 줄 요약 — 드롭다운 <b>안</b>을 커스텀할 필요가 없고 특히 <b>모바일 네이티브 피커</b>가 좋으면
+						NativeSelect, 옵션에 아이콘/2줄/그룹 스타일 등 <b>드롭다운 자체를 꾸며야</b> 하면 Select. Select 예제는 좌측
+						메뉴 <code className="font-mono">UI Components &gt; Select</code> 에 있습니다.
 					</div>
 				</div>
 			</section>
@@ -467,17 +474,19 @@ console.log(fd.get('city')); // 'seoul'`}
 				<div className="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-50/60 dark:bg-amber-900/10 p-4 space-y-3 text-xs text-amber-900 dark:text-amber-200">
 					<p>
 						<b>① className은 셀렉트가 아니라 "래퍼"에 붙습니다.</b> NativeSelect 에 준 className 은{' '}
-						<code className="font-mono">[data-slot=&quot;native-select-wrapper&quot;]</code> 로 갑니다. 실제 셀렉트 박스는
-						그 안의 <code className="font-mono">[data-slot=&quot;native-select&quot;]</code> 라, 자손 선택자(
+						<code className="font-mono">[data-slot=&quot;native-select-wrapper&quot;]</code> 로 갑니다. 실제 셀렉트
+						박스는 그 안의 <code className="font-mono">[data-slot=&quot;native-select&quot;]</code> 라, 자손 선택자(
 						<code className="font-mono">.field [data-slot=&quot;native-select&quot;]</code>)로 파고들어 스타일합니다.
 					</p>
 					<p>
-						<b>② 펼쳐진 드롭다운 목록은 OS가 그려서 못 바꿉니다.</b> 여기서 바꾸는 건 "닫힌 셀렉트 박스"의 모양(테두리·높이·라운드·색·화살표)입니다.
-						옵션 목록의 폰트·배경을 픽셀 단위로 맞춰야 한다면 그건 NativeSelect가 아니라 <b>Select(radix)</b>를 써야 하는 신호입니다.
+						<b>② 펼쳐진 드롭다운 목록은 OS가 그려서 못 바꿉니다.</b> 여기서 바꾸는 건 "닫힌 셀렉트 박스"의
+						모양(테두리·높이·라운드·색·화살표)입니다. 옵션 목록의 폰트·배경을 픽셀 단위로 맞춰야 한다면 그건
+						NativeSelect가 아니라 <b>Select(radix)</b>를 써야 하는 신호입니다.
 					</p>
 					<p>
-						<b>③ 화살표는 이미 커스텀 아이콘입니다.</b> 컴포넌트가 <code className="font-mono">appearance-none</code> 으로 OS 화살표를 숨기고{' '}
-						<code className="font-mono">[data-slot=&quot;native-select-icon&quot;]</code> 로 ChevronDown 을 얹었습니다. 위치·색을 이 슬롯으로 조정하세요.
+						<b>③ 화살표는 이미 커스텀 아이콘입니다.</b> 컴포넌트가 <code className="font-mono">appearance-none</code>{' '}
+						으로 OS 화살표를 숨기고 <code className="font-mono">[data-slot=&quot;native-select-icon&quot;]</code> 로
+						ChevronDown 을 얹었습니다. 위치·색을 이 슬롯으로 조정하세요.
 					</p>
 				</div>
 
@@ -518,7 +527,12 @@ console.log(fd.get('city')); // 'seoul'`}
 						</thead>
 						<tbody className="divide-y divide-gray-100 dark:divide-gray-800">
 							{[
-								{ component: 'NativeSelect', prop: 'size', type: '"sm" | "default"', desc: '높이 (sm: h-7, default: h-8)' },
+								{
+									component: 'NativeSelect',
+									prop: 'size',
+									type: '"sm" | "default"',
+									desc: '높이 (sm: h-7, default: h-8)',
+								},
 								{
 									component: 'NativeSelect',
 									prop: 'value / onChange',
@@ -527,7 +541,12 @@ console.log(fd.get('city')); // 'seoul'`}
 								},
 								{ component: 'NativeSelect', prop: 'defaultValue', type: 'string', desc: '초기 선택값 (비제어)' },
 								{ component: 'NativeSelect', prop: 'disabled', type: 'boolean', desc: '전체 비활성화 (래퍼가 흐려짐)' },
-								{ component: 'NativeSelect', prop: 'name', type: 'string', desc: '폼 전송용 이름 (네이티브라 그대로 전송)' },
+								{
+									component: 'NativeSelect',
+									prop: 'name',
+									type: 'string',
+									desc: '폼 전송용 이름 (네이티브라 그대로 전송)',
+								},
 								{ component: 'NativeSelect', prop: 'required', type: 'boolean', desc: '폼 필수 값 여부' },
 								{
 									component: 'NativeSelect',
@@ -541,7 +560,12 @@ console.log(fd.get('city')); // 'seoul'`}
 									type: 'HTML select 속성',
 									desc: 'multiple, autoFocus 등 표준 select 속성 그대로',
 								},
-								{ component: 'NativeSelectOption', prop: 'value', type: 'string', desc: '항목 값. placeholder는 value=""' },
+								{
+									component: 'NativeSelectOption',
+									prop: 'value',
+									type: 'string',
+									desc: '항목 값. placeholder는 value=""',
+								},
 								{ component: 'NativeSelectOption', prop: 'disabled', type: 'boolean', desc: '해당 항목만 비활성화' },
 								{ component: 'NativeSelectOptGroup', prop: 'label', type: 'string', desc: '그룹 소제목 (선택 불가)' },
 							].map((row, i) => (
@@ -566,8 +590,8 @@ console.log(fd.get('city')); // 'seoul'`}
 				</div>
 				<p className="text-xs text-gray-500 dark:text-gray-400">
 					💡 <code className="font-mono">NativeSelectOption</code> 대신 표준{' '}
-					<code className="font-mono">&lt;option&gt;</code> 도 그대로 쓸 수 있습니다. 다만 다크 모드에서 옵션 배경색이 어색할 수 있어,
-					색 보정(<code className="font-mono">bg-[Canvas] text-[CanvasText]</code>)이 들어간{' '}
+					<code className="font-mono">&lt;option&gt;</code> 도 그대로 쓸 수 있습니다. 다만 다크 모드에서 옵션 배경색이
+					어색할 수 있어, 색 보정(<code className="font-mono">bg-[Canvas] text-[CanvasText]</code>)이 들어간{' '}
 					<code className="font-mono">NativeSelectOption</code> 사용을 권장합니다.
 				</p>
 			</section>
@@ -576,7 +600,7 @@ console.log(fd.get('city')); // 'seoul'`}
 			<section className="space-y-4">
 				<SectionHeader
 					title="기타. 실전 예제 — 목록 하단 그리드 툴바"
-					description="제공 NativeSelect를 손대지 않고 *.module.css 만으로 알약(pill) 톤의 툴바 셀렉트로 재스타일링했습니다. className이 래퍼로 가는 점을 감안해 [data-slot=&quot;native-select&quot;]로 파고들어 셀렉트 박스를 스타일하는, 실제 퍼블리셔 작업 형태를 그대로 보여줍니다."
+					description='제공 NativeSelect를 손대지 않고 *.module.css 만으로 알약(pill) 톤의 툴바 셀렉트로 재스타일링했습니다. className이 래퍼로 가는 점을 감안해 [data-slot="native-select"]로 파고들어 셀렉트 박스를 스타일하는, 실제 퍼블리셔 작업 형태를 그대로 보여줍니다.'
 				/>
 
 				<GridToolbarNativeSelect />
