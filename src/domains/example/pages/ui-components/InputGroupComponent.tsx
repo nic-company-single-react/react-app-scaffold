@@ -97,10 +97,9 @@ export default function InputGroupComponent(): React.ReactNode {
 					theme="github-dark"
 				/>
 				<p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-					<b>InputGroupAddon</b> 의 <b>align</b> 으로 부가 영역의 위치를 정합니다 —{' '}
-					<b>"inline-start"</b>(앞, 기본) · <b>"inline-end"</b>(뒤) · <b>"block-start"</b>(위) ·{' '}
-					<b>"block-end"</b>(아래, textarea 와 조합). 테두리·포커스·에러·disabled 상태는 개별 입력이 아니라{' '}
-					<b>InputGroup 래퍼</b>가 통째로 처리합니다.
+					<b>InputGroupAddon</b> 의 <b>align</b> 으로 부가 영역의 위치를 정합니다 — <b>"inline-start"</b>(앞, 기본) ·{' '}
+					<b>"inline-end"</b>(뒤) · <b>"block-start"</b>(위) · <b>"block-end"</b>(아래, textarea 와 조합).
+					테두리·포커스·에러·disabled 상태는 개별 입력이 아니라 <b>InputGroup 래퍼</b>가 통째로 처리합니다.
 				</p>
 			</section>
 
@@ -116,9 +115,15 @@ export default function InputGroupComponent(): React.ReactNode {
 						<thead>
 							<tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
 								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">구분</th>
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">역할(계층)</th>
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">테두리/포커스 소유</th>
-								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">이 프로젝트</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+									역할(계층)
+								</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+									테두리/포커스 소유
+								</th>
+								<th className="text-left px-4 py-2.5 font-medium text-gray-600 dark:text-gray-400 text-xs">
+									이 프로젝트
+								</th>
 							</tr>
 						</thead>
 						<tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -169,9 +174,10 @@ export default function InputGroupComponent(): React.ReactNode {
 				<div className="rounded-xl border border-sky-200 dark:border-sky-800/50 bg-sky-50 dark:bg-sky-900/15 px-4 py-3">
 					<p className="text-xs leading-relaxed text-sky-800 dark:text-sky-300">
 						<strong className="font-semibold">Field 는 이 프로젝트에 설치되어 있지 않습니다.</strong> shadcn 공식
-						InputGroup 문서 예제에는 <code className="font-mono">Field / FieldLabel / FieldDescription / FieldError</code>{' '}
-						가 자주 함께 나오지만, 그건 <b>입력 컴포넌트가 아니라 라벨·설명·에러를 묶는 폼 레이아웃 래퍼</b>라 InputGroup
-						과 직접 관계가 없습니다. 없어도 전혀 문제되지 않으며, 이 프로젝트에서는{' '}
+						InputGroup 문서 예제에는{' '}
+						<code className="font-mono">Field / FieldLabel / FieldDescription / FieldError</code> 가 자주 함께 나오지만,
+						그건 <b>입력 컴포넌트가 아니라 라벨·설명·에러를 묶는 폼 레이아웃 래퍼</b>라 InputGroup 과 직접 관계가
+						없습니다. 없어도 전혀 문제되지 않으며, 이 프로젝트에서는{' '}
 						<b>
 							기존 <code className="font-mono">Label</code> + 도움말/에러 텍스트
 						</b>{' '}
