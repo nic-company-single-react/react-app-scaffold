@@ -116,9 +116,7 @@ export default function SliderComponent(): React.ReactNode {
 								key={s.step}
 								className="flex items-center gap-3"
 							>
-								<span className="w-16 shrink-0 text-xs font-mono text-gray-500 dark:text-gray-400">
-									{s.label}
-								</span>
+								<span className="w-16 shrink-0 text-xs font-mono text-gray-500 dark:text-gray-400">{s.label}</span>
 								<Slider
 									defaultValue={[50]}
 									min={0}
@@ -203,8 +201,8 @@ export default function SliderComponent(): React.ReactNode {
 				</ExCard>
 				<p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
 					트랙·range·thumb 모두 Root 의 <b>자손</b>이므로 자손 결합자(<code className="font-mono">[&amp;_…]</code>,
-					언더스코어=공백)를 씁니다. 색·크기가 클래스로 감당 안 될 만큼 복잡하면 아래 실전 예제처럼{' '}
-					<b>*.module.css</b> 에서 같은 <code className="font-mono">data-slot</code> 선택자를 쓰면 됩니다.
+					언더스코어=공백)를 씁니다. 색·크기가 클래스로 감당 안 될 만큼 복잡하면 아래 실전 예제처럼 <b>*.module.css</b>{' '}
+					에서 같은 <code className="font-mono">data-slot</code> 선택자를 쓰면 됩니다.
 				</p>
 			</section>
 
@@ -238,8 +236,7 @@ export default function SliderComponent(): React.ReactNode {
 				<div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-sm">
 					<div className="px-4 py-2 border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
 						<span className="text-xs font-medium text-gray-600 dark:text-gray-400">
-							단일:{' '}
-							<code className="font-mono text-violet-700 dark:text-violet-400">{volume[0]}</code> · 범위:{' '}
+							단일: <code className="font-mono text-violet-700 dark:text-violet-400">{volume[0]}</code> · 범위:{' '}
 							<code className="font-mono text-violet-700 dark:text-violet-400">
 								[{range[0]}, {range[1]}]
 							</code>
