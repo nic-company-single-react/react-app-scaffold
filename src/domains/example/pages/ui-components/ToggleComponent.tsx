@@ -109,8 +109,7 @@ const [on, setOn] = useState(false);
 						굵게
 					</Toggle>
 					<span className="text-xs text-gray-500 dark:text-gray-400">
-						현재 상태:{' '}
-						<code className="font-mono text-violet-700 dark:text-violet-400">{bold ? 'on' : 'off'}</code>
+						현재 상태: <code className="font-mono text-violet-700 dark:text-violet-400">{bold ? 'on' : 'off'}</code>
 					</span>
 				</ExCard>
 			</section>
@@ -426,7 +425,8 @@ const [align, setAlign] = useState('left');
 						</ToggleGroupItem>
 					</ToggleGroup>
 					<span className="text-xs text-gray-500 dark:text-gray-400">
-						선택: <code className="font-mono text-violet-700 dark:text-violet-400">[{formats.join(', ') || '없음'}]</code>
+						선택:{' '}
+						<code className="font-mono text-violet-700 dark:text-violet-400">[{formats.join(', ') || '없음'}]</code>
 					</span>
 				</ExCard>
 			</section>
@@ -446,8 +446,7 @@ const [align, setAlign] = useState('left');
 							<code className="font-mono text-xs">className</code> 에 Tailwind 유틸리티를 덧붙여 색·모서리·크기를 조정.
 						</li>
 						<li>
-							<b>부분 오버라이드</b> — Toggle 은{' '}
-							<code className="font-mono text-xs">data-state="on"</code> /{' '}
+							<b>부분 오버라이드</b> — Toggle 은 <code className="font-mono text-xs">data-state="on"</code> /{' '}
 							<code className="font-mono text-xs">aria-pressed</code> 를, ToggleGroup 은{' '}
 							<code className="font-mono text-xs">data-slot="toggle-group-item"</code> 를 노출합니다. 이 속성 선택자로
 							눌림 상태 스타일만 갈아끼웁니다.
