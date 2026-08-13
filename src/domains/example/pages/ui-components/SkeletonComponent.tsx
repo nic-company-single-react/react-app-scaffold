@@ -62,8 +62,9 @@ export default function SkeletonComponent(): React.ReactNode {
 					theme="github-dark"
 				/>
 				<p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-					내부 구현은 <b>animate-pulse rounded-md bg-muted</b> 클래스를 가진 <b>&lt;div&gt;</b> 하나가 전부입니다. 그래서{' '}
-					<b>className</b> 으로 넘긴 유틸리티가 그대로 병합되어 크기(<code>h-*, w-*</code>)·모양(<code>rounded-*</code>)·색(
+					내부 구현은 <b>animate-pulse rounded-md bg-muted</b> 클래스를 가진 <b>&lt;div&gt;</b> 하나가 전부입니다.
+					그래서 <b>className</b> 으로 넘긴 유틸리티가 그대로 병합되어 크기(<code>h-*, w-*</code>)·모양(
+					<code>rounded-*</code>)·색(
 					<code>bg-*</code>)을 자유롭게 덮어쓸 수 있습니다. <code>div</code> 표준 속성(<code>style</code>,{' '}
 					<code>onClick</code> 등)도 그대로 전달됩니다.
 				</p>
@@ -228,9 +229,7 @@ export default function SkeletonComponent(): React.ReactNode {
 								</div>
 								<div className="space-y-1 flex-1 min-w-0">
 									<p className="text-sm font-bold text-gray-900 dark:text-white">레드스카이 개발팀</p>
-									<p className="text-xs text-gray-500 dark:text-gray-400">
-										폐쇄망 금융권 프론트엔드 스캐폴드 · 12명
-									</p>
+									<p className="text-xs text-gray-500 dark:text-gray-400">폐쇄망 금융권 프론트엔드 스캐폴드 · 12명</p>
 									<p className="text-xs text-slate-600 dark:text-slate-400">team@redsky.dev</p>
 								</div>
 							</div>
