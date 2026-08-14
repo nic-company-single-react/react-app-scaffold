@@ -554,11 +554,11 @@ const [draft, setDraft] = useState(nickname);
 				</div>
 			</section>
 
-			{/* ── 8. $ui.dialog() 예고 안내 ─────────────────────── */}
+			{/* ── 8. $ui.dialog() 안내 ──────────────────────────── */}
 			<section className="space-y-4">
 				<SectionHeader
-					title="곧 제공 예정 — $ui.dialog()"
-					description="지금 이 페이지의 컴포넌트형 Dialog와 별개로, 명령형(imperative) 호출 방식도 준비 중입니다."
+					title="명령형 대안 — $ui.dialog()"
+					description="이 페이지의 컴포넌트형 Dialog와 같은 UI를, JSX 배치 없이 함수 호출 한 번으로 열고 await 로 결과를 받는 방식입니다."
 				/>
 				<div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-sm">
 					<div className="p-5 text-sm text-gray-600 dark:text-gray-400 leading-relaxed space-y-2">
@@ -566,26 +566,37 @@ const [draft, setDraft] = useState(nickname);
 							컴포넌트형 <code className="font-mono text-sky-700 dark:text-sky-400">&lt;Dialog&gt;</code> 는 JSX 안에 마크업을
 							배치하고 상태로 여닫습니다. 반면{' '}
 							<code className="font-mono text-sky-700 dark:text-sky-400">$ui.dialog()</code> 는 함수 한 번 호출로 열고{' '}
-							<code className="font-mono">await</code> 로 결과를 받는 <b>명령형 API</b>가 될 예정입니다. 같은 UI지만,
-							이벤트 핸들러 흐름 안에서 쓰기 편하도록 사용성을 얹은 것이라고 보면 됩니다.
+							<code className="font-mono">await</code> 로 결과를 받는 <b>명령형 API</b>입니다. 위 10·11번의 패턴 A(
+							<code className="font-mono">target</code> 상태 + <code className="font-mono">open</code> 파생 +{' '}
+							<code className="font-mono">{'{target && ...}'}</code> 가드)가 통째로 사라집니다.
 						</p>
 						<p className="text-xs text-gray-500 dark:text-gray-400">
-							※ 아래 코드는 <b>예정 API 미리보기</b>입니다. 현재 제공되는 <code className="font-mono">$ui</code> 는{' '}
-							<code className="font-mono">$ui.alert()</code> / <code className="font-mono">$ui.confirm()</code> 입니다(좌측
-							메뉴 참고).
+							자세한 사용법·옵션은 좌측 메뉴 <b>API Examples → $ui → dialog</b> 페이지를 참고하세요.
 						</p>
 					</div>
 					<div className="border-t border-gray-100 dark:border-gray-800">
 						<CodeBlock
-							code={`// (예정) 명령형 호출 — JSX 배치 없이 흐름 안에서 바로 사용
-const ok = await $ui.dialog({
-  title: '정말 삭제할까요?',
-  description: '이 작업은 되돌릴 수 없습니다.',
-  confirmText: '삭제',
-  cancelText: '취소',
+							code={`// 명령형 호출 — JSX 배치 없이 이벤트 핸들러 흐름 안에서 바로 사용
+const member = await $ui.dialog({
+  component: MemberPickerDialog,   // 본문 컴포넌트 (defineDialog 로 정의)
+  props: { deptId: 3 },            // 호출 시점 스냅샷 (갱신은 handle.update())
+  title: '회원 선택',
+  size: 'lg',
+  footer: false,                   // 컨텐츠가 직접 닫는다
 });
-if (ok) await deleteAccount();`}
+
+// 취소 · ESC · X · 배경 클릭은 undefined
+if (member) setAssignee(member);`}
 						/>
+					</div>
+					<div className="border-t border-gray-100 dark:border-gray-800 px-5 py-3">
+						<button
+							type="button"
+							onClick={() => $router.push('/example/ui/dialog')}
+							className="text-xs font-medium text-sky-700 hover:underline dark:text-sky-400"
+						>
+							$ui.dialog 예제 페이지로 이동 →
+						</button>
 					</div>
 				</div>
 			</section>

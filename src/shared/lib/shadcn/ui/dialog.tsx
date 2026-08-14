@@ -51,13 +51,19 @@ function DialogContent({
   className,
   children,
   showCloseButton = true,
+  overlayClassName,
+  overlayStyle,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
+  /** Overlay(딤 배경)에 추가할 클래스. 딤 색/블러를 끄거나 z-index 를 바꿀 때 쓴다. */
+  overlayClassName?: string
+  /** Overlay 에 적용할 인라인 스타일. 동적 z-index 는 Tailwind 가 스캔 못 하므로 여기로 준다. */
+  overlayStyle?: React.CSSProperties
 }) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      <DialogOverlay className={overlayClassName} style={overlayStyle} />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         // 오버레이와 동일하게 헤더(z-99999) 위로 올라오도록 z-100000 사용.

@@ -45,16 +45,19 @@ function AlertDialogOverlay({
 function AlertDialogContent({
   className,
   overlayClassName,
+  overlayStyle,
   size = "default",
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Content> & {
   size?: "default" | "sm"
   /** Overlay(딤 배경)에 추가할 클래스. z-index 등 Content 와 함께 올려야 할 때 사용. */
   overlayClassName?: string
+  /** Overlay 에 적용할 인라인 스타일. 동적 z-index 는 Tailwind 가 스캔 못 하므로 여기로 준다. */
+  overlayStyle?: React.CSSProperties
 }) {
   return (
     <AlertDialogPortal>
-      <AlertDialogOverlay className={overlayClassName} />
+      <AlertDialogOverlay className={overlayClassName} style={overlayStyle} />
       <AlertDialogPrimitive.Content
         data-slot="alert-dialog-content"
         data-size={size}

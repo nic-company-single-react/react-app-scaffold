@@ -9,6 +9,7 @@ const ErrorTemplate = loadable(() => import('@/domains/example/pages/templates/E
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
 const UiAlert = loadable(() => import('@/domains/example/pages/ui/UiAlert'));
 const UiConfirm = loadable(() => import('@/domains/example/pages/ui/UiConfirm'));
+const UiDialog = loadable(() => import('@/domains/example/pages/ui/UiDialog'));
 const ButtonComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonComponent'));
 const ButtonGroupComponent = loadable(() => import('@/domains/example/pages/ui-components/ButtonGroupComponent'));
 const AccordionComponent = loadable(() => import('@/domains/example/pages/ui-components/AccordionComponent'));
@@ -88,6 +89,11 @@ const routes: TAppRoute[] = [
 		path: 'ui/confirm',
 		element: <UiConfirm />,
 		name: '$ui.confirm 예제',
+	},
+	{
+		path: 'ui/dialog',
+		element: <UiDialog />,
+		name: '$ui.dialog 예제',
 	},
 	{
 		path: 'ui-components/button',

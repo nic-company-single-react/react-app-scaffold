@@ -129,6 +129,7 @@ export const navItems: NavItem[] = [
 				subItems: [
 					{ name: 'alert', icon: <Bell />, path: '/example/ui/alert' },
 					{ name: 'confirm', icon: <MessageSquareText />, path: '/example/ui/confirm' },
+					{ name: 'dialog', icon: <MessageSquare />, path: '/example/ui/dialog', new: true },
 				],
 			},
 			{

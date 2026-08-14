@@ -40,6 +40,9 @@ export default defineConfig([
 			'react-hooks/incompatible-library': 'off',
 			'react-hooks/set-state-in-effect': 'off',
 			'react/no-unescaped-entities': 'off',
+			// defineDialog($ui.dialog 컨텐츠 정의 헬퍼)는 런타임 identity 함수라 Fast Refresh 에 문제가 없다.
+			// HOC 로 인식시켜 `export default defineDialog(...)` 패턴을 허용한다.
+			'react-refresh/only-export-components': ['error', { allowConstantExport: true, extraHOCs: ['defineDialog'] }],
 			'import/no-anonymous-default-export': [
 				'warn',
 				{
