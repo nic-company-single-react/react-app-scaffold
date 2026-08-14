@@ -3,6 +3,9 @@ import type { TAppRoute } from '@/types/router';
 import loadable from '@loadable/component';
 
 const BlankPage = loadable(() => import('@/domains/example/pages/BlankPage'));
+const FormTemplate = loadable(() => import('@/domains/example/pages/templates/FormTemplate'));
+const ListTemplate = loadable(() => import('@/domains/example/pages/templates/ListTemplate'));
+const ErrorTemplate = loadable(() => import('@/domains/example/pages/templates/ErrorTemplate'));
 const ExUseApi = loadable(() => import('@/domains/example/pages/use-api/ExUseApi'));
 const UiAlert = loadable(() => import('@/domains/example/pages/ui/UiAlert'));
 const UiConfirm = loadable(() => import('@/domains/example/pages/ui/UiConfirm'));
@@ -55,6 +58,21 @@ const routes: TAppRoute[] = [
 		path: 'blank-page', // 라우터 path 를 원하는 이름으로 정하여 작성한다.
 		element: <BlankPage />, // 위에서 가져온 페이지 컴포넌트를 element 에 연결한다.
 		name: '빈 페이지', // 페이지 name 을 원하는 이름으로 정하여 입력한다.
+	},
+	{
+		path: 'templates/form',
+		element: <FormTemplate />,
+		name: '폼 화면 템플릿',
+	},
+	{
+		path: 'templates/list',
+		element: <ListTemplate />,
+		name: '목록 화면 템플릿',
+	},
+	{
+		path: 'templates/error',
+		element: <ErrorTemplate />,
+		name: '에러 처리 & 404',
 	},
 	{
 		path: 'use-api',

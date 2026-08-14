@@ -44,6 +44,8 @@ import {
 	Combine,
 	NotepadText,
 	CircleUserRound,
+	ClipboardCheck,
+	ShieldAlert,
 } from 'lucide-react';
 
 /** leaf: `path`만 사용. 하위 그룹: `subItems`가 있으면 `path`는 무시됩니다.
@@ -72,6 +74,9 @@ export const navItems: NavItem[] = [
 		subItems: [
 			{ name: 'introduction', path: '/' },
 			{ name: 'Blank 페이지', path: '/example/blank-page' },
+			{ name: '폼 화면 템플릿', icon: <ClipboardCheck />, path: '/example/templates/form' },
+			{ name: '목록 화면 템플릿', icon: <TableProperties />, path: '/example/templates/list' },
+			{ name: '에러 처리 & 404', icon: <ShieldAlert />, path: '/example/templates/error' },
 		],
 	},
 	{
