@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
+import DialogSkin from '@/shared/ui/overlay/DialogSkin';
 import { CLOSE_ANIM_MS } from '@/shared/ui/overlay/overlay-layers';
 import { useUIStore } from '../store';
-import UIDialogShell from './UIDialogShell';
 import { settleDialog } from './dialogController';
-import { useDialogStackStore } from './dialogStore';
+import { useDialogStackStore, type IDialogStackItem } from './dialogStore';
+import { useDialogFrame } from './useDialogFrame';
 
 /**
  * 전역 $ui.dialog 스택을 렌더하는 호스트.
@@ -51,7 +52,7 @@ export default function UIDialogStackHost(): React.ReactNode {
 	return (
 		<>
 			{stack.map((item, index) => (
-				<UIDialogShell
+				<DialogItem
 					key={item.id}
 					item={item}
 					depth={index}
@@ -59,5 +60,32 @@ export default function UIDialogStackHost(): React.ReactNode {
 				/>
 			))}
 		</>
+	);
+}
+
+interface IDialogItemProps {
+	item: IDialogStackItem;
+	/** 스택 깊이 (0 = 최하단) */
+	depth: number;
+	/** 최상단 항목인지 */
+	isTop: boolean;
+}
+
+/**
+ * 스택 항목 1개.
+ *
+ * 동작은 전부 `useDialogFrame` 이 계산하고(core), 그리는 일은 `DialogSkin` 이 한다(shared).
+ * 프로젝트 스타일에 맞춰 껍데기를 고칠 때는 `src/shared/ui/overlay/DialogSkin.tsx` 만 열면 된다.
+ *
+ * 항목마다 훅을 불러야 해서 컴포넌트로 분리했을 뿐, 다른 역할은 없다.
+ */
+function DialogItem({ item, depth, isTop }: IDialogItemProps): React.ReactNode {
+	const frame = useDialogFrame(item, depth, isTop);
+
+	return (
+		<DialogSkin
+			frame={frame}
+			option={item.option}
+		/>
 	);
 }

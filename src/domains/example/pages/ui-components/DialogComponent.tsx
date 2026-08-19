@@ -577,8 +577,8 @@ const [draft, setDraft] = useState(nickname);
 					<div className="border-t border-gray-100 dark:border-gray-800">
 						<CodeBlock
 							code={`// 명령형 호출 — JSX 배치 없이 이벤트 핸들러 흐름 안에서 바로 사용
-const member = await $ui.dialog({
-  component: MemberPickerDialog,   // 본문 컴포넌트 (defineDialog 로 정의)
+const member = await $ui.dialog<IMember>({
+  component: MemberPickerDialog,   // 본문 컴포넌트 (평범한 컴포넌트면 된다)
   props: { deptId: 3 },            // 호출 시점 스냅샷 (갱신은 handle.update())
   title: '회원 선택',
   size: 'lg',

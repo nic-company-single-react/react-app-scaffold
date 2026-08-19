@@ -14,10 +14,8 @@ import type {
 	IConfirmDialogOption,
 	IDialogApi,
 	IDialogControls,
-	IDialogOption,
-	TAnyDialogComponent,
+	TDialogCallOption,
 	TDialogHandle,
-	TDialogProps,
 	IUI,
 } from '@/types/components';
 
@@ -39,7 +37,7 @@ function normalize<T extends IAlertDialogOption>(message?: string | T, option?: 
  * `Object.assign` 이므로 await / then / catch / finally 가 그대로 동작합니다.
  */
 function createDialogApi(): IDialogApi {
-	const dialog = ((option: IDialogOption<unknown> & { component: TAnyDialogComponent; props?: TDialogProps }) => {
+	const dialog = ((option: TDialogCallOption<unknown, Record<string, unknown>>) => {
 		const { component, props, ...rest } = option;
 
 		let settle!: (value: unknown) => void;
@@ -106,13 +104,11 @@ export function registerWindowUI(): void {
 }
 
 /* ── 화면 코드에서 쓰는 공개 표면 ────────────────────────────────────────────
- * $ui 자체는 전역이라 import 가 필요 없습니다.
+ * $ui 자체는 전역이라 import 가 필요 없고, 다이얼로그 컨텐츠는 평범한 컴포넌트라
+ * 감싸는 헬퍼도 없습니다. 필요한 것은 훅뿐이고, 훅의 창구는 `@axiom/hooks` 하나입니다.
  *
- * ⚠️ **훅은 여기서 내보내지 않습니다.** 스캐폴드가 제공하는 훅의 창구는 `@axiom/hooks` 하나입니다.
- *   import { defineDialog } from '@/core/ui';
- *   import { useDialog, useDialogSubmit, useLiveProps } from '@axiom/hooks';
+ *   import { useDialog, useDialogSubmit, useDialogGuard, useLiveProps } from '@axiom/hooks';
  * ------------------------------------------------------------------------- */
-export { defineDialog } from './dialog/defineDialog';
 
 /* ── 호스트 (AppProviders 전용) ─────────────────────────────────────────── */
 export { UIHosts } from './UIHosts';

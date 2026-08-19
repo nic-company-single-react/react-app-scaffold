@@ -5,9 +5,9 @@ import SectionNav from '@/domains/example/components/ui-components/common/Sectio
 import ExCard from '@/domains/example/components/ui-components/common/ExCard';
 import SourceTabs from '@/domains/example/components/ui-components/common/SourceTabs';
 import NicknameFormDialog from '@/domains/example/components/ui/dialog/NicknameFormDialog';
-import MemberPickerDialog from '@/domains/example/components/ui/dialog/MemberPickerDialog';
+import MemberPickerDialog, { type IExampleMember } from '@/domains/example/components/ui/dialog/MemberPickerDialog';
 import UploadProgressDialog from '@/domains/example/components/ui/dialog/UploadProgressDialog';
-import InquiryFormDialog from '@/domains/example/components/ui/dialog/InquiryFormDialog';
+import InquiryFormDialog, { type IInquiry } from '@/domains/example/components/ui/dialog/InquiryFormDialog';
 import MemberAssignCard from '@/domains/example/components/ui/dialog/MemberAssignCard';
 import LiveStatusCard from '@/domains/example/components/ui/dialog/LiveStatusCard';
 import nicknameSource from '@/domains/example/components/ui/dialog/NicknameFormDialog.tsx?raw';
@@ -62,7 +62,6 @@ const CONTENT_API_ROWS: { name: string; type: string; desc: string }[] = [
 	{ name: 'dialog.setConfirmDisabled(b)', type: '(b: boolean) => void', desc: "shell '확인' 버튼 비활성" },
 	{ name: 'dialog.setLoading(b)', type: '(b: boolean) => void', desc: 'shell footer 로딩 표시' },
 	{ name: 'dialog.setDismissable(b)', type: '(b: boolean) => void', desc: 'ESC · 배경 · X 잠금/해제' },
-	{ name: 'defineDialog<P, T>(C)', type: 'TDialogComponent<P, T>', desc: '결과 타입 각인 + dialog prop 주입' },
 ];
 
 export default function UiDialog(): React.ReactNode {
@@ -119,11 +118,11 @@ export default function UiDialog(): React.ReactNode {
 			<section className="space-y-4">
 				<SectionHeader
 					title="0. 호출 방법"
-					description="import 없이 전역 $ui.dialog 를 호출합니다. 반환값은 진짜 Promise 이면서 update / close 같은 제어 메서드를 함께 갖는 핸들입니다."
+					description="import 없이 전역 $ui.dialog 를 호출합니다. 결과 타입은 호출부에서 $ui.dialog<T>(...) 로 지정합니다. 반환값은 진짜 Promise 이면서 update / close 같은 제어 메서드를 함께 갖는 핸들입니다."
 				/>
 				<CodeBlock
 					code={`// (1) 기본 — shell 이 확인/취소를 그리고, 컨텐츠는 본문만 담당
-const nickname = await $ui.dialog({
+const nickname = await $ui.dialog<string>({
   component: NicknameFormDialog,
   props: { initial: '홍길동' },
   title: '닉네임 수정',
@@ -132,7 +131,7 @@ const nickname = await $ui.dialog({
 if (nickname) save(nickname);   // 취소/ESC/X/배경 = undefined
 
 // (2) 컨텐츠가 직접 닫기
-const member = await $ui.dialog({
+const member = await $ui.dialog<IMember>({
   component: MemberPickerDialog,
   footer: false,
   size: 'lg',
@@ -142,7 +141,7 @@ const member = await $ui.dialog({
 const HeavyEditor = loadable(() => import('./HeavyEditor'));
 await $ui.dialog({ component: HeavyEditor, props: { docId }, size: 'full' });
 
-// (4) 핸들로 제어
+// (4) 핸들로 제어 — 결과를 안 쓰면 <T> 를 생략한다. props 타입이 추론되어 update() 가 체크된다
 const d = $ui.dialog({ component: UploadProgressDialog, props: { percent: 0 } });
 d.update({ percent: 50 });
 d.close();
@@ -150,6 +149,17 @@ await d;`}
 					lang="tsx"
 					theme="github-dark"
 				/>
+				<div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-900/40 px-4 py-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+					<strong className="font-bold text-gray-800 dark:text-gray-200">
+						<code className="font-mono">&lt;T&gt;</code> 를 쓸 때와 생략할 때
+					</strong>
+					<br />
+					<code className="font-mono">$ui.dialog&lt;T&gt;(...)</code> 는 <b>await 결과 타입</b>을 정합니다. 생략하면 결과는{' '}
+					<code className="font-mono">unknown</code> 이 되는 대신 <code className="font-mono">props</code> 타입이 추론되어{' '}
+					<code className="font-mono">handle.update()</code> 가 체크됩니다. TypeScript 는 타입 인자를 일부만 받아 나머지를
+					추론해 주지 않으므로, 둘 다 필요하면{' '}
+					<code className="font-mono">{'$ui.dialog<IMember, IPickerProps>(...)'}</code> 처럼 두 개를 모두 적습니다.
+				</div>
 				<p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
 					⚠️ <code className="font-mono">component</code> 에 <code className="font-mono">{'() => import(...)'}</code>{' '}
 					썽크를 직접 넘기면 안 됩니다. 함수 컴포넌트와 런타임에 구분할 수 없기 때문에, 코드분할은{' '}
@@ -166,7 +176,7 @@ await d;`}
 				/>
 				<ExCard
 					label="footer 기본값 + useDialogSubmit"
-					code={`const nickname = await $ui.dialog({
+					code={`const nickname = await $ui.dialog<string>({
   component: NicknameFormDialog,
   props: { initial: '홍길동' },
   title: '닉네임 수정',
@@ -175,7 +185,7 @@ await d;`}
 });
 setLastResult(nickname ?? '(취소)');
 
-// NicknameFormDialog 내부
+// NicknameFormDialog 내부 — 평범한 컴포넌트에 훅 한 줄
 useDialogSubmit<string>(() => {
   if (tooShort) return undefined; // 닫지 않음
   return draft.trim();            // 이 값이 await 결과
@@ -184,7 +194,7 @@ useDialogSubmit<string>(() => {
 					<Button
 						type="button"
 						onClick={async () => {
-							const nickname = await $ui.dialog({
+							const nickname = await $ui.dialog<string>({
 								component: NicknameFormDialog,
 								props: { initial: '홍길동' },
 								title: '닉네임 수정',
@@ -212,21 +222,22 @@ useDialogSubmit<string>(() => {
 				/>
 				<ExCard
 					label="footer: false + dialog.close(value)"
-					code={`const member = await $ui.dialog({
+					code={`const member = await $ui.dialog<IExampleMember>({
   component: MemberPickerDialog,
   title: '회원 선택',
   size: 'lg',
   footer: false,
 });
 
-// MemberPickerDialog 내부 (defineDialog 로 dialog prop 을 주입받는다)
+// MemberPickerDialog 내부 — 제어 API 는 prop 이 아니라 훅으로 꺼낸다
+const dialog = useDialog<IExampleMember>();
 <Button onClick={() => dialog.close(member)}>선택</Button>`}
 				>
 					<Button
 						type="button"
 						variant="outline"
 						onClick={async () => {
-							const member = await $ui.dialog({
+							const member = await $ui.dialog<IExampleMember>({
 								component: MemberPickerDialog,
 								title: '회원 선택',
 								size: 'lg',
@@ -249,7 +260,7 @@ useDialogSubmit<string>(() => {
 				<ExCard
 					label="dialog 안에서 다시 $ui.dialog / $ui.confirm"
 					code={`// 1단계
-const member = await $ui.dialog({
+const member = await $ui.dialog<IExampleMember>({
   component: MemberPickerDialog,
   title: '1단계 — 회원 선택',
   size: 'lg',
@@ -355,8 +366,8 @@ await d;`}
 					</p>
 					<ul className="text-xs text-emerald-800/90 dark:text-emerald-300/80 space-y-1 list-disc pl-4">
 						<li>
-							<code className="font-mono">defineDialog</code> 도 <code className="font-mono">useDialog</code> 도 필요
-							없습니다. props 를 받아 그리기만 하면 됩니다.
+							감싸는 헬퍼도, <code className="font-mono">useDialog</code> 도 필요 없습니다. 스스로 닫지 않는 컨텐츠라면
+							props 를 받아 그리기만 하면 됩니다.
 						</li>
 						<li>
 							컨텐츠는 <code className="font-mono">useLiveProps</code> 의 존재조차 모릅니다. 셸이 풀어서 평범한 props 로
@@ -483,7 +494,7 @@ useDialogGuard<IInquiry>(async (result) => {
 						type="button"
 						variant="outline"
 						onClick={async () => {
-							const inquiry = await $ui.dialog({
+							const inquiry = await $ui.dialog<IInquiry>({
 								component: InquiryFormDialog,
 								props: { defaultSubject: '' },
 								title: '문의 작성',
@@ -533,20 +544,21 @@ useDialogGuard<IInquiry>(async (result) => {
 			<section className="space-y-3">
 				<SectionHeader
 					title="7. 컨텐츠 쪽 API"
-					description="다이얼로그 본문 컴포넌트에서 쓰는 훅·헬퍼입니다. 전부 @/core/ui 한 곳에서 가져옵니다."
+					description="다이얼로그 본문 컴포넌트는 평범한 컴포넌트입니다. 감싸는 헬퍼 없이 export default function 으로 작성하고, 제어가 필요할 때만 훅을 부릅니다. 훅은 전부 @axiom/hooks 한 곳에서 가져옵니다."
 				/>
 				<CodeBlock
-					code={`import { defineDialog, useDialog, useDialogSubmit, useDialogGuard } from '@/core/ui';
-import type { IDialogInjected } from '@/types/components';
+					code={`import { useDialog, useDialogSubmit, useDialogGuard } from '@axiom/hooks';
 
 export interface IMemberPickerProps { deptId: number }
 
-function MemberPicker({ deptId, dialog }: IMemberPickerProps & IDialogInjected<IMember>) {
+// 평범한 컴포넌트다. dialog prop 도, 감싸는 헬퍼도 없다.
+export default function MemberPicker({ deptId }: IMemberPickerProps) {
+  const dialog = useDialog<IMember>();
   return <Button onClick={() => dialog.close(member)}>선택</Button>;
 }
 
-// P(props)와 T(결과 타입)를 한 번만 선언하면 호출부에서 둘 다 추론된다.
-export default defineDialog<IMemberPickerProps, IMember>(MemberPicker);`}
+// 호출부에서 결과 타입을 지정한다
+const member = await $ui.dialog<IMember>({ component: MemberPicker, props: { deptId: 3 } });`}
 					lang="tsx"
 					theme="github-dark"
 				/>

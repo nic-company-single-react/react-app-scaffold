@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Input, Label, Textarea } from '@axiom/components/ui';
-import { defineDialog } from '@/core/ui';
-import { useDialogGuard, useDialogSubmit } from '@axiom/hooks';
-import type { IDialogInjected } from '@/types/components';
+import { useDialog, useDialogGuard, useDialogSubmit } from '@axiom/hooks';
 
 /** 제출 결과 */
 export interface IInquiry {
@@ -25,10 +23,8 @@ const EMPTY: IInquiry = { subject: '', body: '' };
  * 가드 안에서 `$ui.confirm` 을 부르는 것이 정상 시나리오다 —
  * alert 티어(z-100500)가 dialog 티어(z-100000+)보다 위라 항상 최상단에 뜬다.
  */
-function InquiryFormDialog({
-	defaultSubject = '',
-	dialog,
-}: IInquiryFormDialogProps & IDialogInjected<IInquiry>): React.ReactNode {
+export default function InquiryFormDialog({ defaultSubject = '' }: IInquiryFormDialogProps): React.ReactNode {
+	const dialog = useDialog<IInquiry>();
 	const [form, setForm] = useState<IInquiry>({ ...EMPTY, subject: defaultSubject });
 	const dirty = form.subject !== defaultSubject || form.body !== '';
 
@@ -84,5 +80,3 @@ function InquiryFormDialog({
 		</div>
 	);
 }
-
-export default defineDialog<IInquiryFormDialogProps, IInquiry>(InquiryFormDialog);

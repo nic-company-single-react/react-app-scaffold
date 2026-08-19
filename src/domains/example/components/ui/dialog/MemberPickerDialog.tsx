@@ -1,7 +1,6 @@
 import { Badge, Button, SmartTable, defineColumns } from '@axiom/components/ui';
 import { Check } from 'lucide-react';
-import { defineDialog } from '@/core/ui';
-import type { IDialogInjected } from '@/types/components';
+import { useDialog } from '@axiom/hooks';
 
 /** 데모용 회원 타입 */
 export interface IExampleMember {
@@ -49,13 +48,16 @@ export interface IMemberPickerDialogProps {
  * shell 이 버튼을 그리지 않으므로 컨텐츠가 직접 닫는다.
  * 행을 고르면 `dialog.close(member)` 로 그 회원을 결과로 넘긴다 → 호출부는 `await` 로 받는다.
  *
+ * 제어 API 는 prop 으로 주입받지 않고 `useDialog<T>()` 로 꺼낸다. 여기서 준 `T` 는
+ * 이 컴포넌트 안에서 `close(...)` 인자를 체크하는 용도이고,
+ * 호출부의 `await` 결과 타입은 `$ui.dialog<IExampleMember>({...})` 로 따로 지정한다.
+ *
  * 기존 `MemberSmartTableDialog`(컴포넌트형)와 비교하면,
  * `target` state · `open` 파생 · `onOpenChange` 리셋 · `{target && ...}` 가드가 전부 사라진다.
  */
-function MemberPickerDialog({
-	selectedId,
-	dialog,
-}: IMemberPickerDialogProps & IDialogInjected<IExampleMember>): React.ReactNode {
+export default function MemberPickerDialog({ selectedId }: IMemberPickerDialogProps): React.ReactNode {
+	const dialog = useDialog<IExampleMember>();
+
 	return (
 		<SmartTable
 			data={MEMBERS}
@@ -83,5 +85,3 @@ function MemberPickerDialog({
 		/>
 	);
 }
-
-export default defineDialog<IMemberPickerDialogProps, IExampleMember>(MemberPickerDialog);

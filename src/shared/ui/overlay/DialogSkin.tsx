@@ -12,6 +12,30 @@ import { Spinner } from '@/shared/lib/shadcn/ui/spinner';
 import { cn } from '@/shared/utils/cn';
 import type { IDialogFrame, IDialogOption, TDialogSize } from '@/types/components';
 
+/**
+ * 컨텐츠가 지연 로딩(loadable/lazy)되는 동안 본문 자리에 보여줄 화면.
+ * 표시만 담당합니다. 자유롭게 고쳐도 됩니다.
+ */
+export function DialogPendingFallback(): React.ReactNode {
+	return (
+		<div className="flex items-center justify-center py-10">
+			<Spinner className="size-5 text-muted-foreground" />
+		</div>
+	);
+}
+
+/**
+ * 컨텐츠 렌더가 실패했을 때 본문 자리에 보여줄 화면.
+ *
+ * 표시만 담당합니다 — Promise 정산(다이얼로그를 닫고 `await` 를 풀어주는 일)은
+ * core 의 에러 경계가 이미 끝냈습니다.
+ */
+export function DialogErrorFallback(): React.ReactNode {
+	return (
+		<p className="py-6 text-center text-sm text-destructive">내용을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.</p>
+	);
+}
+
 /* ════════════════════════════════════════════════════════════════════════════
  * $ui.dialog 의 **껍데기 디자인**. 프로젝트 스타일에 맞춰 마음껏 고치는 파일입니다.
  *

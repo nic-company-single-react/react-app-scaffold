@@ -7,6 +7,7 @@ import MemberPickerDialog, { type IExampleMember } from './MemberPickerDialog';
  * 실전 예제 — 담당자 지정.
  *
  * `$ui.dialog` 로 회원 피커를 띄우고 **결과를 await 로 받는다**.
+ * 결과 타입은 호출부에서 `$ui.dialog<IExampleMember>({...})` 처럼 지정한다.
  *
  * 컴포넌트형 Dialog 로 같은 걸 만들면 필요한 것들:
  *   - `const [open, setOpen] = useState(false)`
@@ -19,7 +20,7 @@ export default function MemberAssignCard(): React.ReactNode {
 	const [assignee, setAssignee] = useState<IExampleMember | null>(null);
 
 	const handlePick = async (): Promise<void> => {
-		const picked = await $ui.dialog({
+		const picked = await $ui.dialog<IExampleMember>({
 			component: MemberPickerDialog,
 			props: { selectedId: assignee?.id },
 			title: '담당자 선택',

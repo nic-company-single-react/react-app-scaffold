@@ -11,9 +11,9 @@ export interface ILiveStatusDialogProps {
 }
 
 /**
- * 예제 — 완전히 평범한 컴포넌트.
+ * 예제 — 결과도 제어도 없는 표시 전용 컨텐츠.
  *
- * `defineDialog` 도, `useDialog` 도, 동기화 코드도 없다.
+ * 스스로 닫지 않으므로 `useDialog()` 조차 없다. 동기화 코드도 없다.
  * 다이얼로그 전용으로 만든 게 아니라 그냥 props 를 받아 렌더하는 보통 컴포넌트이고,
  * 페이지 안에 그대로 박아 써도 똑같이 동작한다.
  *

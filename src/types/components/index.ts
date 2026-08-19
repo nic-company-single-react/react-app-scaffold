@@ -6,7 +6,7 @@
  * 구현은 src/core/ui 에 위치합니다.
  */
 
-import type { ComponentProps, ComponentType, CSSProperties, ReactNode } from 'react';
+import type { ComponentType, CSSProperties, ReactNode } from 'react';
 
 /** 다이얼로그 종류별 아이콘·색상 구분 */
 export type TUIDialogType = 'success' | 'info' | 'warning' | 'error';
@@ -174,22 +174,14 @@ export interface IDialogOption<T = unknown> {
 	onClose?: (result: IDialogResult<T>) => void;
 }
 
-/** 결과 타입 T 를 컴포넌트에 각인하기 위한 팬텀 브랜드 (런타임에는 존재하지 않음) */
-declare const dialogResultBrand: unique symbol;
-
-/** defineDialog 로 만든 다이얼로그 컴포넌트 (P: 외부 props, T: 결과 타입) */
-export type TDialogComponent<P extends object = Record<string, never>, T = void> = ComponentType<P> & {
-	readonly [dialogResultBrand]?: T;
-};
-
-/** 임의의 다이얼로그 컴포넌트 (제네릭 제약용) */
+/**
+ * 본문으로 렌더할 컴포넌트.
+ *
+ * **평범한 React 컴포넌트**면 됩니다. 다이얼로그 전용으로 감쌀 필요가 없고,
+ * 페이지 안에 그대로 박아 써도 똑같이 동작합니다.
+ * 제어(닫기·제출·가드)가 필요하면 컴포넌트 안에서 `useDialog()` 를 부르세요.
+ */
 export type TAnyDialogComponent = ComponentType<any>;
-
-/** 컴포넌트에서 결과 타입 T 를 추출합니다. defineDialog 를 쓰지 않았으면 unknown. */
-export type TDialogResultOf<C> = C extends { readonly [dialogResultBrand]?: infer T } ? T : unknown;
-
-/** 컴포넌트에서 props 타입 P 를 추출합니다. */
-export type TDialogPropsOf<C extends TAnyDialogComponent> = ComponentProps<C>;
 
 /**
  * `useLiveProps(...)` 가 만드는 **살아있는 props 상자**.
@@ -213,20 +205,20 @@ export interface ILivePropsBox<P extends object = Record<string, unknown>> {
 /** 컨텐츠에 넘길 props — 평범한 객체이거나 `useLiveProps` 가 만든 살아있는 상자. */
 export type TDialogProps = Record<string, unknown> | ILivePropsBox;
 
-/** P 에 필수 키가 있으면 props 를 필수로, 없으면 선택으로 만듭니다. */
-type TRequiredKeys<P> = { [K in keyof P]-?: {} extends Pick<P, K> ? never : K }[keyof P];
-type TPropsValue<P> = P extends object ? P | ILivePropsBox<P> : P;
-type TPropsField<P> = [TRequiredKeys<P>] extends [never] ? { props?: TPropsValue<P> } : { props: TPropsValue<P> };
-
-/** $ui.dialog 옵션 (component + props) */
-export type TDialogComponentOption<C extends TAnyDialogComponent> = IDialogOption<TDialogResultOf<C>> & {
+/** $ui.dialog 옵션 (껍데기 옵션 + component + props) */
+export type TDialogCallOption<T, P extends object> = IDialogOption<T> & {
 	/**
 	 * 본문으로 렌더할 컴포넌트.
 	 * 코드분할이 필요하면 `loadable(() => import('...'))` 결과를 넘깁니다.
 	 * (함수 컴포넌트와 import 썽크는 런타임에 구분할 수 없으므로 썽크를 직접 넘기면 안 됩니다)
 	 */
-	component: C;
-} & TPropsField<TDialogPropsOf<C>>;
+	component: TAnyDialogComponent;
+	/**
+	 * 컨텐츠에 넘길 props. 호출 시점 스냅샷이며 이후 갱신은 `handle.update()` 입니다.
+	 * 열려 있는 동안 바탕 페이지의 state 를 계속 따라가야 하면 `useLiveProps(...)` 로 감싸 넘깁니다.
+	 */
+	props?: P | ILivePropsBox<P>;
+};
 
 /** $ui.dialog 반환 핸들의 제어부 */
 export interface IDialogControls<T = unknown, P = Record<string, unknown>> {
@@ -255,11 +247,27 @@ export interface IDialogControls<T = unknown, P = Record<string, unknown>> {
  */
 export type TDialogHandle<T = unknown, P = Record<string, unknown>> = Promise<T | undefined> & IDialogControls<T, P>;
 
-/** $ui.dialog — 임의 컴포넌트를 모달로 띄우고 결과를 돌려받습니다. */
+/**
+ * $ui.dialog — 임의 컴포넌트를 모달로 띄우고 결과를 돌려받습니다.
+ *
+ * 결과 타입은 **호출부에서 지정**합니다. 컴포넌트를 감싸는 헬퍼는 필요 없습니다.
+ *
+ * ```ts
+ * // 결과를 쓰는 경우 — 타입 인자로 결과 타입을 준다
+ * const member = await $ui.dialog<IMember>({ component: MemberPicker, props: { deptId: 3 } });
+ * //    ^? IMember | undefined
+ *
+ * // 결과를 안 쓰는 경우 — 타입 인자를 생략하면 props 타입이 추론되어 update() 가 체크된다
+ * const d = $ui.dialog({ component: UploadProgress, props: { percent: 0 } });
+ * d.update({ percent: 50 });
+ * ```
+ *
+ * ⚠️ 타입 인자를 명시하면 `P` 는 추론되지 않고 기본값(`Record<string, unknown>`)이 됩니다.
+ *    TypeScript 가 타입 인자를 일부만 받아 나머지를 추론해 주지 않기 때문입니다.
+ *    결과 타입과 props 타입을 동시에 좁히고 싶으면 두 인자를 모두 적으세요.
+ */
 export interface IDialogApi {
-	<C extends TAnyDialogComponent>(
-		option: TDialogComponentOption<C>,
-	): TDialogHandle<TDialogResultOf<C>, TDialogPropsOf<C>>;
+	<T = unknown, P extends object = Record<string, unknown>>(option: TDialogCallOption<T, P>): TDialogHandle<T, P>;
 	/** 특정 id 의 dialog 를 닫습니다. (기본 reason 'programmatic' — beforeClose 를 우회합니다) */
 	close(id: string, reason?: TDialogReason): void;
 	/** 열려 있는 모든 dialog 를 닫습니다. (beforeClose 우회, 각각 undefined 로 resolve) */
@@ -268,7 +276,7 @@ export interface IDialogApi {
 	count(): number;
 }
 
-/** 컨텐츠 내부에서 쓰는 제어 API — useDialog() 또는 defineDialog 의 dialog prop */
+/** 컨텐츠 내부에서 쓰는 제어 API — `useDialog()` 로 얻습니다. */
 export interface IDialogApiHandle<T = unknown> {
 	/** 이 다이얼로그의 id */
 	readonly id: string;
@@ -295,11 +303,6 @@ export interface IDialogApiHandle<T = unknown> {
 	setSubmit(submit: TDialogSubmit<T> | null): void;
 	/** 껍데기 옵션 부분 갱신 */
 	patch(option: Partial<IDialogOption<T>>): void;
-}
-
-/** defineDialog 가 컴포넌트에 주입하는 prop */
-export interface IDialogInjected<T = unknown> {
-	dialog: IDialogApiHandle<T>;
 }
 
 /** 전역 $ui 루트 타입 */

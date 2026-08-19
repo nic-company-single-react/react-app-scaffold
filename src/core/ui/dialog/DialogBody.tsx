@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import DialogPendingFallback from '@/shared/ui/overlay/DialogPendingFallback';
+import { DialogPendingFallback } from '@/shared/ui/overlay/DialogSkin';
 import { DialogContext } from './DialogContext';
 import DialogErrorBoundary from './DialogErrorBoundary';
 import DialogRouterBridge from './DialogRouterBridge';

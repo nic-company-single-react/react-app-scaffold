@@ -12,7 +12,7 @@ import { setupAuthInterceptor, setAccessToken } from '@/shared/auth';
 // 전역 $util 유틸리티 등록(window.$util) =============================
 registerWindowUtil();
 
-// 전역 $ui 등록(window.$ui : $ui.alert / $ui.confirm) =============================
+// 전역 $ui 등록(window.$ui : $ui.alert / $ui.confirm / $ui.dialog) =============================
 registerWindowUI();
 
 // 앱에서 REST API 호출용 API 설정 주입(push): src/config/api.config.ts → core(전역 저장: window.__MF_APP_CONFIG__) =====

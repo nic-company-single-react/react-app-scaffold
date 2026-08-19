@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import DialogErrorFallback from '@/shared/ui/overlay/DialogErrorFallback';
+import { DialogErrorFallback } from '@/shared/ui/overlay/DialogSkin';
 
 export interface IDialogErrorBoundaryProps {
 	/** 오류 발생 시 정산할 다이얼로그 id */

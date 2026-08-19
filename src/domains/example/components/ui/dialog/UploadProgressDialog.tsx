@@ -1,6 +1,4 @@
 import { Progress } from '@axiom/components/ui';
-import { defineDialog } from '@/core/ui';
-import type { IDialogInjected } from '@/types/components';
 
 export interface IUploadProgressDialogProps {
 	/** 진행률 0~100 — 호출부가 handle.update({ percent }) 로 갱신한다. */
@@ -23,11 +21,10 @@ export interface IUploadProgressDialogProps {
  *
  * 참고: 서버에서 오는 실시간 데이터라면 update() 대신 컨텐츠가 react-query/zustand 를
  * 직접 구독하는 편이 낫다. 호스트가 QueryProvider 안쪽에 있으므로 그대로 동작한다.
+ *
+ * 이 컴포넌트는 스스로 닫지 않으므로 `useDialog()` 조차 필요 없다 — 완전히 평범한 컴포넌트다.
  */
-function UploadProgressDialog({
-	percent,
-	filename,
-}: IUploadProgressDialogProps & IDialogInjected<void>): React.ReactNode {
+export default function UploadProgressDialog({ percent, filename }: IUploadProgressDialogProps): React.ReactNode {
 	return (
 		<div className="space-y-3">
 			<p className="truncate text-sm text-gray-700 dark:text-gray-300">{filename}</p>
@@ -36,5 +33,3 @@ function UploadProgressDialog({
 		</div>
 	);
 }
-
-export default defineDialog<IUploadProgressDialogProps, void>(UploadProgressDialog);
