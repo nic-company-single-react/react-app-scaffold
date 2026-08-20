@@ -23,7 +23,9 @@ import type { IAlertFrame, TUIDialogType } from '@/types/components';
  *
  * ⛔ 건드리면 안 되는 것 — 두 줄입니다
  *    1. `{...frame.rootProps}`    — 열림 상태와 ESC fallback 배선
- *    2. `{...frame.contentProps}` — z-index. 인라인이 아니면 헤더에 가립니다
+ *    2. `{...frame.contentProps}` — z-index(인라인이 아니면 헤더에 가립니다) + 초기 포커스 배선
+ *       (alert 은 취소 버튼이 없어 Radix 가 아무것도 포커스하지 못합니다. 이 스프레드를 지우면
+ *        포커스가 트리거 버튼에 남아 알림이 뜬 직후 Enter 로 그 버튼이 다시 눌립니다)
  *
  * 버튼의 frame.confirm / cancel / close 는 각각 다른 닫기 사유(reason)이며,
  * confirm 만 `$ui.confirm` 의 결과를 true 로 만듭니다. 서로 바꿔 달면 안 됩니다.

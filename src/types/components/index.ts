@@ -323,6 +323,14 @@ export interface IUI {
 type TPreventable = { preventDefault: () => void };
 
 /**
+ * 초기 포커스(open auto focus) 이벤트의 최소 모양.
+ *
+ * `preventDefault` 와 이벤트가 걸린 컨테이너(`currentTarget`)만 사용합니다.
+ * DOM `Event` 가 이 모양을 만족하므로 Radix 이벤트 타입에 의존하지 않습니다.
+ */
+type TAutoFocusable = TPreventable & { currentTarget: EventTarget | null };
+
+/**
  * Radix `<DialogContent>` 에 **통째로 스프레드**해야 하는 동작 props.
  *
  * ⚠️ 스킨에서 이 스프레드를 지우면 ESC · 배경 클릭이 Radix 자체 경로로 닫히면서
@@ -381,8 +389,22 @@ export interface IAlertFrame {
 	kind: 'alert' | 'confirm';
 	option: IConfirmDialogOption;
 	rootProps: { open: boolean; onOpenChange: (next: boolean) => void };
-	/** Radix `<AlertDialogContent>` 에 스프레드 (z-index 인라인) */
-	contentProps: { style: CSSProperties; overlayStyle: CSSProperties };
+	/**
+	 * Radix `<AlertDialogContent>` 에 **통째로 스프레드**해야 하는 props.
+	 * z-index(인라인) + 초기 포커스 배선이 들어 있습니다.
+	 *
+	 * ⚠️ 스킨에서 이 스프레드를 지우면 다이얼로그가 헤더에 가리고,
+	 *    alert 의 초기 포커스가 트리거 버튼에 남아 **Enter 로 그 버튼이 다시 눌립니다.**
+	 */
+	contentProps: {
+		style: CSSProperties;
+		overlayStyle: CSSProperties;
+		/**
+		 * 열릴 때 초기 포커스를 다이얼로그 안으로 들여놓습니다.
+		 * 취소 버튼이 없는 alert 에서만 존재합니다 — 이유는 `useAlertFrame` 참고.
+		 */
+		onOpenAutoFocus?: (event: TAutoFocusable) => void;
+	};
 	/** 아이콘을 표시할지 — type 지정 여부와 icon 옵션으로 core 가 계산합니다. */
 	showIcon: boolean;
 	/** X 버튼 (reason 'close') */
