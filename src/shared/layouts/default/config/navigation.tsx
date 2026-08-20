@@ -129,16 +129,16 @@ export const navItems: NavItem[] = [
 				subItems: [
 					{ name: 'alert', icon: <Bell />, path: '/example/ui/alert' },
 					{ name: 'confirm', icon: <MessageSquareText />, path: '/example/ui/confirm' },
-					{ name: 'dialog', icon: <MessageSquare />, path: '/example/ui/dialog', new: true },
+					{ name: 'dialog', icon: <MessageSquare />, path: '/example/ui/dialog' },
 				],
 			},
-			{
-				name: 'useClientState예제',
-				subItems: [
-					{ name: 'useClientState1', path: '/example/use-client-state-1' },
-					{ name: 'useClientState2', path: '/example/use-client-state-2' },
-				],
-			},
+			//{
+			//	name: 'useClientState예제',
+			//	subItems: [
+			//		{ name: 'useClientState1', path: '/example/use-client-state-1' },
+			//		{ name: 'useClientState2', path: '/example/use-client-state-2' },
+			//	],
+			//},
 		],
 	},
 	{
