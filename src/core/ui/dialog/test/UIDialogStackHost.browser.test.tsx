@@ -3,13 +3,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createWindowUI } from '@/core/ui';
-import { useUIStore } from '@/core/ui/store';
-import { UIAlertHost } from '@/core/ui/UIAlertHost';
+import { useUIStore } from '@/core/ui/alert/alertStore';
+import { UIAlertHost } from '@/core/ui/alert/UIAlertHost';
 import { Z_ALERT, Z_DIALOG_BASE } from '@/shared/ui/overlay/overlay-layers';
-import UIDialogStackHost from './UIDialogStackHost';
-import { useDialogStackStore } from './dialogStore';
-import { closeAllDialogs } from './dialogController';
-import { useDialog } from './useDialog';
+import UIDialogStackHost from '../UIDialogStackHost';
+import { useDialogStackStore } from '../dialogStore';
+import { closeAllDialogs } from '../dialogController';
+import { useDialog } from '../useDialog';
 
 /**
  * 테스트용 호스트 묶음.

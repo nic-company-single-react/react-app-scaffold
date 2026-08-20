@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { CLOSE_ANIM_MS, Z_ALERT } from '@/shared/ui/overlay/overlay-layers';
-import { useUIStore } from './store';
+import { useUIStore } from './alertStore';
 import type { IAlertFrame, IConfirmDialogOption, IDialogResult, TDialogReason } from '@/types/components';
 
 /**

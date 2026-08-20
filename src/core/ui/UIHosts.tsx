@@ -1,6 +1,6 @@
-import { UIAlertHost } from './UIAlertHost';
-import { AppToaster } from './AppToaster';
 import UIDialogStackHost from './dialog/UIDialogStackHost';
+import { UIAlertHost } from './alert/UIAlertHost';
+import { AppToaster } from './toast/AppToaster';
 
 /**
  * 앱 전역 UI 호스트 묶음.
@@ -9,7 +9,7 @@ import UIDialogStackHost from './dialog/UIDialogStackHost';
  * Provider 조립부를 건드릴 필요가 없다.
  *
  * 렌더 순서는 DOM 순서일 뿐 겹침 순서를 결정하지 않는다.
- * 실제 겹침은 z-index 티어가 정한다 → `src/core/ui/z-index.ts`
+ * 실제 겹침은 z-index 티어가 정한다 → `src/shared/ui/overlay/overlay-layers.ts`
  *   $ui.dialog 스택(100000+) < $ui.alert/confirm(100500) < 토스트(100600)
  */
 export function UIHosts(): React.ReactNode {

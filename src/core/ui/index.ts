@@ -1,4 +1,4 @@
-import { useUIStore } from './store';
+import { useUIStore } from './alert/alertStore';
 import { createId } from './createId';
 import {
 	closeAllDialogs,
@@ -18,6 +18,25 @@ import type {
 	TDialogHandle,
 	IUI,
 } from '@/types/components';
+
+/* ── 폴더 구성 ────────────────────────────────────────────────────────────────
+ * 전역 UI 는 **분야(전역 컴포넌트) 단위로 폴더**를 나눈다. 새 전역 컴포넌트가
+ * 늘어나도 같은 규칙으로 폴더 하나만 추가하면 된다.
+ *
+ *   core/ui/index.ts   ← $ui 조립 + 호스트 re-export. **유일한 공개 표면**
+ *   core/ui/UIHosts    ← 호스트 묶음 (AppProviders 가 이것 하나만 렌더)
+ *   core/ui/createId   ← 분야에 속하지 않는 공용 leaf
+ *   core/ui/alert/     ← $ui.alert + $ui.confirm (confirm 은 alert 의 kind 변종)
+ *   core/ui/dialog/    ← $ui.dialog 스택
+ *   core/ui/toast/     ← 전역 토스트 호스트
+ *
+ * 규칙 두 가지:
+ *   1. 분야 폴더 안에 barrel(index.ts) 을 두지 않는다. 공개 표면은 이 파일 하나다.
+ *   2. 파일명 접두사는 유지한다(`alert/alertStore.ts`). 폴더가 구분해 주더라도
+ *      에디터 탭 제목은 파일명뿐이라 `store.ts` 가 여럿이면 구분되지 않는다.
+ *
+ * 모양(스킨)은 core 가 아니라 `src/shared/ui/overlay/*Skin.tsx` 가 담당한다.
+ * ------------------------------------------------------------------------- */
 
 /**
  * 첫 인자(string | option) + 두번째 인자(option)를 단일 옵션으로 병합하고
@@ -103,15 +122,15 @@ export function registerWindowUI(): void {
 	window.$ui = createWindowUI();
 }
 
-/* ── 화면 코드에서 쓰는 공개 표면 ────────────────────────────────────────────
- * $ui 자체는 전역이라 import 가 필요 없고, 다이얼로그 컨텐츠는 평범한 컴포넌트라
- * 감싸는 헬퍼도 없습니다. 필요한 것은 훅뿐이고, 훅의 창구는 `@axiom/hooks` 하나입니다.
+/* ── 화면 코드에서 쓰는 공개 관련 ────────────────────────────────────────────
+ * $ui와 관련된 alert, confirm, dialog 에서 사용하는 훅의 창구는 `@axiom/hooks` 입니다.
+ * $ui 자체는 전역이라 import 가 필요 없습니다.
  *
  *   import { useDialog, useDialogSubmit, useDialogGuard, useLiveProps } from '@axiom/hooks';
  * ------------------------------------------------------------------------- */
 
 /* ── 호스트 (AppProviders 전용) ─────────────────────────────────────────── */
 export { UIHosts } from './UIHosts';
-export { UIAlertHost } from './UIAlertHost';
+export { UIAlertHost } from './alert/UIAlertHost';
 export { default as UIDialogStackHost } from './dialog/UIDialogStackHost';
-export { AppToaster } from './AppToaster';
+export { AppToaster } from './toast/AppToaster';

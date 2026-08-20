@@ -9,11 +9,11 @@ import { useEffect, useState } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createWindowUI } from '@/core/ui';
-import { useUIStore } from '@/core/ui/store';
-import UIDialogStackHost from './UIDialogStackHost';
-import { useDialogStackStore } from './dialogStore';
-import { closeAllDialogs } from './dialogController';
-import { useLiveProps } from './useLiveProps';
+import { useUIStore } from '@/core/ui/alert/alertStore';
+import UIDialogStackHost from '../UIDialogStackHost';
+import { useDialogStackStore } from '../dialogStore';
+import { closeAllDialogs } from '../dialogController';
+import { useLiveProps } from '../useLiveProps';
 
 interface ITickProps {
 	tick: number;

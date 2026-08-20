@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import DialogSkin from '@/shared/ui/overlay/DialogSkin';
 import { CLOSE_ANIM_MS } from '@/shared/ui/overlay/overlay-layers';
-import { useUIStore } from '../store';
+import { useUIStore } from '../alert/alertStore';
 import { settleDialog } from './dialogController';
 import { useDialogStackStore, type IDialogStackItem } from './dialogStore';
 import { useDialogFrame } from './useDialogFrame';

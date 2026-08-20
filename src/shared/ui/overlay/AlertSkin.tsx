@@ -38,7 +38,7 @@ const TYPE_META: Record<TUIDialogType, { Icon: LucideIcon; iconClass: string; de
 };
 
 export interface IAlertSkinProps {
-	/** core 가 계산한 동작 묶음 (src/core/ui/useAlertFrame) */
+	/** core 가 계산한 동작 묶음 (src/core/ui/alert/useAlertFrame) */
 	frame: IAlertFrame;
 }
 

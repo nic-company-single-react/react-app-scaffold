@@ -8,7 +8,7 @@ import type { IDialogOption, TAnyDialogComponent, TDialogProps } from '@/types/c
  *    `defineStore` 는 immer 기반이고 immer 는 결과를 **auto-freeze** 하는데,
  *    여기에는 컴포넌트 함수 · ReactNode · 사용자 props(Map/Date/클래스 인스턴스 가능) ·
  *    resolve 콜백이 들어가므로 freeze/draft 처리가 위험합니다.
- *    (형제 파일 `src/core/ui/store.ts` 가 순정 zustand 를 쓰는 것과 같은 이유입니다)
+ *    (형제 폴더의 `src/core/ui/alert/alertStore.ts` 가 순정 zustand 를 쓰는 것과 같은 이유입니다)
  */
 export interface IDialogStackItem {
 	id: string;

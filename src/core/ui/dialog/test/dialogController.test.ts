@@ -4,8 +4,8 @@
 // 이게 깨지면 `await $ui.dialog(...)` 가 영원히 멈추거나(누수), 결과가 두 번 확정된다.
 import { createWindowUI } from '@/core/ui';
 import { CLOSE_ANIM_MS } from '@/shared/ui/overlay/overlay-layers';
-import { getDialogRuntime, useDialogStackStore } from './dialogStore';
-import { MAX_STACK_DEPTH, closeAllDialogs, requestCloseDialog, settleDialog } from './dialogController';
+import { getDialogRuntime, useDialogStackStore } from '../dialogStore';
+import { MAX_STACK_DEPTH, closeAllDialogs, requestCloseDialog, settleDialog } from '../dialogController';
 import type { IDialogResult, IUI } from '@/types/components';
 
 /** 테스트용 더미 컨텐츠 (렌더되지 않는다 — 호스트를 마운트하지 않으므로) */

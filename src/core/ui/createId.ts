@@ -7,6 +7,7 @@
  *
  * $ui.alert / $ui.confirm / $ui.dialog 가 공유하므로 별도 모듈로 분리했습니다.
  * (core/ui/index.ts 와 core/ui/dialog/* 가 서로를 import 하면 순환참조가 생깁니다)
+ * 특정 분야(alert/dialog/toast)에 속하지 않는 공용 leaf 라서 최상위에 둡니다.
  */
 export function createId(): string {
 	if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
