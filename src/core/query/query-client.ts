@@ -14,7 +14,7 @@ const defaultQueryConfig: DefaultOptions = {
 	},
 };
 
-// 앱이 밀어넣은 override 읽기 (전역 저장: api 설정과 저장 위치 통일).
+// 앱이 밀어넣은 override 읽기 (전역 저장).
 // MF 구조에서 원격 번들이 각자 모듈 인스턴스를 가져도 설정은 window 하나로 공유.
 function getUserQueryConfig(): DefaultOptions {
 	return (typeof window !== 'undefined' ? window.__MF_QUERY_CONFIG__ : undefined) ?? {};
