@@ -7,6 +7,7 @@ import axios, {
 } from 'axios';
 import type { ApiInstanceConfig, ApiRequestConfig, ApiResponse } from '../types/api-types';
 import { getApiConfig } from './api-config';
+import type { ApiLibConfig } from '@/types/api';
 
 class BaseAxiosClient {
 	private static instance: BaseAxiosClient;
@@ -20,17 +21,24 @@ class BaseAxiosClient {
 	}
 
 	static getInstance(): BaseAxiosClient {
+		console.log('api 초기 설정값:::', window.__MF_APP_CONFIG__);
 		if (!BaseAxiosClient.instance) {
 			BaseAxiosClient.instance = new BaseAxiosClient();
 		}
 		return BaseAxiosClient.instance;
 	}
 
+	/** 앱이 주입한 API 설정을 axios 인스턴스 defaults에 반영한다. 설정이 늘어도 이 함수는 그대로다. */
+	private applyApiConfig(config: ApiLibConfig): void {
+		Object.assign(this.axiosInstance.defaults, { ...config });
+	}
+
 	private createAxiosInstance(config: ApiInstanceConfig): AxiosInstance {
 		const apiConfig = getApiConfig();
+
 		return axios.create({
-			baseURL: config.baseURL || apiConfig.baseURL || '',
-			timeout: config.timeout ?? 30000,
+			...apiConfig,
+			...config,
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
@@ -117,7 +125,7 @@ class BaseAxiosClient {
 			method,
 			url: url.toString(),
 			headers,
-			timeout: timeout ?? 30000,
+			timeout: timeout ?? apiConfig.timeout,
 		};
 
 		if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method.toUpperCase()) && body) {
