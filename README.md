@@ -57,10 +57,27 @@ src/
 ├─ domains/         도메인 단위 화면
 │  ├─ main/         메인(랜딩) 페이지
 │  └─ example/      UI 컴포넌트 · API 사용 예제
-├─ shared/          공통 레이아웃 · UI 컴포넌트(shadcn) · 라우터 · 유틸
+├─ shared/          공통 레이아웃 · UI 컴포넌트(shadcn) · 라우터 · 인증 · 유틸
 ├─ publishing/      퍼블리싱 작업용 공간
 └─ __stories__/     Storybook 스토리 · 문서
 ```
+
+## 인증 (JWT)
+
+로그인 · 401 자동 갱신 · 라우트 보호 · 탭 간 로그아웃 전파가 **동작하는 부품**으로 들어 있다.
+**배선은 되어 있지 않다** — 프로젝트마다 로그인 방식과 서버 규약이 달라서, 미리 붙여두면
+반입한 프로젝트가 그걸 지우는 일부터 하게 된다. 기본 상태에서는 첫 화면이 그대로 랜딩 페이지다.
+
+```tsx
+const { submit, pending, error } = useLogin();   // 로그인 폼
+const { user, hasRole } = useAuth<IAppUser>();   // 사용자 표시 · 권한 분기
+const { logout } = useLogout();                  // 로그아웃 버튼
+```
+
+- **붙이는 순서 · 넣을 코드 전문** → [plan/jwt인증-공통개발자-적용가이드.md](plan/jwt인증-공통개발자-적용가이드.md)
+- 업무 개발자 사용법 → [plan/jwt인증-업무개발자-사용가이드.md](plan/jwt인증-업무개발자-사용가이드.md)
+- 모듈 자체의 설명서(공개 API · 확장 지점 · 서버 요구조건) → [src/shared/auth/README.md](src/shared/auth/README.md)
+- 인증을 쓰지 않는 프로젝트는 **아무것도 안 해도 된다.** 참조되지 않으면 번들에 들어가지 않는다
 
 ## 커스터마이징 가이드
 

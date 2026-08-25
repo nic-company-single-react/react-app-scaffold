@@ -3,6 +3,26 @@ import { RootLayout } from '@/shared/layouts';
 import MainRouter from '@/domains/main/router';
 import ExampleRouter from '@/domains/example/router';
 
+/**
+ * 라우트 정의.
+ *
+ * ── 인증(JWT)을 붙일 때 ──────────────────────────────────────────────────────
+ * 스캐폴드는 라우트를 보호하지 않은 상태로 출고된다. 기능은 `src/shared/auth`에 있고
+ * 배선만 비어 있다. 붙이는 순서는 plan/jwt인증-공통개발자-적용가이드.md 에 있고, 이 파일에서 할 일은
+ * 로그인 라우트를 게이트 **바깥**에 두고, 보호할 라우트를 게이트 **안**으로 옮기는 것이다.
+ *
+ *   import { ProtectedRoute } from '@/shared/auth';
+ *   import AuthRouter from '@/domains/auth/router';
+ *
+ *   { path: '/auth', children: AuthRouter },              ← 게이트 바깥
+ *   {
+ *       element: <ProtectedRoute />,                       ← 게이트
+ *       children: [{ path: '/', element: <RootLayout />, children: MainRouter }],
+ *   },
+ *
+ * ⚠️ 인증 라우트(`/auth`)를 게이트 안에 넣으면 로그인하러 가는 길이 다시 막혀
+ *    무한 리다이렉트가 된다.
+ */
 const routes: TAppRoute[] = [
 	{
 		path: '/',

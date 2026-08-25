@@ -161,7 +161,12 @@ class BaseAxiosClient {
 			const absoluteBase = /^https?:\/\//.test(apiConfig.baseURL)
 				? apiConfig.baseURL
 				: new URL(apiConfig.baseURL, window.location.origin).href;
-			url = new URL(endpoint, absoluteBase);
+			// ⚠️ new URL(endpoint, absoluteBase) 를 쓰지 않는다.
+			//    endpoint 가 '/' 로 시작하면 절대 경로로 해석되어 base 의 경로가 통째로 버려진다.
+			//      new URL('/auth/login', 'http://host/api')  →  'http://host/auth/login'
+			//    baseURL 에 경로 접두어(/api, /gateway)를 두는 구성이 404 로만 드러나며 조용히 깨진다.
+			//    axios 의 baseURL 동작(문자열 결합)과 같게 맞춘다.
+			url = new URL(`${absoluteBase.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`);
 		}
 
 		if (method.toUpperCase() === 'GET' && params) {
