@@ -50,5 +50,10 @@
 	"axiom-ai.debug.logSystemPrompt": true,
 	"axiom-ai.llm.provider": "ollama",
 	"axiom-ai.experimental.regionEdit": true,
-	"axiom-ai.experimental.intentClassifier": true
+	"axiom-ai.experimental.intentClassifier": true,
+	// 자동 저장을 끕니다.
+	// 전역 설정(files.autoSave: afterDelay)이 켜져 있으면 타이핑 도중 파일이
+	// 디스크에 써지고, Docusaurus dev 서버가 그때마다 핫 리로드를 돕니다.
+	// off 로 두면 Ctrl+S 로 직접 저장할 때만 리로드됩니다.
+	"files.autoSave": "off"
 }
