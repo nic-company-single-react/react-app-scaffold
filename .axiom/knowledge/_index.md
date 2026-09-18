@@ -1,0 +1,246 @@
+---
+version: 1.0
+project: react-app-scaffold
+---
+
+# 지식 인덱스
+
+## 패턴
+
+- keywords: [$ui, window.$ui, ui 객체, ui객체, ui 유틸, ui유틸, ui util, uiutil, alert, 얼럿, 알림, 알림창, 알림팝업, 경고창, confirm, 컨펌, 확인창, 확인팝업, 확인취소, 예아니오, 다이얼로그, dialog, 모달, modal, 팝업, popup, window.alert, window.confirm, 브라우저알림, 네이티브알림, autodismiss, 자동닫힘, $ui.alert, $ui.confirm]
+  files: [utils/ui.md]
+- keywords: [axios, api-client, 클라이언트, baseurl, interceptor, 인터셉터, callapi, apierror, apiresponse, initapiconfig, getapiconfig, api설정, api-config, 인증헤더, 클라이언트내부, api내부구현]
+  files: [patterns/api-call.md]
+- keywords: [api-client, axios, baseaxiosclient, callapi, 소스, source, interceptor, 인터셉터, baseurl, token, 토큰]
+  files: [patterns/api-client-source.md]
+- keywords: [querykey, query-key, factory, 팩토리, tanstack, cache, 캐시키, invalidate]
+  files: [patterns/query-key-factory.md]
+- keywords: [router, 라우터, routing, 라우팅, createhashrouter, createapprouter, hash, 해시, route, 경로, navigate, 이동, loadable, 코드스플리팅, tapproute, lazy, 지연로딩, $router]
+  files: [patterns/router.md]
+- keywords: [navigate, navigation, 이동버튼, 이동하는, 네비게이션, usenavigate, 화면이동, 페이지이동, 뒤로가기, 루트로이동, 메인으로이동, 버튼추가, 이동코드, router.push]
+  files: [patterns/navigation.md]
+- keywords: [page-generation, createpage, newpage, addpage, page, screen, router, route, path, kebab-case, 페이지생성, 페이지추가, 화면생성, 라우터생성]
+  files: [patterns/page-generation.md, patterns/router.md]
+- keywords: [provider, 프로바이더, appproviders, queryprovider, context, 컨텍스트, 상태, state, tanstack, devtools, sidebar, 레이아웃]
+  files: [patterns/state-management.md]
+- keywords: [useapi, use-api, invalidatequeries, refetch, reset, useapi사용예, useapi예제, usapi코드예제]
+  files: [patterns/use-api-example.md]
+- keywords: [useapi소스, use-api소스, useapi 소스, use-api 소스, useapi구현, useapi 구현, useapi내부, useapi 내부, usapi소스코드, overload, 오버로드, iuseapiqueryoptions, iuseapimutationoptions, normalizebody, formdata]
+  files: [patterns/use-api-source.md]
+- keywords: [useapi, use-api, @axiom/hooks, api, api호출, api통신, api함수, 통신, http, fetch, 요청, 호출, 데이터, 데이터조회, 데이터요청, 데이터생성, 데이터수정, 데이터삭제, 가져오기, 불러오기, 서버통신, query, mutation, get, post, put, delete, patch, cache, 캐시, invalidate, enabled, 조건부, tanstack, usequery, usemutation, 훅, envelope, 봉투, 응답구조, 응답봉투, response-shape, unwrap, 언랩, 제네릭타입, generic, 봉투벗김, data꺼내기]
+  files: [patterns/use-api.md, patterns/use-api-example.md]
+- keywords: [architecture, 아키텍처, 구조, 폴더, 레이어, folder, structure, directory, 디렉터리, layer, alias, 앨리어스, @axiom, @/, import, 임포트, stack, 스택, react, typescript, vite, tanstack]
+  files: [scaffold/project-structure.md]
+- keywords: [error, 에러, 오류, 에러처리, 오류처리, error-handling, 예외, exception, trycatch, try-catch, iserror, error.message, apierror, errorboundary, 에러바운더리, fallback, 폴백, 폴백ui, 빈상태, empty, 재시도, retry, 실패, fail, 401, 토큰부착]
+  files: [patterns/error-handling.md, patterns/use-api.md]
+- keywords: [custom-hook, 커스텀훅, 커스텀 훅, 훅작성, 훅만들기, 훅 만들기, use접두사, usedebounce, 디바운스, uselocalstorage, 로컬스토리지, usetoggle, 재사용로직, 로직분리, 로직추출, rules-of-hooks, 훅규칙, 조건부훅, 훅합성]
+  files: [patterns/custom-hooks.md, react/component.md]
+- keywords: [performance, 성능, 최적화, optimize, 느림, 렌더링최적화, 리렌더, 리렌더링, re-render, memo, react.memo, usememo, usecallback, 메모이제이션, memoization, 코드스플리팅, 코드 스플리팅, code-splitting, loadable, 지연로딩, 번들, bundle, 청크, chunk, staletime, 캐싱, 불필요한요청, 중복요청, 리스트키]
+  files: [patterns/performance.md]
+- keywords: [test, 테스트, testing, 검증, storybook, 스토리북, story, 스토리, stories, csf, 컴포넌트테스트, 컴포넌트 테스트, 유닛테스트, 단위테스트, unit-test, 훅테스트, mock, 모킹, mocking, msw, react-testing-library, rtl, api모킹, 시각검증, 상태검증]
+  files: [patterns/testing.md]
+
+## React 코드 패턴
+
+- keywords: [컴포넌트패턴, 컴포넌트 패턴, 컴포넌트구조, 컴포넌트 구조, 코드구조, component구조, card, badge, tabs, tailwind, 스타일, shadcn, @axiom/components, 임포트컨벤션, import컨벤션, layout, 레이아웃, pascalcase, 선언순서, 선언 순서, 선언위치, 선언 위치, hook순서, 훅순서, 훅 순서, 훅선언순서, 훅 선언 순서, handler, 핸들러]
+  files: [react/component.md]
+
+## 기존 항목 (수동 관리)
+
+- keywords: [button, 버튼, btn, click, 클릭, cta, variant, destructive, outline, ghost]
+  files: [components/Button.md]
+
+- keywords: [table, 테이블, 데이터테이블, 표, grid, 데이터표, 데이터그리드, 행, 열, row, column, tablecell, tablerow, tableheader]
+  files: [components/Table.md]
+
+- keywords: [smarttable, smart-table, smart table, 스마트테이블, 스마트 테이블, 스마트그리드, 스마트 그리드, 데이터테이블, 데이터 테이블, 데이터그리드, 데이터 그리드, 선언형테이블, 선언형 테이블, 선언형그리드, 고수준테이블, 고수준 테이블, 고수준그리드, definecolumns, 컬럼dsl, 컬럼 dsl, 컬럼정의, 설정맵, 설정 맵, smartcolumns, ismartcolumn, ismarttableprops, ismarttablehandle, 배지매핑, badge매핑, 상태배지, 병합헤더, 다단계헤더, 그룹헤더, 세로병합, mergecells, 합계행, summary, aggregate, 집계, 행선택, 다중선택, bulkactions, 일괄액션, renderrowactions, 행액션, 서버모드, 클라이언트모드, parammap, 응답어댑터, exportable, 내보내기, 엑셀다운로드, xlsx]
+  files: [components/SmartTable.md]
+
+- keywords: [dialog, modal, 모달, popup, 팝업, 다이얼로그, sheet, 사이드패널]
+  files: [components/Dialog.md]
+
+- keywords: [input, 입력, text, 텍스트, 텍스트필드, label, 라벨, 필드]
+  files: [components/Input.md]
+
+- keywords: [select, dropdown, 드롭다운, 선택, combobox, option, 옵션]
+  files: [components/Select.md]
+
+- keywords: [form, 폼, 양식, 폼검증, submit, 제출, validation, 유효성]
+  files: [patterns/form-handling.md, page-templates/form-page.md]
+
+- keywords: [폼화면, 폼 화면, 등록화면, 등록 화면, 수정화면, 입력폼, 폼만들, 폼 만들, 유효성검사, 유효성 검사, 입력검증, 필수입력, 필수값체크]
+  files: [patterns/form-handling.md, page-templates/form-page.md]
+
+# 없는 라이브러리를 물으면 "없다"고 답하는 문서가 1순위로 붙어야 한다.
+# 이게 없으면 모델이 react-hook-form 예제를 그대로 베껴 화면이 뜨기 전에 깨진다(2026-09-06 실기기).
+- keywords: [react-hook-form, reacthookform, hookform, useform, formfield, formitem, formlabel, formcontrol, formmessage, zod, zodresolver, 폼라이브러리, shadcn form]
+  files: [components/Form.md, patterns/form-handling.md]
+
+- keywords: [naming, 이름, 네이밍, 규칙, convention, 파일명, 컴포넌트명, 훅명]
+  files: [conventions/naming.md]
+
+- keywords: [typescript, 타입, type, interface, generic, 제네릭, 타입스크립트, 타입정의]
+  files: [conventions/typescript.md]
+
+- keywords: [tailwind, tailwindcss, 스타일, css, 클래스, className, 다크모드, darkmode, brand]
+  files: [components/Button.md]
+
+## 디자인 시스템
+
+- keywords: [design-system, 디자인시스템, 컴포넌트목록, 컴포넌트 목록, 컴포넌트리스트, component-list, variants, shadcn, axiom/components/ui, 전체컴포넌트, 사용가능한컴포넌트, 제공하는컴포넌트, ui컴포넌트, ui 컴포넌트, 컴포넌트, 컴포넌트 사용법, 컴포넌트 사용, 컴포넌트 사용예, 컴포넌트종류, 어떤컴포넌트, 컴포넌트뭐있어, tbd, 추가예정, 확정컴포넌트]
+  files: [design-system/components.md]
+
+- keywords: [layout, 레이아웃, card, container, stack, grid, flexbox, scrollarea, 카드, 페이지구조, 목록화면, 상세화면, 폼화면, si프로젝트, 프로젝트별, 반응형, responsive, darkmode, 다크모드, rootlayout]
+  files: [design-system/layout.md]
+
+- keywords: [token, 토큰, 디자인토큰, color, 색상, typography, 타이포그래피, spacing, 간격, brand, 브랜드컬러, primitive, theme, darkmode, css-variable, tailwindcss]
+  files: [design-system/tokens.md]
+
+## 퍼블 컨벤션
+
+- keywords: [publish, 퍼블, 마크업, markup, html, 퍼블리셔, publisher, 변환, convert, 클래스, class, 패턴, 버튼, 폼, 카드, 테이블, 모달]
+  files: [publish/markup-patterns.md]
+
+- keywords: [css-mapping, css매핑, 클래스매핑, class-mapping, shadcn, btn, form-control, card, modal, badge, 변환, convert, 퍼블, publish]
+  files: [publish/css-mapping.md]
+
+## 화면 템플릿
+
+- keywords: [페이지 만드는, 페이지만드는, 페이지 만드는법, 페이지 만들기, 페이지만들기, 페이지 만들어, 페이지 생성법, 페이지생성법, 페이지 생성하는, 페이지 생성 방법, 페이지생성방법, 페이지 생성 가이드, 페이지생성가이드, 페이지 생성, 페이지 만드는 방법, 페이지 작성법, 페이지 추가하는, 페이지 추가 방법, 페이지 어떻게 만들, 페이지를 어떻게, 화면 만드는, 화면만드는, 화면 만드는법, 화면 만드는 법, 화면 만드는 방법, 화면 어떻게 만들, 화면 만들기, 화면만들기, 화면 생성 방법, 화면 생성 가이드, 화면 생성, 새 페이지 만들, 새페이지, 신규 페이지 만들, 신규페이지, 업무페이지, 업무 페이지, 비즈니스페이지, 비즈니스 페이지, biz-page, create-biz-pages, create-page]
+  files: [page-templates/create-page-guide.md, patterns/domain-structure.md, patterns/router.md]
+
+- keywords: [page-template, 페이지템플릿, 목록화면, 목록 화면, list-page, listpage, 리스트화면, 리스트 화면, 검색화면, 검색 영역, 필터영역, 신규등록]
+  files: [page-templates/list-page.md]
+
+- keywords: [page-template, 페이지템플릿, 상세화면, detail-page, detailpage, 상세, detail, 뒤로가기, 조회, 읽기전용, readonly]
+  files: [page-templates/detail-page.md]
+
+- keywords: [page-template, 페이지템플릿, 폼화면, form-page, formpage, 폼, form, 등록, 수정, 입력, 저장, 취소, validation, 유효성]
+  files: [page-templates/form-page.md]
+
+## 라이브러리 사용법
+
+- keywords: [dayjs, 날짜, date, format, 포맷, locale, 로케일, 요일, 한글요일, 날짜포맷,
+             상대시간, relativetime, 날짜파싱, 날짜계산, customparsformat, weekday,
+             YYYY, MM, DD, dddd, 날짜라이브러리, 날짜변환, 날짜비교]
+  files: [libraries/dayjs.md]
+
+- keywords: [zustand, 스토어, store, 전역상태, global-state, 상태관리, create, useStore,
+             devtools, 선택자, 전역변수, 공유상태, 글로벌스토어, zustand5]
+  files: [libraries/zustand.md]
+
+- keywords: [date-fns, datefns, format, parse, isvalid, differenceInDays, addDays, addMonths,
+             날짜유틸, 날짜함수, parseISO, formatDistance, formatDistanceToNow]
+  files: [libraries/date-fns.md]
+
+- keywords: [animejs, anime, 애니메이션, animation, animate, timeline, keyframes,
+             자바스크립트애니메이션, 모션, motion, 트랜지션, easing, 스크롤애니메이션]
+  files: [libraries/animejs.md]
+
+- keywords: [react-table, tanstack-table, usereacttable, columndef, columnhelper,
+             테이블정렬, 테이블필터, 페이지네이션, sorting, filtering, pagination,
+             테이블상태, 컬럼정의, 테이블훅]
+  files: [libraries/react-table.md]
+
+- keywords: [react-day-picker, daypicker, 달력, calendar, 날짜선택, datepicker,
+             캘린더, 날짜피커, 달력컴포넌트, 달력선택]
+  files: [libraries/react-day-picker.md]
+
+- keywords: [lodash, debounce, throttle, groupby, pick, omit, clonedeep,
+             flatmap, uniqby, orderby, chunk, flatten, 유틸리티, 헬퍼함수, 배열처리, 객체처리]
+  files: [libraries/lodash.md]
+
+- keywords: [lottie, lottie-react, 애니메이션파일, json애니메이션, LottiePlayer,
+             useLottie, 로티, 로티애니메이션, lottie파일]
+  files: [libraries/lottie-react.md]
+
+## 스캐폴드 공통 유틸 ($util)
+
+- keywords: [util, 유틸, 유틸리티, 헬퍼, helper, $util, 공통함수, 공통유틸,
+             금액, 통화, currency, 쉼표, comma, 콤마, 천단위, 천단위콤마, 3자리, 자릿수,
+             숫자, number, 숫자포맷, 반올림, round, floor, ceil, 버림, 올림, clamp, 범위제한, tonumber, 숫자변환, percent, 퍼센트, 백분율,
+             vat, 부가세, 한글금액, tokorean, 축약, abbreviate, 만억조, 증감율, rate, 등락, 부동소수점,
+             날짜포맷, 날짜계산, adddays, addmonths, addyears, diffdays, 영업일, businessday, 공휴일, holiday,
+             startof, endof, 분기, quarter, 주차, 만나이, age, 윤년, 요일, dayofweek, fromnow, 상대시간,
+             문자열, string, capitalize, truncate, 말줄임, padstart, 자리수, mask, 마스킹, isempty, 공백제거,
+             이메일검증, isemail, 휴대폰, 주민번호, 사업자번호, 카드번호, 초성, chosung, 조사, josa, escapehtml, base64,
+             finance, 금융, 이자, 단리, 복리, simpleinterest, compoundinterest, 만기, maturityamount, 원리금균등, 상환, monthlypayment, amortization, 환율, exchange, 공급가액, supplyprice, 금액분할, splitamount,
+             object, 객체, 객체유틸, deepclone, deepequal, pick, omit, merge, cleanempty, 깊은복사, 깊은비교, 깊은병합, 경로조회,
+             array, 배열, 배열유틸, groupby, sortby, sum, sumby, uniq, uniqby, chunk, totree, flattentree, 그룹핑, 트리, 트리변환, 중복제거, 배열분할, 합계, 정렬]
+  files: [utils/util.md]
+- keywords: [cn, classname, 클래스명, 클래스, 클래스병합, 스타일병합, tailwind, twmerge, clsx, 조건부클래스, classnames]
+  files: [utils/cn.md]
+
+## React 레퍼런스 (순수 React, react.dev — 보완 지식)
+
+- keywords: [usestate, use-state, usestate 사용법, usestate 사용법알려줘, setstate, 함수형업데이트, 게으른초기화, lazy-init, 상태변수, 상태훅, 상태값, 상태 값, 상태값에, 상태에 넣, 상태에 저장, state에 넣, state에 저장, state로 저장, 상태로 저장, 컴포넌트 상태]
+  files: [react-reference/useState.md]
+- keywords: [useeffect, use-effect, 이펙트, 의존성배열, 의존성 배열, dependency array, cleanup, 정리함수, 정리 함수, 부수효과, side-effect, 구독해제, stale-closure, 이펙트정리]
+  files: [react-reference/useEffect.md]
+- keywords: [useref, use-ref, ref객체, .current, dom참조, dom 참조, 엘리먼트참조, 포커스주기, 가변값보관, 리렌더없이]
+  files: [react-reference/useRef.md]
+- keywords: [usememo, use-memo, 메모이제이션, memoization, 계산캐싱, 계산 캐싱, 비싼계산, 파생값메모, 값메모]
+  files: [react-reference/useMemo.md]
+- keywords: [usecallback, use-callback, 함수메모, 콜백메모, 함수캐싱, 콜백캐싱, 참조안정화, 함수참조유지]
+  files: [react-reference/useCallback.md]
+- keywords: [usecontext, use-context, 컨텍스트값, context값, createcontext, prop-drilling, props드릴링, 컨텍스트구독, 컨텍스트소비]
+  files: [react-reference/useContext.md]
+- keywords: [usereducer, use-reducer, 리듀서, reducer, dispatch, 디스패치, 리듀서액션, 복잡한상태관리, 상태머신]
+  files: [react-reference/useReducer.md]
+- keywords: [usetransition, use-transition, 트랜지션, ispending, starttransition, 논블로킹업데이트, 비차단업데이트, 동시성렌더]
+  files: [react-reference/useTransition.md]
+- keywords: [rules-of-hooks, 훅규칙, 훅 규칙, 훅호출규칙, 훅 호출 규칙, 조건부훅, 조건문훅, 조건문 안, 조건문안, 조건에 따라 훅, 조건부로 훅, 반복문 안, 반복문안, 루프 안, 훅 호출, 훅을 조건, 훅순서, 훅 순서, 최상위훅, 최상위에서, 훅을조건문에, early-return훅, exhaustive-deps]
+  files: [react-reference/rules-of-hooks.md]
+
+## React 레퍼런스 — 추가 훅 (Phase 2)
+
+- keywords: [use 훅, use api, use promise, use(, promise 읽, 프로미스 읽, promise 값 읽, 컨텍스트 읽기 use, 조건부 use, 리소스 읽기 훅, suspense로 데이터 읽]
+  files: [react-reference/use.md]
+- keywords: [useid, use-id, 고유id, 고유 id, unique id, 접근성 id, htmlfor, aria id, 라벨 id 연결, 안정적 id]
+  files: [react-reference/useId.md]
+- keywords: [usedeferredvalue, use-deferred-value, 지연값, 지연 값, deferred value, 입력 지연, 검색 지연, 무거운 리스트 지연, 디바운스 대체]
+  files: [react-reference/useDeferredValue.md]
+- keywords: [uselayouteffect, use-layout-effect, 레이아웃 이펙트, 동기 이펙트, 페인트 전, 레이아웃 측정, getboundingclientrect, 깜빡임 방지, 측정 후 위치]
+  files: [react-reference/useLayoutEffect.md]
+- keywords: [usesyncexternalstore, use-sync-external-store, 외부 스토어, external store, 스토어 구독, getsnapshot, subscribe 스토어, 비-react 상태 구독]
+  files: [react-reference/useSyncExternalStore.md]
+- keywords: [useimperativehandle, use-imperative-handle, ref 핸들, 명령형 핸들, 부모에 메서드 노출, ref로 focus 노출, imperative handle, ref 커스텀]
+  files: [react-reference/useImperativeHandle.md]
+- keywords: [useactionstate, use-action-state, useformstate, 폼 액션 상태, form action, 액션 상태, 폼 제출 상태, action ispending]
+  files: [react-reference/useActionState.md]
+- keywords: [useoptimistic, use-optimistic, 낙관적 업데이트, 낙관적 ui, optimistic update, 즉시 반영 임시, 비동기 중 표시]
+  files: [react-reference/useOptimistic.md]
+- keywords: [usedebugvalue, use-debug-value, 디버그값, devtools 라벨, 커스텀 훅 라벨, 훅 디버깅 라벨]
+  files: [react-reference/useDebugValue.md]
+
+## React 레퍼런스 — 컴포넌트/API (Phase 3)
+
+- keywords: [react.memo, memo 컴포넌트, 메모 컴포넌트, 리렌더 건너뛰기, 리렌더 방지, props 얕은 비교, areequal, 자식 리렌더 최적화]
+  files: [react-reference/memo.md]
+- keywords: [react.lazy, lazy 로딩, 지연 로딩 컴포넌트, 컴포넌트 코드 분할, dynamic import 컴포넌트, lazy import]
+  files: [react-reference/lazy.md]
+- keywords: [suspense, 서스펜스, fallback 표시, 로딩 fallback, 로딩 폴백, 로딩 바운더리, suspense 경계, 스피너 fallback]
+  files: [react-reference/Suspense.md]
+- keywords: [createcontext, create-context, 컨텍스트 생성, context 객체 생성, provider 생성, 컨텍스트 만들기, 기본값 컨텍스트]
+  files: [react-reference/createContext.md]
+- keywords: [forwardref, forward-ref, ref 전달, ref 포워딩, 자식에 ref 전달, ref prop 전달, 레거시 ref]
+  files: [react-reference/forwardRef.md]
+- keywords: [createportal, create-portal, 포털, portal, 다른 dom에 렌더, body에 렌더, 모달 포털, 오버레이 포털, z-index 탈출]
+  files: [react-reference/createPortal.md]
+- keywords: [fragment, react.fragment, 프래그먼트, 빈 태그, 빈 래퍼, 래퍼 없이, 다중 요소 반환, key fragment]
+  files: [react-reference/Fragment.md]
+- keywords: [profiler, 프로파일러, 렌더 측정, 렌더 성능 측정, onrender, 렌더 타이밍, 렌더 비용 측정]
+  files: [react-reference/Profiler.md]
+- keywords: [starttransition, start-transition, 트랜지션 표시, 컴포넌트 밖 트랜지션, ispending 없이, 논블로킹 업데이트 함수]
+  files: [react-reference/startTransition.md]
+- keywords: [react act, act 유틸, 테스트 act, 업데이트 플러시, not wrapped in act, act로 감싸, act 로 감싸, act( , 테스트 렌더 플러시]
+  files: [react-reference/act.md]
+
+## 스캐폴드 공통 자산 카탈로그 (목록·한눈에)
+
+- keywords: [카탈로그, catalog, 한눈에, overview, 전체목록, 제공하는기능, 제공기능, 공통자산, 공통기능, 뭐있어, 뭐가있어, 뭐가 있어, 뭐 있어, 어떤게있어, 어떤게 있어, 어떤기능, scaffold, 스캐폴드, scaffold기능, 스캐폴드기능, 기본제공]
+  files: [catalog/overview.md]
+- keywords: [훅, 훅목록, 훅 목록, hook, hooks, 커스텀훅, custom-hook, 공통훅, 제공하는훅, 사용가능한훅, 어떤훅, usetheme, usesidebar, 훅종류, 훅리스트, 훅뭐있어]
+  files: [catalog/hooks.md]
+- keywords: [공통함수, 공통함수목록, 함수목록, 함수 목록, 헬퍼목록, 유틸목록, 유틸 목록, 유틸함수, 유틸함수목록, 유틸함수 목록, 유틸 함수, 사용가능한유틸, 사용할수있는유틸]
+  files: [catalog/overview.md, utils/util.md]

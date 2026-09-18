@@ -1,0 +1,3 @@
+{"at":"2026-09-18T14:07:34.299Z","kind":"turn","calls":0,"totalMs":738.0313999997452,"queryChars":49,"trace":"[턴 1]  · 사유 card:use-api-doc · 문 pre-v3 · 결과 미정 · 호출 0회 · 0.7초","turn":1,"door":"pre-v3","phases":{}}
+{"at":"2026-09-18T14:08:00.643Z","kind":"turn","calls":2,"totalMs":23678.951899999753,"queryChars":49,"trace":"[턴 2] v3(create_page/declined 1회) · 사유 create_page · 전략 v3 · 결과 미정 · 호출 2회 · 23.7초 · 프리필 2240ms · 디코드 511ms","turn":2,"prefillMs":2240,"decodeMs":511,"promptTokens":1668,"completionTokens":35,"door":"v3","phases":{"모델":21450,"적용":649,"웹뷰":1}}
+{"at":"2026-09-18T14:10:14.817Z","kind":"cancel","turn":2}

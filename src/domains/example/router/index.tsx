@@ -53,6 +53,7 @@ const ObjectUtil = loadable(() => import('@/domains/example/pages/utils/ObjectUt
 const ArrayUtil = loadable(() => import('@/domains/example/pages/utils/ArrayUtil'));
 const FavoriteCatalog = loadable(() => import('@/domains/example/pages/store/FavoriteCatalog'));
 const FavoriteList = loadable(() => import('@/domains/example/pages/store/FavoriteList'));
+const ExUseApi2 = loadable(() => import('@/domains/example/pages/ExUseApi2'));
 
 const routes: TAppRoute[] = [
 	{
@@ -309,6 +310,11 @@ const routes: TAppRoute[] = [
 		path: 'store/favorites',
 		element: <FavoriteList />,
 		name: '즐겨찾기 목록',
+	},
+	{
+		path: 'use-api2',
+		element: <ExUseApi2 />,
+		name: 'ExUseApi2',
 	},
 ];
 
